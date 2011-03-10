@@ -50,9 +50,8 @@
 -- to produced all the required values.
 -- (The first part of the curve is a bit steeper and the last bit is more linear than expected)
 --
--- NOTE, this component uses LINEAR mixing of the three analogue channels, and is only
--- accurate for designs where the outputs are buffered and not simply wired together.
--- The ouput level is more complex in that case and requires a larger table.
+-- NOTE, this component uses a volume table for accurate mixing of the three analogue channels,
+-- where the outputs are wired together - like in the Atari ST
 
 library ieee;
   use ieee.std_logic_1164.all;
@@ -82,7 +81,7 @@ entity YM2149 is
   I_IOB               : in  std_logic_vector(7 downto 0);
   O_IOB               : out std_logic_vector(7 downto 0);
   O_IOB_OE_L          : out std_logic;
-
+  --
   ENA                 : in  std_logic; -- clock enable for higher speed operation
   RESET_L             : in  std_logic;
   CLK                 : in  std_logic  -- note 6 Mhz
@@ -90,6 +89,16 @@ entity YM2149 is
 end;
 
 architecture RTL of YM2149 is
+
+  component vol_table
+    port (
+      CLK         : in    std_logic;
+      ADDR        : in    std_logic_vector(11 downto 0);
+      DATA        : out   std_logic_vector(9 downto 0)
+      );
+  end component;
+
+  --  signals
   type  array_16x8   is array (0 to 15) of std_logic_vector(7 downto 0);
   type  array_3x12   is array (1 to 3) of std_logic_vector(11 downto 0);
 
@@ -121,14 +130,9 @@ architecture RTL of YM2149 is
   signal env_inc              : std_logic;
   signal env_vol              : std_logic_vector(4 downto 0);
 
-  signal tone_ena_l           : std_logic;
-  signal tone_src             : std_logic;
-  signal noise_ena_l          : std_logic;
-  signal chan_vol             : std_logic_vector(4 downto 0);
+  signal vol_table_in         : std_logic_vector(11 downto 0);
+  signal vol_table_out        : std_logic_vector(9 downto 0);
 
-  signal dac_amp              : std_logic_vector(7 downto 0);
-  signal audio_mix            : std_logic_vector(9 downto 0);
-  signal audio_final          : std_logic_vector(9 downto 0);
 begin
   -- cpu i/f
   p_busdecode            : process(I_BDIR, I_BC2, I_BC1, addr, I_A9_L, I_A8)
@@ -143,7 +147,7 @@ begin
     --   1   0   0  address
     --   1   0   1  inactive
     --   1   1   0  write
-    --   1   1   1  address
+    --   1   1   1  read
     busctrl_addr <= '0';
     busctrl_we <= '0';
     busctrl_re <= '0';
@@ -173,9 +177,7 @@ begin
     O_DA_OE_L <= not (busctrl_re);
   end process;
 
-  --
   -- CLOCKED
-  --
   --p_waddr                : process
   --begin
     ---- looks like registers are latches in real chip, but the address is caught at the end of the address state.
@@ -189,7 +191,6 @@ begin
       --end if;
     --end if;
   --end process;
-
   --p_wdata                : process
   --begin
     ---- looks like registers are latches in real chip, but the address is caught at the end of the address state.
@@ -225,9 +226,7 @@ begin
     --end if;
   --end process;
 
-  --
   -- LATCHED, useful when emulating a real chip in circuit. Nasty as gated clock.
-  --
   p_waddr                : process(reset_l, busctrl_addr)
   begin
     -- looks like registers are latches in real chip, but the address is caught at the end of the address state.
@@ -508,105 +507,66 @@ begin
     end if;
   end process;
 
-  p_chan_mixer           : process(cnt_div, reg, tone_gen_op)
+  p_chan_mixer_table     : process
+    variable chan_mixed : std_logic_vector(2 downto 0);
   begin
-    tone_ena_l  <= '1'; tone_src <= '1';
-    noise_ena_l <= '1'; chan_vol <= "00000";
-    case cnt_div(1 downto 0) is
-      when "00" =>
-        tone_ena_l  <= reg(7)(0); tone_src <= tone_gen_op(1); chan_vol <=  reg(8)(4 downto 0);
-        noise_ena_l <= reg(7)(3);
-      when "01" =>
-        tone_ena_l  <= reg(7)(1); tone_src <= tone_gen_op(2); chan_vol <=  reg(9)(4 downto 0);
-        noise_ena_l <= reg(7)(4);
-      when "10" =>
-        tone_ena_l  <= reg(7)(2); tone_src <= tone_gen_op(3); chan_vol <= reg(10)(4 downto 0);
-        noise_ena_l <= reg(7)(5);
-      when "11" => null; -- tone gen outputs become valid on this clock
-      when others => null;
-    end case;
+    wait until rising_edge(CLK);
+    if (ENA = '1') then
+      chan_mixed(0) := (reg(7)(0) or tone_gen_op(1)) and (reg(7)(3) or noise_gen_op);
+      chan_mixed(1) := (reg(7)(1) or tone_gen_op(2)) and (reg(7)(4) or noise_gen_op);
+      chan_mixed(2) := (reg(7)(2) or tone_gen_op(3)) and (reg(7)(5) or noise_gen_op);
+
+      vol_table_in <= x"000";
+
+      if (chan_mixed(0) = '1') then
+        if (reg(8)(4) = '0') then
+          vol_table_in(3 downto 0) <= reg(8)(3 downto 0);
+        else
+          vol_table_in(3 downto 0) <= env_vol(4 downto 1);
+        end if;
+      end if;
+
+      if (chan_mixed(1) = '1') then
+        if (reg(9)(4) = '0') then
+          vol_table_in(7 downto 4) <= reg(9)(3 downto 0);
+        else
+          vol_table_in(7 downto 4) <= env_vol(4 downto 1);
+        end if;
+      end if;
+
+      if (chan_mixed(2) = '1') then
+        if (reg(10)(4) = '0') then
+          vol_table_in(11 downto 8) <= reg(10)(3 downto 0);
+        else
+          vol_table_in(11 downto 8) <= env_vol(4 downto 1);
+        end if;
+      end if;
+    end if;
   end process;
+
+  u_vol_table            : vol_table
+    port map (
+      CLK         => clk,
+      ADDR        => vol_table_in,
+      DATA        => vol_table_out
+      );
 
   p_op_mixer             : process
     variable chan_mixed : std_logic;
     variable chan_amp : std_logic_vector(4 downto 0);
   begin
     wait until rising_edge(CLK);
-    if (ENA = '1') then
 
-      chan_mixed := (tone_ena_l or tone_src) and (noise_ena_l or noise_gen_op);
-
-      chan_amp := (others => '0');
-      if (chan_mixed = '1') then
-        if (chan_vol(4) = '0') then
-          if (chan_vol(3 downto 0) = "0000") then -- nothing is easy ! make sure quiet is quiet
-            chan_amp := "00000";
-          else
-            chan_amp := chan_vol(3 downto 0) & '1'; -- make sure level 31 (env) = level 15 (tone)
-          end if;
-        else
-          chan_amp := env_vol(4 downto 0);
-        end if;
-      end if;
-
-      dac_amp <= x"00";
-      case chan_amp is
-        when "11111" => dac_amp <= x"FF";
-        when "11110" => dac_amp <= x"D9";
-        when "11101" => dac_amp <= x"BA";
-        when "11100" => dac_amp <= x"9F";
-        when "11011" => dac_amp <= x"88";
-        when "11010" => dac_amp <= x"74";
-        when "11001" => dac_amp <= x"63";
-        when "11000" => dac_amp <= x"54";
-        when "10111" => dac_amp <= x"48";
-        when "10110" => dac_amp <= x"3D";
-        when "10101" => dac_amp <= x"34";
-        when "10100" => dac_amp <= x"2C";
-        when "10011" => dac_amp <= x"25";
-        when "10010" => dac_amp <= x"1F";
-        when "10001" => dac_amp <= x"1A";
-        when "10000" => dac_amp <= x"16";
-        when "01111" => dac_amp <= x"13";
-        when "01110" => dac_amp <= x"10";
-        when "01101" => dac_amp <= x"0D";
-        when "01100" => dac_amp <= x"0B";
-        when "01011" => dac_amp <= x"09";
-        when "01010" => dac_amp <= x"08";
-        when "01001" => dac_amp <= x"07";
-        when "01000" => dac_amp <= x"06";
-        when "00111" => dac_amp <= x"05";
-        when "00110" => dac_amp <= x"04";
-        when "00101" => dac_amp <= x"03";
-        when "00100" => dac_amp <= x"03";
-        when "00011" => dac_amp <= x"02";
-        when "00010" => dac_amp <= x"02";
-        when "00001" => dac_amp <= x"01";
-        when "00000" => dac_amp <= x"00";
-        when others => null;
-      end case;
-
-      if (cnt_div(1 downto 0) = "10") then
-        audio_mix   <= (others => '0');
-        audio_final <= audio_mix;
-      else
-        audio_mix   <= audio_mix + ("00" & dac_amp);
-      end if;
-
-      if (RESET_L = '0') then
-        O_AUDIO(7 downto 0) <= "00000000";
-      else
-        if (audio_final(9) = '0') then
-          O_AUDIO(7 downto 0) <= audio_final(8 downto 1);
-        else -- clip
-          O_AUDIO(7 downto 0) <= x"FF";
-        end if;
-      end if;
+    if (RESET_L = '0') then
+      O_AUDIO(7 downto 0) <= "00000000";
+    else
+      O_AUDIO(7 downto 0) <= vol_table_out(9 downto 2);
     end if;
   end process;
 
   p_io_ports             : process(reg)
   begin
+    -- input low
     O_IOA <= reg(14);
 
     O_IOA_OE_L <= not reg(7)(6);
