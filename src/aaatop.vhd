@@ -24,9 +24,9 @@ use IEEE.NUMERIC_STD.ALL;
 entity aaatop is
     Port ( rx : in  STD_LOGIC;
            tx : inout  STD_LOGIC;
-           W1A : inout  STD_LOGIC_VECTOR (15 downto 0);
+           W1A : out  STD_LOGIC_VECTOR (15 downto 0);
            W1B : in  STD_LOGIC_VECTOR (15 downto 0);
-           W2C : out  STD_LOGIC_VECTOR (15 downto 0);
+           W2C : inout  STD_LOGIC_VECTOR (15 downto 0);
            clk : in  STD_LOGIC);
 end aaatop;
 
@@ -160,21 +160,31 @@ end component pwm;
 	signal pwm_out : std_logic := '0';
 begin
 --	w2c <= (7 downto 0 => audio, others => '0');
-	w2c(7 downto 0) <= audio;
-	w2c(8) <= pwm_out;
-	w2c(15 downto 9) <= (others => '0');
+--	w2c(7 downto 0) <= audio;
+--	w2c(8) <= pwm_out;
+--	w2c(15 downto 9) <= (others => '0');
+	w2c(0) <= pwm_out;
+	w1a(15) <= pwm_out;
+	w1a(14) <= pwm_out;
+	w1a(13 downto 0) <= (others => '0');
+
+--	wingbutled0 : wingbutled Port map (
+--		io => w1a(7 downto 0),
+--		buttons => buthi,
+--		leds => ledhi
+--	);
 
 	wingbutled0 : wingbutled Port map (
-		io => w1a(7 downto 0),
+		io => w2c(15 downto 8),
 		buttons => buthi,
 		leds => ledhi
 	);
 
-	wingbutled1 : wingbutled Port map (
-		io => w1a(15 downto 8),
-		buttons => butlo,
-		leds => ledlo
-	);
+--	wingbutled1 : wingbutled Port map (
+--		io => w1a(15 downto 8),
+--		buttons => butlo,
+--		leds => ledlo
+--	);
 
 	reset_ym_loc <= buthi(3);
 

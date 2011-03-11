@@ -69,6 +69,7 @@
     <file xil_pn:fileType="FILE_WEBTALK" xil_pn:name="aaatop_usage.xml"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="aaatop_vhdl.prj"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="aaatop_xst.xrpt"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="usage_statistics_webtalk.html"/>
     <file xil_pn:fileType="FILE_LOG" xil_pn:name="webtalk.log"/>
     <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="webtalk_pn.xml"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xlnx_auto_0_xdb"/>
@@ -104,7 +105,7 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1299801131" xil_pn:in_ck="-4870034310818298367" xil_pn:name="TRANEXT_xstsynthesize_spartan3e" xil_pn:prop_ck="-8801176179280105848" xil_pn:start_ts="1299801087">
+    <transform xil_pn:end_ts="1299843047" xil_pn:in_ck="-4870034310818298367" xil_pn:name="TRANEXT_xstsynthesize_spartan3e" xil_pn:prop_ck="-8801176179280105848" xil_pn:start_ts="1299843023">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -127,7 +128,7 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1299801140" xil_pn:in_ck="-8415791677918859408" xil_pn:name="TRANEXT_ngdbuild_FPGA" xil_pn:prop_ck="1116954548340712228" xil_pn:start_ts="1299801131">
+    <transform xil_pn:end_ts="1299843057" xil_pn:in_ck="-8415791677918859408" xil_pn:name="TRANEXT_ngdbuild_FPGA" xil_pn:prop_ck="1116954548340712228" xil_pn:start_ts="1299843047">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -137,7 +138,7 @@
       <outfile xil_pn:name="aaatop.ngd"/>
       <outfile xil_pn:name="aaatop_ngdbuild.xrpt"/>
     </transform>
-    <transform xil_pn:end_ts="1299801159" xil_pn:in_ck="-8415791677918859407" xil_pn:name="TRANEXT_map_spartan3" xil_pn:prop_ck="-1697458369411087007" xil_pn:start_ts="1299801140">
+    <transform xil_pn:end_ts="1299843076" xil_pn:in_ck="-8415791677918859407" xil_pn:name="TRANEXT_map_spartan3" xil_pn:prop_ck="-1697458369411087007" xil_pn:start_ts="1299843057">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -151,7 +152,7 @@
       <outfile xil_pn:name="aaatop_summary.xml"/>
       <outfile xil_pn:name="aaatop_usage.xml"/>
     </transform>
-    <transform xil_pn:end_ts="1299801231" xil_pn:in_ck="-775339161647952118" xil_pn:name="TRANEXT_par_spartan3" xil_pn:prop_ck="-5563652517805085498" xil_pn:start_ts="1299801159">
+    <transform xil_pn:end_ts="1299843120" xil_pn:in_ck="-775339161647952118" xil_pn:name="TRANEXT_par_spartan3" xil_pn:prop_ck="-5563652517805085498" xil_pn:start_ts="1299843076">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -166,7 +167,7 @@
       <outfile xil_pn:name="aaatop_pad.txt"/>
       <outfile xil_pn:name="aaatop_par.xrpt"/>
     </transform>
-    <transform xil_pn:end_ts="1299801254" xil_pn:in_ck="4642623900840025" xil_pn:name="TRANEXT_bitFile_spartan3e" xil_pn:prop_ck="287829442711806529" xil_pn:start_ts="1299801231">
+    <transform xil_pn:end_ts="1299843142" xil_pn:in_ck="4642623900840025" xil_pn:name="TRANEXT_bitFile_spartan3e" xil_pn:prop_ck="287829442711806529" xil_pn:start_ts="1299843120">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
@@ -175,10 +176,11 @@
       <outfile xil_pn:name="aaatop.bit"/>
       <outfile xil_pn:name="aaatop.drc"/>
       <outfile xil_pn:name="aaatop.ut"/>
+      <outfile xil_pn:name="usage_statistics_webtalk.html"/>
       <outfile xil_pn:name="webtalk.log"/>
       <outfile xil_pn:name="webtalk_pn.xml"/>
     </transform>
-    <transform xil_pn:end_ts="1299801231" xil_pn:in_ck="-8415791677918859539" xil_pn:name="TRAN_postRouteTrce" xil_pn:prop_ck="445577401284416186" xil_pn:start_ts="1299801225">
+    <transform xil_pn:end_ts="1299843120" xil_pn:in_ck="-8415791677918859539" xil_pn:name="TRAN_postRouteTrce" xil_pn:prop_ck="445577401284416186" xil_pn:start_ts="1299843114">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="_xmsgs/trce.xmsgs"/>
