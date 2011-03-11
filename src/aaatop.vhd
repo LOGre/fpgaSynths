@@ -252,7 +252,31 @@ begin
 --	ledlo <= data(3 downto 0);
 --	ledhi <= data(7 downto 4);
 --	ledhi <= buffer_full & buffer_half_full & read_buffer & buffer_data_present;
-	ledhi <= buffer_full & buffer_half_full & ready & buffer_data_present;
+--	ledhi <= buffer_full & buffer_half_full & ready & buffer_data_present;
+--	ledhi <= audio( 7 downto 4);
+	process(audio)
+	begin
+		if unsigned(audio) > x"70" then
+			ledhi(0) <= '1';
+		else
+			ledhi(0) <= '0';
+		end if;
+		if unsigned(audio) > x"50" then
+			ledhi(1) <= '1';
+		else
+			ledhi(1) <= '0';
+		end if;
+		if unsigned(audio) > x"30" then
+			ledhi(2) <= '1';
+		else
+			ledhi(2) <= '0';
+		end if;
+		if unsigned(audio) > x"10" then
+			ledhi(3) <= '1';
+		else
+			ledhi(3) <= '0';
+		end if;
+	end process;
 	uart_rx0 : uart_rx    Port map(
 		serial_in => rx,
 		data_out => data,
