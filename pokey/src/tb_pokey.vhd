@@ -109,16 +109,16 @@ BEGIN
 	
 	procedure write
 	(
-		addr : in bit_vector(3 downto 0);
-		data : in bit_vector(7 downto 0)
+		v_addr : in bit_vector(3 downto 0);
+		v_data : in bit_vector(7 downto 0)
 	) is
 	begin
 		wait until rising_edge(clk);
 		-- addr
-		ADDR <= to_stdlogicvector(addr);
+		ADDR <= to_stdlogicvector(v_addr);
 		wait for 120 ns;
 		-- write
-		DIN <= to_stdlogicvector(data);
+		DIN <= to_stdlogicvector(v_data);
 	end write;		
 	
    begin		
@@ -142,19 +142,19 @@ BEGIN
 		-- set AUDF1 : middle A
 		write(x"0",x"90");
 		-- set AUDC1 : pure tone high vol
-		write(x"1",b"1110111");
+		write(x"1",b"10101111");
 		-- set AUDF2 : middle A
 		write(x"2",x"90");
 		-- set AUDC2 : pure tone, off
-		write(x"3",b"11100000");
+		write(x"3",b"10100000");
 		-- set AUDF3 : middle A
 		write(x"4",x"90");
 		-- set AUDC3 : pure tone, off
-		write(x"5",b"11100000");
+		write(x"5",b"10100000");
 		-- set AUDF4 : middle A
 		write(x"6",x"90");
 		-- set AUDC4 : pure tone, off
-		write(x"7",b"11100000");
+		write(x"7",b"10100000");
 		-- set AUDCTL : 0
 		write(x"8",b"00000000");
 		
