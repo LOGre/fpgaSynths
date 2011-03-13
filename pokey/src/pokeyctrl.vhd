@@ -32,13 +32,13 @@ Port (
  	enable_out  : out STD_LOGIC;
 	
 	-- clk
-	clk 			: in  STD_LOGIC	-- should be 1.77MHz
+	clk 			: in  STD_LOGIC;	-- should be 1.77MHz
 			
 	-- input signals	
 	data_in 		: in  STD_LOGIC_VECTOR (7 downto 0);
 	latch_in 	: in  STD_LOGIC;
 	reset_in 	: in  STD_LOGIC;
-	ready_out 	: out  STD_LOGIC;
+	ready_out 	: out  STD_LOGIC
 	);
 end pokeyctrl ;
 
@@ -59,116 +59,50 @@ architecture Behavioral of pokeyctrl is
 	
 	type s_t is
 	(
-		s_reset,s_raddr,s_saddr
-		,s_saddr2
-		,s_rdata,s_sdata
-		,s_sdata2
+		s_init, 
+		s_setaddr,
+		s_setdata
 	);
 	
-	signal stP,stN : s_t := s_reset;
-	signal bdirP,bdirN : std_logic := '0';
-	signal bc1P,bc1N : std_logic := '0';
+	-- ctrl signals
+	signal stP,stN 		: s_t := s_reset;
 	signal resetP,resetN : std_logic := '1';
 	signal readyP,readyN : std_logic := '0';
-	signal daP,daN : std_logic_vector(7 downto 0) := (others => '0');
 	signal cnt : unsigned(CNTLEN-1 downto 0) := to_unsigned(0,CNTLEN);
 	
-begin
-	ready_out <= readyP;
-	reset_out <= resetP;
-	bdir_out <= bdirP;
-	bc1_out <= bc1P;
-	da_out <= daP;
+	-- Pokey signals
+	signal csP,csN 		: std_logic := '0';
+	signal cslP,cslN 		: std_logic := '0';	
+	signal enaP,enaN 		: std_logic := '0';	
+	signal rwlP,rwlN		: std_logic := '0';
+	signal daP,daN 		: std_logic_vector(7 downto 0) := (others => '0');	
+	signal addrP,addrN 	: std_logic_vector(3 downto 0) := (others => '0');	
 
-	process (stP,latch_in,reset_in,data_in,cnt,readyP,resetP,bdirP,bc1P,daP)
+begin
+	ready_out 	<= readyP;
+	
+	cs_out 		<= csP;
+	cs_l_out 	<= cslP;
+	rw_l_out 	<= rwlP;
+	enable_out	<= enaP;
+	data_out 	<= daP;
+	addr_out		<= addrP;
+
+	process (stP,latch_in,reset_in,data_in,cnt,readyP,csP,cslP,rwlP,enaP,daP,addrP)
 	begin
-		resetN <= resetP;
-		readyN <= readyP;
-		bdirN <= bdirP;
-		bc1N <= bc1P;
-		daN <= daP;
-		stN <= stP;
+		readyN 	<= readyP;
+		csN 		<= csP;
+		cslN 		<= cslP;
+		rwlN 		<= rwlP;
+		daN 		<= daP;
+		addrN		<=	addrP;
+		enaN		<=	enaP;
+		stN 		<= stP;
+		
 		case stP is
-			when s_reset =>
-				if cnt=TRW+TRB then
-					stN <= s_raddr;
-					resetN <= '1';
-					readyN <= '0';
-				elsif cnt=TRW then
-					stN <= s_reset;
-					resetN <= '1';
-					readyN <= '0';
-				else
-					bdirN <= '0';
-					bc1N <= '0';
-					stN <= s_reset;
-					resetN <= '0';
-					readyN <= '0';
-				end if;
-			when s_raddr =>
-				if reset_in='1' then
-					stN <= s_reset;
-					readyN <= '0';
-				else
-					if latch_in='0' then
-						stN <= s_raddr;
-						daN <= (others => '0');
-						readyN <= '1';
-					else
-						stN <= s_saddr;
-						daN <= data_in;
-						bdirN <= '1';
-						bc1N <= '1';
-						readyN <= '0';
-					end if;
-				end if;
-			when s_saddr =>
-				if cnt=TAS then
-					stN <= s_saddr2;
-					bdirN <= '0';
-					bc1N <= '0';
-					readyN <= '1';
-				else
-					stN <= s_saddr;
-					readyN <= '0';
-				end if;
-			when s_saddr2 =>
-				if cnt=TAS+TAH then
-					stN <= s_rdata;
-					readyN <= '1';
-				else
-					stN <= s_saddr2;
-					readyN <= '1';
-				end if;
-			when s_rdata =>
-				if latch_in='0' then
-					stN <= s_rdata;
-					readyN <= '1';
-				else
-					stN <= s_sdata;
-					bdirN <= '1';
-					bc1N <= '0';
-					daN <= data_in;
-					readyN <= '0';
-				end if;
-			when s_sdata =>
-				if cnt=TDW then
-					stN <= s_sdata2;
-					bdirN <= '0';
-					bc1N <= '0';
-					readyN <= '1';
-				else
-					stN <= s_sdata;
-					readyN <= '0';
-				end if;
-			when s_sdata2 =>
-				if cnt=TDW+TDH then
-					stN <= s_raddr;
-					readyN <= '1';
-				else
-					stN <= s_sdata2;
-					readyN <= '1';
-				end if;
+			when s_init =>
+			when s_setaddr =>
+			when s_setdata =>
 		end case;
 	end process;
 	
@@ -176,40 +110,9 @@ begin
 	begin
 		if rising_edge(clk) then
 			case stN is
-				when s_reset =>
-					if cnt=TRW+TRB then
-						cnt <= (others => '0');
-					elsif clk_enable='1' then
-						cnt <= cnt + 1;
-					end if;
-				when s_raddr =>
-					cnt <= (others => '0');
-				when s_saddr =>
-					if cnt=TAS then
-						cnt <= (others => '0');
-					else
-						cnt <= cnt + 1;
-					end if;
-				when s_saddr2 =>
-					if cnt=TAH then
-						cnt <= (others => '0');
-					else
-						cnt <= cnt + 1;
-					end if;
-				when s_rdata =>
-					cnt <= (others => '0');
-				when s_sdata =>
-					if cnt=TDW then
-						cnt <= (others => '0');
-					else
-						cnt <= cnt + 1;
-					end if;
-				when s_sdata2 =>
-					if cnt=TDH then
-						cnt <= (others => '0');
-					else
-						cnt <= cnt + 1;
-					end if;
+			when s_init =>
+			when s_setaddr =>
+			when s_setdata =>
 			end case;
 		end if;
 	end process;
@@ -217,12 +120,15 @@ begin
 	process (clk)
 	begin
 		if rising_edge( clk) then
-			resetP <= resetN;
-			readyP <= readyN;
-			bdirP <= bdirN;
-			bc1P <= bc1N;
-			daP <= daN;
-			stP <= stN;
+			readyP 	<= readyN;
+			bdirP		<= csN;
+			csP 		<= csN;
+			cslP 		<= cslN;
+			rwlP 		<= rwlN;
+			enaP		<= enaN;
+			addrP		<= addrN;
+			daP 		<= daN;
+			stP 		<= stN;
 		end if;
 	end process;
 end Behavioral;
