@@ -40,9 +40,9 @@ ARCHITECTURE behavior OF tb_top_but IS
     PORT(
          rx : IN  std_logic;
          tx : INOUT  std_logic;
-         W1A : inout  std_logic_vector(15 downto 0);
+         W1A : out  std_logic_vector(15 downto 0);
          W1B : IN  std_logic_vector(15 downto 0);
-         W2C : OUT  std_logic_vector(15 downto 0);
+         W2C : inOUT  std_logic_vector(15 downto 0);
          clk : IN  std_logic
         );
     END COMPONENT;
@@ -79,23 +79,25 @@ ARCHITECTURE behavior OF tb_top_but IS
 	signal data : std_logic_vector(7 downto 0) := (others => '0');
 	signal write_buffer : std_logic := '0';
 	signal write_bufferN,write_bufferP : std_logic := '0';
-constant a1 : std_logic_vector(7 downto 0) := x"35";
-constant d1 : std_logic_vector(7 downto 0) := x"31";
-constant a2 : std_logic_vector(7 downto 0) := x"37";
-constant d2 : std_logic_vector(7 downto 0) := x"62";
-constant a3 : std_logic_vector(7 downto 0) := x"61";
-constant d3 : std_logic_vector(7 downto 0) := x"66";
+constant a1 : std_logic_vector(7 downto 0) := x"05";
+constant d1 : std_logic_vector(7 downto 0) := x"01";
+constant a2 : std_logic_vector(7 downto 0) := x"07";
+constant d2 : std_logic_vector(7 downto 0) := x"fb";
+constant a3 : std_logic_vector(7 downto 0) := x"0a";
+constant d3 : std_logic_vector(7 downto 0) := x"0f";
 type st_t is (s_reset,s_wait,s_a1,s2_a1,s_d1,s2_d1,s_a2,s2_a2,s_d2,s2_d2,s_a3,s2_a3,s_d3,s2_d3);
 signal stP,stN : st_t := s_reset;
 signal but_in : std_logic_vector(3 downto 0);
 signal dataP,dataN : std_logic_vector(7 downto 0) := (others => '0');
 BEGIN
  
-	but_in(0) <= w1a(7);
-	but_in(3) <= w1a(1);
+	w2c(15) <= but_in(0);
+	w2c(13) <= but_in(1);
+	w2c(11) <= but_in(2);
+	w2c(9) <= but_in(3);
 	data <= dataP;
 	write_buffer <= write_bufferP;
-	audio <= w2c(7 downto 0);
+--	audio <= w2c(7 downto 0);
 	w1b(14) <= reset_ym_in;
 
 	-- Instantiate the Unit Under Test (UUT)
@@ -214,10 +216,10 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin
-		w1a(1) <= '0';
-		w1a(3) <= '0';
-		w1a(5) <= '0';
-		w1a(7) <= '0';
+		but_in(0) <= '0';
+		but_in(1) <= '0';
+		but_in(2) <= '0';
+		but_in(3) <= '0';
 		reset_ym_in <= '1';
       -- hold reset state for 100 ns.
       wait for 100 ns;	
@@ -228,10 +230,10 @@ BEGIN
 --		wait until rising_edge(clk);
       -- insert stimulus here
 
-		w1a(7) <= '1';
+		but_in(0) <= '1';
 --		wait for clk_period*15;
 		wait for 15 ms;
-		w1a(7) <= '0';
+		but_in(0) <= '0';
 --		wait for clk_period*55;
 
 --		w1a(7) <= '1';

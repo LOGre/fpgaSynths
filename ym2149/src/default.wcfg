@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/nico/hackerspace/fpga/git/fpgaSynths/ym2149/src/tb_top_but_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="tb_top_but" />
+            <top_module name="textio" />
+            <top_module name="vcomponents" />
+            <top_module name="vital_primitives" />
+            <top_module name="vital_timing" />
+            <top_module name="vpkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="30" />
+   <wvobject fp_name="/tb_top_but/uut/rx" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rx</obj_property>
+      <obj_property name="ObjectShortName">rx</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/tx" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">tx</obj_property>
+      <obj_property name="ObjectShortName">tx</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/w1a" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">w1a[15:0]</obj_property>
+      <obj_property name="ObjectShortName">w1a[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/w1b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">w1b[15:0]</obj_property>
+      <obj_property name="ObjectShortName">w1b[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/w2c" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">w2c[15:0]</obj_property>
+      <obj_property name="ObjectShortName">w2c[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/cnt32" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt32[2:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt32[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/ena32_4" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ena32_4</obj_property>
+      <obj_property name="ObjectShortName">ena32_4</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/ena32_8" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ena32_8</obj_property>
+      <obj_property name="ObjectShortName">ena32_8</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/ena32_16" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ena32_16</obj_property>
+      <obj_property name="ObjectShortName">ena32_16</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/bdir" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bdir</obj_property>
+      <obj_property name="ObjectShortName">bdir</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/bc1" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bc1</obj_property>
+      <obj_property name="ObjectShortName">bc1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/reset_ym_loc" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reset_ym_loc</obj_property>
+      <obj_property name="ObjectShortName">reset_ym_loc</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/reset_ym_serctrl" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reset_ym_serctrl</obj_property>
+      <obj_property name="ObjectShortName">reset_ym_serctrl</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/reset_ym_ymctrl" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reset_ym_ymctrl</obj_property>
+      <obj_property name="ObjectShortName">reset_ym_ymctrl</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/da" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">da[7:0]</obj_property>
+      <obj_property name="ObjectShortName">da[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/audio" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">audio[7:0]</obj_property>
+      <obj_property name="ObjectShortName">audio[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/ready" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ready</obj_property>
+      <obj_property name="ObjectShortName">ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/latch" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">latch</obj_property>
+      <obj_property name="ObjectShortName">latch</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/dat" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">dat[7:0]</obj_property>
+      <obj_property name="ObjectShortName">dat[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/buffer_data_present" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">buffer_data_present</obj_property>
+      <obj_property name="ObjectShortName">buffer_data_present</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/read_buffer" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">read_buffer</obj_property>
+      <obj_property name="ObjectShortName">read_buffer</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/buthi" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">buthi[3:0]</obj_property>
+      <obj_property name="ObjectShortName">buthi[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/butlo" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">butlo[3:0]</obj_property>
+      <obj_property name="ObjectShortName">butlo[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/ledhi" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ledhi[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ledhi[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/ledlo" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ledlo[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ledlo[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/buffer_half_full" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">buffer_half_full</obj_property>
+      <obj_property name="ObjectShortName">buffer_half_full</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/buffer_full" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">buffer_full</obj_property>
+      <obj_property name="ObjectShortName">buffer_full</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top_but/uut/pwm_out" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">pwm_out</obj_property>
+      <obj_property name="ObjectShortName">pwm_out</obj_property>
+   </wvobject>
+</wave_config>

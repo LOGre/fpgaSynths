@@ -1,8 +1,8 @@
 INTSTYLE=ise
-INFILE=C:\nico\msys\home\sauzeden\git\fpgaSynths\src\aaatop.ncd
-OUTFILE=C:\nico\msys\home\sauzeden\git\fpgaSynths\src\aaatop.bit
+INFILE=C:\nico\hackerspace\fpga\git\fpgaSynths\ym2149\src\aaatop.ncd
+OUTFILE=C:\nico\hackerspace\fpga\git\fpgaSynths\ym2149\src\aaatop.bit
 FAMILY=Spartan3E
 PART=xc3s500e-4vq100
-WORKINGDIR=C:\nico\msys\home\sauzeden\git\fpgaSynths\src
+WORKINGDIR=C:\nico\hackerspace\fpga\git\fpgaSynths\ym2149\src
 LICENSE=WebPack
 USER_INFO=0_0_219
