@@ -85,9 +85,9 @@ begin
 		AUDIO_OUT => audio_out,
 		--
 		PIN       => (others => '0'), 
-		ENA       => ena_1_5M,	
---		CLK       => ena32_2
-		CLK       => clk
+		ENA       => ena_1_5M,
+		CLK       => ena32_4
+--		CLK       => clk
 	);
 	
 	pokeyctrl0 : entity work.pokeyctrl Port map( 
@@ -98,8 +98,8 @@ begin
 		cs_out => cs,
 		cs_l_out	=> cs_l,
 		enable_out => ena_1_5M,
---		clk => ena32_2,
-		clk => clk,
+		clk => ena32_4,
+--		clk => clk,
 		data_in => data_in,
 		latch_in => latch_in,
 --		reset_in => reset_in,
