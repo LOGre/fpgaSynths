@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2011-03-17T02:08:20</DateModified>
+  <DateModified>2011-03-17T02:19:24</DateModified>
   <ModuleName>aaatop</ModuleName>
-  <SummaryTimeStamp>2011-03-17T02:07:43</SummaryTimeStamp>
+  <SummaryTimeStamp>2011-03-17T02:18:35</SummaryTimeStamp>
   <SavedFilePath>C:/nico/hackerspace/fpga/git/fpgaSynths/ym2149/src/iseconfig/aaatop.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>C:/nico/hackerspace/fpga/git/fpgaSynths/ym2149/src</ImplementationReportsDirectory>
+  <ImplementationReportsDirectory>C:/nico/hackerspace/fpga/git/fpgaSynths/ym2149/src\</ImplementationReportsDirectory>
   <DateInitialized>2011-03-17T02:06:30</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>
