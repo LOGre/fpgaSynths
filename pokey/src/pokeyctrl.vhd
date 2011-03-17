@@ -37,14 +37,14 @@ Port (
 	-- input signals	
 	data_in 		: in  STD_LOGIC_VECTOR (7 downto 0);
 	latch_in 	: in  STD_LOGIC;
-	reset_in 	: in  STD_LOGIC;
+--	reset_in 	: in  STD_LOGIC;
 	ready_out 	: out  STD_LOGIC
 	);
 end pokeyctrl ;
 
 architecture Behavioral of pokeyctrl is
 
-	constant CNTLEN : integer := 3;
+	constant CNTLEN : integer := 1;
 	
 	-- 1 cycle@1.77 Mhz => 565ns
 	constant TRWS : integer := 1; -- min 130 ns
@@ -59,20 +59,22 @@ architecture Behavioral of pokeyctrl is
 	
 	type s_t is
 	(
-		s_init, 
+		s_waitaddr, 
 		s_setaddr,
-		s_setdata
+		s_waitdata,
+		s_setdata,
+		s_write
 	);
 	
 	-- ctrl signals
-	signal stP,stN 		: s_t := s_reset;
-	signal resetP,resetN : std_logic := '1';
+	signal stP,stN 		: s_t := s_waitaddr;
+--	signal resetP,resetN : std_logic := '1';
 	signal readyP,readyN : std_logic := '0';
 	signal cnt : unsigned(CNTLEN-1 downto 0) := to_unsigned(0,CNTLEN);
 	
 	-- Pokey signals
 	signal csP,csN 		: std_logic := '0';
-	signal cslP,cslN 		: std_logic := '0';	
+	signal cslP,cslN 		: std_logic := '1';	
 	signal enaP,enaN 		: std_logic := '0';	
 	signal rwlP,rwlN		: std_logic := '0';
 	signal daP,daN 		: std_logic_vector(7 downto 0) := (others => '0');	
@@ -80,7 +82,6 @@ architecture Behavioral of pokeyctrl is
 
 begin
 	ready_out 	<= readyP;
-	
 	cs_out 		<= csP;
 	cs_l_out 	<= cslP;
 	rw_l_out 	<= rwlP;
@@ -88,7 +89,7 @@ begin
 	data_out 	<= daP;
 	addr_out		<= addrP;
 
-	process (stP,latch_in,reset_in,data_in,cnt,readyP,csP,cslP,rwlP,enaP,daP,addrP)
+	process (stP,latch_in,data_in,cnt,readyP,csP,cslP,rwlP,enaP,daP,addrP)
 	begin
 		readyN 	<= readyP;
 		csN 		<= csP;
@@ -98,21 +99,61 @@ begin
 		addrN		<=	addrP;
 		enaN		<=	enaP;
 		stN 		<= stP;
-		
 		case stP is
-			when s_init =>
+			when s_waitaddr =>
+				enaN <= '1';
+				rwlN <= '0';
+				cslN <= '1';
+				csN <= '0';
+				addrN <= x"f";
+				daN <= x"ff";
+				readyN <= '1';
+				if latch_in='1' then
+					addrN <= data_in(3 downto 0);
+					stN <= s_setaddr;
+					readyN <= '0';
+				end if;
 			when s_setaddr =>
+				if latch_in='0' then
+					stN <= s_waitdata;
+					readyN <= '1';
+				end if;
+			when s_waitdata =>
+				if latch_in='1' then
+					daN <= data_in;
+					stN <= s_setdata;
+					readyN <= '0';
+				end if;
 			when s_setdata =>
+				if latch_in='0' then
+					cslN <= '0';
+					csN <= '1';
+					stN <= s_write;
+				end if;
+			when s_write =>
+				if cnt=TDHW then
+					cslN <= '1';
+					csN <= '0';
+					stN <= s_waitaddr;
+				end if;
 		end case;
 	end process;
 	
 	process(clk)
 	begin
 		if rising_edge(clk) then
+			cnt <= (others => '0');
 			case stN is
-			when s_init =>
-			when s_setaddr =>
-			when s_setdata =>
+				when s_waitaddr =>
+				when s_setaddr =>
+				when s_waitdata =>
+				when s_setdata =>
+				when s_write =>
+					if cnt=TDHW then
+						cnt <= (others => '0');
+					else
+						cnt <= cnt + 1;
+					end if;
 			end case;
 		end if;
 	end process;
@@ -121,7 +162,6 @@ begin
 	begin
 		if rising_edge( clk) then
 			readyP 	<= readyN;
-			bdirP		<= csN;
 			csP 		<= csN;
 			cslP 		<= cslN;
 			rwlP 		<= rwlN;
