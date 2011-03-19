@@ -148,11 +148,15 @@ begin
     if clk'event and clk='1' then
       if clock178Mhz_count=27 then
          clock178Mhz_count <= 0;
-         clock178Mhz <= '1';
        else
          clock178Mhz_count <= clock178Mhz_count + 1;
-         clock178Mhz <= '0';
       end if;
+		
+		if clock178Mhz_count > 13 then
+			clock178Mhz <= '0';
+		else
+			clock178Mhz <= '1';
+		end if;
     end if;
   end process clock178Mhz_timer;	
 

@@ -40,8 +40,6 @@ ARCHITECTURE behavior OF tb_top IS
     PORT(
          rx : IN  std_logic;
          tx : INOUT  std_logic;
-         W1A : INOUT  std_logic_vector(15 downto 0);
-         W1B : INOUT  std_logic_vector(15 downto 0);
          W2C : INOUT  std_logic_vector(15 downto 0);
          clk : IN  std_logic
         );
@@ -54,23 +52,20 @@ ARCHITECTURE behavior OF tb_top IS
 
 	--BiDirs
    signal tx : std_logic;
-   signal W1A : std_logic_vector(15 downto 0);
-   signal W1B : std_logic_vector(15 downto 0);
    signal W2C : std_logic_vector(15 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 31.25 ns;
+   constant clk_period : time := 20.0 ns;
  
 signal data : std_logic_vector(7 downto 0) := (others => '0');
 signal write_buffer : std_logic := '0';
 BEGIN
+	w2c(0) <= 'Z';
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: aaatop PORT MAP (
           rx => rx,
           tx => tx,
-          W1A => W1A,
-          W1B => W1B,
           W2C => W2C,
           clk => clk
         );

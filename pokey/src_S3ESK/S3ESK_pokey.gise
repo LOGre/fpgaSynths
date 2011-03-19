@@ -23,8 +23,76 @@
 
   <files xmlns="http://www.xilinx.com/XMLSchema">
     <file xil_pn:fileType="FILE_NCD" xil_pn:name="aaatop_guide.ncd" xil_pn:origination="imported"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="fuse.log"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="isim"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_CMD" xil_pn:name="isim.cmd"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_top_beh.prj"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_top_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="tb_top_isim_beh.wdb"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_top_stx_beh.prj"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_INI" xil_pn:name="xilinxsim.ini"/>
   </files>
 
-  <transforms xmlns="http://www.xilinx.com/XMLSchema"/>
+  <transforms xmlns="http://www.xilinx.com/XMLSchema">
+    <transform xil_pn:end_ts="1300521351" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1300521350">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1300521382" xil_pn:in_ck="9074696087039215220" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1300521381">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="aaatop.vhd"/>
+      <outfile xil_pn:name="bbfifo_16x8.vhd"/>
+      <outfile xil_pn:name="kcuart_rx.vhd"/>
+      <outfile xil_pn:name="kcuart_tx.vhd"/>
+      <outfile xil_pn:name="pokey.vhd"/>
+      <outfile xil_pn:name="pokeyctrl.vhd"/>
+      <outfile xil_pn:name="serctrl.vhd"/>
+      <outfile xil_pn:name="tb_top.vhd"/>
+      <outfile xil_pn:name="uart_rx.vhd"/>
+      <outfile xil_pn:name="uart_tx.vhd"/>
+    </transform>
+    <transform xil_pn:end_ts="1300521384" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-7706503539676172834" xil_pn:start_ts="1300521384">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1300521384" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-7252977362691111072" xil_pn:start_ts="1300521384">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1300521384" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="-2444541307378366655" xil_pn:start_ts="1300521384">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1300521384" xil_pn:in_ck="9074696087039215220" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1300521384">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="aaatop.vhd"/>
+      <outfile xil_pn:name="bbfifo_16x8.vhd"/>
+      <outfile xil_pn:name="kcuart_rx.vhd"/>
+      <outfile xil_pn:name="kcuart_tx.vhd"/>
+      <outfile xil_pn:name="pokey.vhd"/>
+      <outfile xil_pn:name="pokeyctrl.vhd"/>
+      <outfile xil_pn:name="serctrl.vhd"/>
+      <outfile xil_pn:name="tb_top.vhd"/>
+      <outfile xil_pn:name="uart_rx.vhd"/>
+      <outfile xil_pn:name="uart_tx.vhd"/>
+    </transform>
+    <transform xil_pn:end_ts="1300521388" xil_pn:in_ck="9074696087039215220" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="513286826207587582" xil_pn:start_ts="1300521384">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="fuse.log"/>
+      <outfile xil_pn:name="isim"/>
+      <outfile xil_pn:name="tb_top_beh.prj"/>
+      <outfile xil_pn:name="tb_top_isim_beh.exe"/>
+      <outfile xil_pn:name="xilinxsim.ini"/>
+    </transform>
+    <transform xil_pn:end_ts="1300521388" xil_pn:in_ck="-7308952277425499241" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-5804122929282523029" xil_pn:start_ts="1300521388">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="isim.cmd"/>
+      <outfile xil_pn:name="tb_top_isim_beh.wdb"/>
+    </transform>
+  </transforms>
 
 </generated_project>

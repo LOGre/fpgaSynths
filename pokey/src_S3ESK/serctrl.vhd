@@ -105,16 +105,17 @@ signal read_bufferP,read_bufferN : std_logic := '0';
 signal datP,datN : STD_LOGIC_VECTOR (7 downto 0) := (others => '0');
 signal latchP,latchN : std_logic := '0';
 signal ledP,ledN : std_logic_vector(3 downto 0) := (others => '0');
---signal cnt : unsigned(3 downto 0) := to_unsigned(0,4);
+signal cntP,cntN : unsigned(3 downto 0) := to_unsigned(0,4);
 begin
 	read_buffer_out <= read_bufferP;
 --	reset_out <= reset_in;
 	dat_out <= datP;
 	latch_out <= latchP;
 	led_out <= ledP;
+--	led_out <= std_logic_vector(cnt);
 
 	process(
---	cnt,
+	cntP,
 	data_in,ledP,buffer_data_present_in,ready_in,stP,latchP,datP,read_bufferP)
 	begin
 		read_bufferN <= read_bufferP;
@@ -123,9 +124,10 @@ begin
 		stN <= stP;
 		ledN <= ledP;
 --		ledN <= std_logic_vector(cnt);
+		cntN <= cntP;
 		case stP is
 			when s_wait =>
-				ledN <= x"1";
+--				ledN <= x"1";
 				read_bufferN <= '0';
 				datN <= (others => '0');
 				latchN <= '0';
@@ -141,23 +143,39 @@ begin
 --						datN <= x"0a";
 --					else
 --						stN <= s_skip;
---						cnt <= cnt+1;
+						cntN <= cntP+1;
 --					end if;
+--					ledN <= std_logic_vector(unsigned(ledP) + 1);
 					datN <= data_in;
+					read_bufferN <= '1';
 				end if;
 			when s_read =>
+		if datP=x"00" and cntP=1 then
+			ledN <= x"1";
+		elsif datP=x"90" and cntP=2 then
+			ledN <= x"2";
+		elsif datP=x"01" and cntP=3 then
+			ledN <= x"3";
+		elsif datP=x"AF" and cntP=4 then
+			ledN <= x"4";
+		elsif datP=x"08" and cntP=5 then
+			ledN <= x"5";
+		elsif datP=x"00" and cntP=6 then
+			ledN <= x"6";
+		else
+--			ledN <= x"F";
+		end if;
 --				ledN <= x"2";
 				read_bufferN <= '0';
 				if ready_in='1' then
-					read_bufferN <= '1';
 					latchN <= '1';
 					stN <= s_write;
 				end if;
 			when s_write =>
 --				ledN <= x"4";
+				read_bufferN <= '0';
 				if ready_in='1' then
-					read_bufferN <= '0';
-					latchN <= '1';
+--					latchN <= '1';
 				else
 					latchN <= '0';
 					stN <= s_wait;
@@ -176,6 +194,7 @@ begin
 			latchP <= latchN;
 			stP <= stN;
 			ledP <= ledN;
+			cntP <= cntN;
 		end if;
 	end process;
 
