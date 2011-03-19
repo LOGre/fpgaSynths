@@ -49,13 +49,15 @@ ARCHITECTURE behavior OF tb_top IS
    --Inputs
    signal rx : std_logic := '0';
    signal clk : std_logic := '0';
-
+	
 	--BiDirs
    signal tx : std_logic;
    signal W2C : std_logic_vector(15 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 20.0 ns;
+	signal clk_tx_count : integer range 0 to 26 :=0;
+	signal en_16_x_baud : std_logic;	
  
 signal data : std_logic_vector(7 downto 0) := (others => '0');
 signal write_buffer : std_logic := '0';
@@ -74,7 +76,7 @@ BEGIN
 		data_in => data,
 		write_buffer => write_buffer,
 		reset_buffer => '0',
-		en_16_x_baud => '1',
+		en_16_x_baud => en_16_x_baud,
 		serial_out => rx,
 		buffer_full => open,
 		buffer_half_full => open,
@@ -90,6 +92,19 @@ BEGIN
 		wait for clk_period/2;
    end process;
  
+    -- Clock process definitions
+   clk_tx: process(clk)
+   begin
+    if clk'event and clk='1' then
+      if clk_tx_count=26 then
+         clk_tx_count <= 0;
+         en_16_x_baud <= '1';
+       else
+         clk_tx_count <= clk_tx_count + 1;
+         en_16_x_baud <= '0';
+      end if;
+    end if;
+   end process clk_tx;
 
    -- Stimulus process
    stim_proc: process
@@ -97,7 +112,6 @@ BEGIN
       -- hold reset state for 100 ns.
       wait for 100 ns;	
 
-      wait for clk_period*10;
 
       -- insert stimulus here 
 		data <= x"00";
