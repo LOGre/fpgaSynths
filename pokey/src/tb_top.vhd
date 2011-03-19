@@ -64,6 +64,8 @@ ARCHITECTURE behavior OF tb_top IS
 signal data : std_logic_vector(7 downto 0) := (others => '0');
 signal write_buffer : std_logic := '0';
 BEGIN
+	w1a <= (others => 'Z');
+	w2c(0) <= 'Z';
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: aaatop PORT MAP (

@@ -1,0 +1,17 @@
+ISim log file
+Running: C:\nico\hackerspace\fpga\git\fpgaSynths\pokey\src\tb_top_isim_beh.exe -gui -tclbatch isim.cmd -view C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/default.wcfg -wdb C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/tb_top_isim_beh.wdb 
+ISim M.70d (signature 0x36e8438f)
+WARNING: A WEBPACK license was found.
+WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
+WARNING: ISim will run in Lite mode. Please refer to the ISim documentation for more information on the differences between the Lite and the Full version.
+This is a Lite version of ISim.
+Time resolution is 1 ps
+# onerror resume
+# run 1000 ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+at 359375 ps(3), Instance /tb_top/uut/POKEYinst/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+# run 1000.00us
+# run 1000.00us
+# run 1000.00us
+# run 1000.00us

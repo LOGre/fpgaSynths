@@ -1,0 +1,16 @@
+EN aaatop NULL C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/aaatop.vhd sub00/vhpl14 1300497275
+AR pokey rtl C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/pokey.vhd sub00/vhpl07 1300497268
+AR bbfifo_16x8 low_level_definition C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/bbfifo_16x8.vhd sub00/vhpl03 1300497264
+AR serctrl behavioral C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/serctrl.vhd sub00/vhpl11 1300497272
+AR pokeyctrl behavioral C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/pokeyctrl.vhd sub00/vhpl09 1300497270
+AR wingbutled behavioral C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/wingbutled.vhd sub00/vhpl05 1300497266
+EN pokeyctrl NULL C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/pokeyctrl.vhd sub00/vhpl08 1300497269
+AR uart_rx macro_level_definition C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/uart_rx.vhd sub00/vhpl13 1300497274
+AR aaatop behavioral C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/aaatop.vhd sub00/vhpl15 1300497276
+EN serctrl NULL C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/serctrl.vhd sub00/vhpl10 1300497271
+EN wingbutled NULL C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/wingbutled.vhd sub00/vhpl04 1300497265
+EN kcuart_rx NULL C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/kcuart_rx.vhd sub00/vhpl00 1300497261
+EN pokey NULL C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/pokey.vhd sub00/vhpl06 1300497267
+EN bbfifo_16x8 NULL C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/bbfifo_16x8.vhd sub00/vhpl02 1300497263
+EN uart_rx NULL C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/uart_rx.vhd sub00/vhpl12 1300497273
+AR kcuart_rx low_level_definition C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/kcuart_rx.vhd sub00/vhpl01 1300497262

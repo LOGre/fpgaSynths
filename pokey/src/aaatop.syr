@@ -1,0 +1,852 @@
+Release 12.3 - xst M.70d (nt)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.84 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.84 secs
+ 
+--> Reading design: aaatop.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "aaatop.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "aaatop"
+Output Format                      : NGC
+Target Device                      : xc3s500e-4-vq100
+
+---- Source Options
+Top Module Name                    : aaatop
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : Yes
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 24
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/kcuart_rx.vhd" in Library work.
+Architecture low_level_definition of Entity kcuart_rx is up to date.
+Compiling vhdl file "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/bbfifo_16x8.vhd" in Library work.
+Architecture low_level_definition of Entity bbfifo_16x8 is up to date.
+Compiling vhdl file "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/wingbutled.vhd" in Library work.
+Architecture behavioral of Entity wingbutled is up to date.
+Compiling vhdl file "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/pokey.vhd" in Library work.
+Architecture rtl of Entity pokey is up to date.
+Compiling vhdl file "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/pokeyctrl.vhd" in Library work.
+Architecture behavioral of Entity pokeyctrl is up to date.
+Compiling vhdl file "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/serctrl.vhd" in Library work.
+Architecture behavioral of Entity serctrl is up to date.
+Compiling vhdl file "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/uart_rx.vhd" in Library work.
+Architecture macro_level_definition of Entity uart_rx is up to date.
+Compiling vhdl file "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/aaatop.vhd" in Library work.
+Entity <aaatop> compiled.
+Entity <aaatop> (Architecture <behavioral>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <aaatop> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for entity <wingbutled> in library <work> (architecture <Behavioral>).
+
+Analyzing hierarchy for entity <POKEY> in library <work> (architecture <RTL>).
+
+Analyzing hierarchy for entity <pokeyctrl> in library <work> (architecture <Behavioral>).
+
+Analyzing hierarchy for entity <serctrl> in library <work> (architecture <Behavioral>).
+
+Analyzing hierarchy for entity <uart_rx> in library <work> (architecture <macro_level_definition>).
+
+Analyzing hierarchy for entity <kcuart_rx> in library <work> (architecture <low_level_definition>).
+
+Analyzing hierarchy for entity <bbfifo_16x8> in library <work> (architecture <low_level_definition>).
+
+WARNING:Xst:2591 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/kcuart_rx.vhd" line 331: attribute on instance <INIT> overrides generic/parameter on component. It is possible that simulator will not take this attribute into account.
+WARNING:Xst:2591 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/kcuart_rx.vhd" line 254: attribute on instance <INIT> overrides generic/parameter on component. It is possible that simulator will not take this attribute into account.
+WARNING:Xst:2591 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/bbfifo_16x8.vhd" line 257: attribute on instance <INIT> overrides generic/parameter on component. It is possible that simulator will not take this attribute into account.
+WARNING:Xst:2591 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/kcuart_rx.vhd" line 236: attribute on instance <INIT> overrides generic/parameter on component. It is possible that simulator will not take this attribute into account.
+WARNING:Xst:2591 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/bbfifo_16x8.vhd" line 158: attribute on instance <INIT> overrides generic/parameter on component. It is possible that simulator will not take this attribute into account.
+WARNING:Xst:2591 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/bbfifo_16x8.vhd" line 215: attribute on instance <INIT> overrides generic/parameter on component. It is possible that simulator will not take this attribute into account.
+WARNING:Xst:2591 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/bbfifo_16x8.vhd" line 226: attribute on instance <INIT> overrides generic/parameter on component. It is possible that simulator will not take this attribute into account.
+WARNING:Xst:2591 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/bbfifo_16x8.vhd" line 239: attribute on instance <INIT> overrides generic/parameter on component. It is possible that simulator will not take this attribute into account.
+WARNING:Xst:2591 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/kcuart_rx.vhd" line 141: attribute on instance <INIT> overrides generic/parameter on component. It is possible that simulator will not take this attribute into account.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <aaatop> in library <work> (Architecture <behavioral>).
+WARNING:Xst:753 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/aaatop.vhd" line 63: Unconnected output port 'buttons' of component 'wingbutled'.
+WARNING:Xst:753 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/aaatop.vhd" line 91: Unconnected output port 'DOUT' of component 'POKEY'.
+WARNING:Xst:753 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/aaatop.vhd" line 91: Unconnected output port 'DOUT_OE_L' of component 'POKEY'.
+WARNING:Xst:753 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/aaatop.vhd" line 136: Unconnected output port 'buffer_full' of component 'uart_rx'.
+WARNING:Xst:753 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/aaatop.vhd" line 136: Unconnected output port 'buffer_half_full' of component 'uart_rx'.
+Entity <aaatop> analyzed. Unit <aaatop> generated.
+
+Analyzing Entity <wingbutled> in library <work> (Architecture <Behavioral>).
+Entity <wingbutled> analyzed. Unit <wingbutled> generated.
+
+Analyzing Entity <POKEY> in library <work> (Architecture <RTL>).
+WARNING:Xst:819 - "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/pokey.vhd" line 328: One or more signals are missing in the process sensitivity list. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+   <pot_fin>
+Entity <POKEY> analyzed. Unit <POKEY> generated.
+
+Analyzing Entity <pokeyctrl> in library <work> (Architecture <Behavioral>).
+Entity <pokeyctrl> analyzed. Unit <pokeyctrl> generated.
+
+Analyzing Entity <serctrl> in library <work> (Architecture <Behavioral>).
+Entity <serctrl> analyzed. Unit <serctrl> generated.
+
+Analyzing Entity <uart_rx> in library <work> (Architecture <macro_level_definition>).
+Entity <uart_rx> analyzed. Unit <uart_rx> generated.
+
+Analyzing Entity <kcuart_rx> in library <work> (Architecture <low_level_definition>).
+    Set user-defined property "INIT =  0" for instance <sync_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <stop_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <data_loop[0].lsbs.delay15_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <data_loop[0].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <data_loop[1].lsbs.delay15_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <data_loop[1].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <data_loop[2].lsbs.delay15_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <data_loop[2].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <data_loop[3].lsbs.delay15_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <data_loop[3].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <data_loop[4].lsbs.delay15_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <data_loop[4].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <data_loop[5].lsbs.delay15_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <data_loop[5].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <data_loop[6].lsbs.delay15_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <data_loop[6].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <data_loop[7].msb.delay15_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <data_loop[7].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <start_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <start_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <edge_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <edge_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0040" for instance <valid_lut> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <valid_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  54" for instance <purge_lut> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <purge_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <valid_loop[0].lsb.delay15_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <valid_loop[0].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <valid_loop[1].msbs.delay16_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <valid_loop[1].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <valid_loop[2].msbs.delay16_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <valid_loop[2].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <valid_loop[3].msbs.delay16_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <valid_loop[3].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <valid_loop[4].msbs.delay16_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <valid_loop[4].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <valid_loop[5].msbs.delay16_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <valid_loop[5].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <valid_loop[6].msbs.delay16_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <valid_loop[6].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <valid_loop[7].msbs.delay16_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <valid_loop[7].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0000" for instance <valid_loop[8].msbs.delay16_srl> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <valid_loop[8].data_reg> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  8" for instance <strobe_lut> in unit <kcuart_rx>.
+    Set user-defined property "INIT =  0" for instance <strobe_reg> in unit <kcuart_rx>.
+Entity <kcuart_rx> analyzed. Unit <kcuart_rx> generated.
+
+Analyzing Entity <bbfifo_16x8> in library <work> (Architecture <low_level_definition>).
+    Set user-defined property "INIT =  0000" for instance <data_width_loop[0].data_srl> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0000" for instance <data_width_loop[1].data_srl> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0000" for instance <data_width_loop[2].data_srl> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0000" for instance <data_width_loop[3].data_srl> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0000" for instance <data_width_loop[4].data_srl> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0000" for instance <data_width_loop[5].data_srl> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0000" for instance <data_width_loop[6].data_srl> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0000" for instance <data_width_loop[7].data_srl> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0" for instance <count_width_loop[0].register_bit> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  6606" for instance <count_width_loop[0].count_lut> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0" for instance <count_width_loop[1].register_bit> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  6606" for instance <count_width_loop[1].count_lut> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0" for instance <count_width_loop[2].register_bit> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  6606" for instance <count_width_loop[2].count_lut> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0" for instance <count_width_loop[3].register_bit> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  6606" for instance <count_width_loop[3].count_lut> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0001" for instance <zero_lut> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  8000" for instance <full_lut> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  BFA0" for instance <dp_lut> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  0" for instance <dp_flop> in unit <bbfifo_16x8>.
+    Set user-defined property "INIT =  C4" for instance <valid_lut> in unit <bbfifo_16x8>.
+Entity <bbfifo_16x8> analyzed. Unit <bbfifo_16x8> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+INFO:Xst:2561 - Always blocking tristate driving signal <io> in unit <wingbutled> is removed.
+INFO:Xst:2561 - Always blocking tristate driving signal <io> in unit <wingbutled> is removed.
+INFO:Xst:2561 - Always blocking tristate driving signal <io> in unit <wingbutled> is removed.
+INFO:Xst:2561 - Always blocking tristate driving signal <io> in unit <wingbutled> is removed.
+
+Synthesizing Unit <wingbutled>.
+    Related source file is "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/wingbutled.vhd".
+Unit <wingbutled> synthesized.
+
+
+Synthesizing Unit <POKEY>.
+    Related source file is "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/pokey.vhd".
+WARNING:Xst:646 - Signal <tone_gen_zero_t<1><7>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <tone_gen_zero_t<2><7>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <tone_gen_zero_t<3><7>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <tone_gen_zero_t<4><7>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <stimer> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:653 - Signal <skstat> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:646 - Signal <skres> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <skctls<7:3>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <serout> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:653 - Signal <serin> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:1780 - Signal <poly_sel_hp_reg<4:3>> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:653 - Signal <kbcode> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:653 - Signal <irqst> is used but never assigned. This sourceless signal will be automatically connected to value 00000000.
+WARNING:Xst:646 - Signal <irqen> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Found 8-bit register for signal <AUDIO_OUT>.
+    Found 32-bit register for signal <audc>.
+    Found 8-bit register for signal <audctl>.
+    Found 32-bit register for signal <audf>.
+    Found 4-bit register for signal <chan_done_load>.
+    Found 7-bit down counter for signal <cnt_15k>.
+    Found 5-bit down counter for signal <cnt_64k>.
+    Found 1-bit register for signal <ena_15k>.
+    Found 1-bit register for signal <ena_64k>.
+    Found 8-bit register for signal <pin_reg>.
+    Found 17-bit register for signal <poly17>.
+    Found 1-bit xor3 for signal <poly17$xor0000> created at line 197.
+    Found 4-bit register for signal <poly4>.
+    Found 1-bit xor2 for signal <poly4$xor0000> created at line 187.
+    Found 5-bit register for signal <poly5>.
+    Found 1-bit xor2 for signal <poly5$xor0000> created at line 188.
+    Found 9-bit register for signal <poly9>.
+    Found 1-bit xor3 for signal <poly9$xor0000> created at line 193.
+    Found 1-bit xor2 for signal <poly_sel_hp_1$xor0000> created at line 494.
+    Found 1-bit xor2 for signal <poly_sel_hp_2$xor0000> created at line 498.
+    Found 2-bit register for signal <poly_sel_hp_reg<2:1>>.
+    Found 4-bit register for signal <poly_sel_hp_t1>.
+    Found 8-bit up counter for signal <pot_cnt>.
+    Found 1-bit register for signal <pot_fin>.
+    Found 64-bit register for signal <pot_val>.
+    Found 1-bit register for signal <potgo>.
+    Found 8-bit register for signal <skctls>.
+    Found 5-bit adder for signal <sum$add0000> created at line 545.
+    Found 5-bit adder for signal <sum$add0001> created at line 546.
+    Found 6-bit adder for signal <sum$add0002> created at line 547.
+    Found 8-bit down counter for signal <tone_gen_cnt>.
+    Found 4-bit register for signal <tone_gen_div>.
+    Found 4-bit register for signal <tone_gen_final>.
+    Found 32-bit register for signal <tone_gen_zero_t>.
+    Summary:
+	inferred   7 Counter(s).
+	inferred 249 D-type flip-flop(s).
+	inferred   3 Adder/Subtractor(s).
+	inferred   2 Xor(s).
+Unit <POKEY> synthesized.
+
+
+Synthesizing Unit <pokeyctrl>.
+    Related source file is "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/pokeyctrl.vhd".
+    Found finite state machine <FSM_0> for signal <stP>.
+    -----------------------------------------------------------------------
+    | States             | 5                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 2                                              |
+    | Outputs            | 10                                             |
+    | Clock              | clk                       (rising_edge)        |
+    | Power Up State     | s_waitaddr                                     |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 4-bit register for signal <addrP>.
+    Found 1-bit register for signal <cnt<0>>.
+    Found 1-bit register for signal <cslP>.
+    Found 1-bit register for signal <csP>.
+    Found 8-bit register for signal <daP>.
+    Found 1-bit register for signal <enaP>.
+    Found 1-bit register for signal <readyP>.
+    Found 1-bit register for signal <rwlP>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  18 D-type flip-flop(s).
+Unit <pokeyctrl> synthesized.
+
+
+Synthesizing Unit <serctrl>.
+    Related source file is "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/serctrl.vhd".
+    Found finite state machine <FSM_1> for signal <stP>.
+    -----------------------------------------------------------------------
+    | States             | 3                                              |
+    | Transitions        | 6                                              |
+    | Inputs             | 2                                              |
+    | Outputs            | 4                                              |
+    | Clock              | clk                       (rising_edge)        |
+    | Power Up State     | s_wait                                         |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 4-bit up counter for signal <cntP>.
+    Found 8-bit register for signal <datP>.
+    Found 1-bit register for signal <latchP>.
+    Found 4-bit register for signal <ledP>.
+    Found 1-bit register for signal <read_bufferP>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   1 Counter(s).
+	inferred  14 D-type flip-flop(s).
+Unit <serctrl> synthesized.
+
+
+Synthesizing Unit <kcuart_rx>.
+    Related source file is "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/kcuart_rx.vhd".
+Unit <kcuart_rx> synthesized.
+
+
+Synthesizing Unit <bbfifo_16x8>.
+    Related source file is "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/bbfifo_16x8.vhd".
+Unit <bbfifo_16x8> synthesized.
+
+
+Synthesizing Unit <uart_rx>.
+    Related source file is "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/uart_rx.vhd".
+Unit <uart_rx> synthesized.
+
+
+Synthesizing Unit <aaatop>.
+    Related source file is "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/aaatop.vhd".
+WARNING:Xst:2565 - Inout <W1A<8>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<9>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<10>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<11>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<12>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<13>> is never assigned.
+WARNING:Xst:2565 - Inout <W1B<13>> is never assigned.
+WARNING:Xst:2565 - Inout <W1B<14>> is never assigned.
+WARNING:Xst:2565 - Inout <W1B<15>> is never assigned.
+WARNING:Xst:2565 - Inout <tx> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<0>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<1>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<2>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<3>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<4>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<5>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<6>> is never assigned.
+WARNING:Xst:2565 - Inout <W1A<7>> is never assigned.
+WARNING:Xst:646 - Signal <ena32_8> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <ena32_2> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <ena32_16> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Found 4-bit up counter for signal <cnt32>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <aaatop> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 3
+ 5-bit adder                                           : 2
+ 6-bit adder                                           : 1
+# Counters                                             : 9
+ 4-bit up counter                                      : 2
+ 5-bit down counter                                    : 1
+ 7-bit down counter                                    : 1
+ 8-bit down counter                                    : 4
+ 8-bit up counter                                      : 1
+# Registers                                            : 59
+ 1-bit register                                        : 26
+ 17-bit register                                       : 1
+ 4-bit register                                        : 4
+ 5-bit register                                        : 1
+ 8-bit register                                        : 26
+ 9-bit register                                        : 1
+# Xors                                                 : 6
+ 1-bit xor2                                            : 4
+ 1-bit xor3                                            : 2
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_1> for best encoding.
+Optimizing FSM <serctrl0/stP/FSM> on signal <stP[1:2]> with gray encoding.
+---------------------
+ State   | Encoding
+---------------------
+ s_wait  | 00
+ s_read  | 01
+ s_write | 11
+---------------------
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <pokeyctrl0/stP/FSM> on signal <stP[1:3]> with user encoding.
+------------------------
+ State      | Encoding
+------------------------
+ s_waitaddr | 000
+ s_setaddr  | 001
+ s_waitdata | 010
+ s_setdata  | 011
+ s_write    | 100
+------------------------
+INFO:Xst:2261 - The FF/Latch <AUDIO_OUT_0> in Unit <POKEYinst> is equivalent to the following 2 FFs/Latches, which will be removed : <AUDIO_OUT_1> <AUDIO_OUT_2> 
+WARNING:Xst:1426 - The value init of the FF/Latch enaP hinder the constant cleaning in the block pokeyctrl0.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1293 - FF/Latch <rwlP> has a constant value of 0 in block <pokeyctrl0>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <ledP_3> has a constant value of 0 in block <serctrl0>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:2677 - Node <skctls_2> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <skctls_3> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <skctls_4> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <skctls_5> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <skctls_6> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <skctls_7> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_1_6> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_1_7> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_3_6> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_3_7> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_2_6> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_2_7> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_4_6> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_4_7> of sequential type is unconnected in block <POKEYinst>.
+WARNING:Xst:2404 -  FFs/Latches <pin_reg<7:0>> (without init value) have a constant value of 0 in block <POKEY>.
+WARNING:Xst:2677 - Node <skctls_3> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <skctls_4> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <skctls_5> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <skctls_6> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <skctls_7> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_1_6> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_1_7> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_2_6> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_2_7> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_3_6> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_3_7> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_4_6> of sequential type is unconnected in block <POKEY>.
+WARNING:Xst:2677 - Node <tone_gen_zero_t_4_7> of sequential type is unconnected in block <POKEY>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 2
+# Adders/Subtractors                                   : 3
+ 5-bit adder                                           : 2
+ 6-bit adder                                           : 1
+# Counters                                             : 9
+ 4-bit up counter                                      : 2
+ 5-bit down counter                                    : 1
+ 7-bit down counter                                    : 1
+ 8-bit down counter                                    : 4
+ 8-bit up counter                                      : 1
+# Registers                                            : 289
+ Flip-Flops                                            : 289
+# Xors                                                 : 6
+ 1-bit xor2                                            : 4
+ 1-bit xor3                                            : 2
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch enaP hinder the constant cleaning in the block pokeyctrl.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1293 - FF/Latch <rwlP> has a constant value of 0 in block <pokeyctrl>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1293 - FF/Latch <ledP_3> has a constant value of 0 in block <serctrl>. This FF/Latch will be trimmed during the optimization process.
+INFO:Xst:2261 - The FF/Latch <AUDIO_OUT_0> in Unit <POKEY> is equivalent to the following 2 FFs/Latches, which will be removed : <AUDIO_OUT_1> <AUDIO_OUT_2> 
+INFO:Xst:2261 - The FF/Latch <pot_val_0_0> in Unit <POKEY> is equivalent to the following 7 FFs/Latches, which will be removed : <pot_val_1_0> <pot_val_2_0> <pot_val_3_0> <pot_val_4_0> <pot_val_5_0> <pot_val_6_0> <pot_val_7_0> 
+INFO:Xst:2261 - The FF/Latch <pot_val_0_1> in Unit <POKEY> is equivalent to the following 7 FFs/Latches, which will be removed : <pot_val_1_1> <pot_val_2_1> <pot_val_3_1> <pot_val_4_1> <pot_val_5_1> <pot_val_6_1> <pot_val_7_1> 
+INFO:Xst:2261 - The FF/Latch <pot_val_0_2> in Unit <POKEY> is equivalent to the following 7 FFs/Latches, which will be removed : <pot_val_1_2> <pot_val_2_2> <pot_val_3_2> <pot_val_4_2> <pot_val_5_2> <pot_val_6_2> <pot_val_7_2> 
+INFO:Xst:2261 - The FF/Latch <pot_val_0_3> in Unit <POKEY> is equivalent to the following 7 FFs/Latches, which will be removed : <pot_val_1_3> <pot_val_2_3> <pot_val_3_3> <pot_val_4_3> <pot_val_5_3> <pot_val_6_3> <pot_val_7_3> 
+INFO:Xst:2261 - The FF/Latch <pot_val_0_4> in Unit <POKEY> is equivalent to the following 7 FFs/Latches, which will be removed : <pot_val_1_4> <pot_val_2_4> <pot_val_3_4> <pot_val_4_4> <pot_val_5_4> <pot_val_6_4> <pot_val_7_4> 
+INFO:Xst:2261 - The FF/Latch <pot_val_0_5> in Unit <POKEY> is equivalent to the following 7 FFs/Latches, which will be removed : <pot_val_1_5> <pot_val_2_5> <pot_val_3_5> <pot_val_4_5> <pot_val_5_5> <pot_val_6_5> <pot_val_7_5> 
+INFO:Xst:2261 - The FF/Latch <pot_val_0_6> in Unit <POKEY> is equivalent to the following 7 FFs/Latches, which will be removed : <pot_val_1_6> <pot_val_2_6> <pot_val_3_6> <pot_val_4_6> <pot_val_5_6> <pot_val_6_6> <pot_val_7_6> 
+INFO:Xst:2261 - The FF/Latch <pot_val_0_7> in Unit <POKEY> is equivalent to the following 7 FFs/Latches, which will be removed : <pot_val_1_7> <pot_val_2_7> <pot_val_3_7> <pot_val_4_7> <pot_val_5_7> <pot_val_6_7> <pot_val_7_7> 
+WARNING:Xst:2677 - Node <cnt32_3> of sequential type is unconnected in block <aaatop>.
+
+Optimizing unit <aaatop> ...
+
+Optimizing unit <POKEY> ...
+
+Optimizing unit <pokeyctrl> ...
+
+Optimizing unit <serctrl> ...
+
+Optimizing unit <kcuart_rx> ...
+
+Optimizing unit <bbfifo_16x8> ...
+WARNING:Xst:2677 - Node <POKEYinst/pot_cnt_7> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_cnt_6> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_cnt_5> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_cnt_4> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_cnt_3> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_cnt_2> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_cnt_1> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_cnt_0> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_val_0_7> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_val_0_6> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_val_0_5> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_val_0_4> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_val_0_3> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_val_0_2> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_val_0_1> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_val_0_0> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/potgo> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/pot_fin> of sequential type is unconnected in block <aaatop>.
+WARNING:Xst:2677 - Node <POKEYinst/skctls_2> of sequential type is unconnected in block <aaatop>.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block aaatop, actual ratio is 4.
+
+Final Macro Processing ...
+
+Processing Unit <aaatop> :
+	Found 4-bit shift register for signal <POKEYinst/poly5_4>.
+	Found 2-bit shift register for signal <POKEYinst/poly4_2>.
+	Found 3-bit shift register for signal <POKEYinst/tone_gen_zero_t_4_5>.
+	Found 2-bit shift register for signal <POKEYinst/tone_gen_zero_t_4_2>.
+	Found 3-bit shift register for signal <POKEYinst/tone_gen_zero_t_3_5>.
+	Found 3-bit shift register for signal <POKEYinst/tone_gen_zero_t_3_2>.
+	Found 3-bit shift register for signal <POKEYinst/tone_gen_zero_t_2_5>.
+	Found 2-bit shift register for signal <POKEYinst/tone_gen_zero_t_2_2>.
+	Found 3-bit shift register for signal <POKEYinst/tone_gen_zero_t_1_5>.
+	Found 3-bit shift register for signal <POKEYinst/tone_gen_zero_t_1_2>.
+Unit <aaatop> processed.
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 246
+ Flip-Flops                                            : 246
+# Shift Registers                                      : 10
+ 2-bit shift register                                  : 3
+ 3-bit shift register                                  : 6
+ 4-bit shift register                                  : 1
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : aaatop.ngr
+Top Level Output File Name         : aaatop
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : No
+
+Design Statistics
+# IOs                              : 51
+
+Cell Usage :
+# BELS                             : 338
+#      GND                         : 1
+#      INV                         : 8
+#      LUT2                        : 38
+#      LUT2_D                      : 1
+#      LUT2_L                      : 2
+#      LUT3                        : 64
+#      LUT3_D                      : 6
+#      LUT3_L                      : 6
+#      LUT4                        : 117
+#      LUT4_D                      : 5
+#      LUT4_L                      : 6
+#      MULT_AND                    : 1
+#      MUXCY                       : 36
+#      MUXF5                       : 5
+#      VCC                         : 1
+#      XORCY                       : 41
+# FlipFlops/Latches                : 256
+#      FD                          : 69
+#      FDE                         : 153
+#      FDR                         : 10
+#      FDRE                        : 4
+#      FDRS                        : 6
+#      FDS                         : 10
+#      FDSE                        : 4
+# Shift Registers                  : 37
+#      SRL16                       : 10
+#      SRL16E                      : 27
+# Clock Buffers                    : 2
+#      BUFG                        : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 28
+#      IBUF                        : 1
+#      OBUF                        : 27
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s500evq100-4 
+
+ Number of Slices:                      190  out of   4656     4%  
+ Number of Slice Flip Flops:            256  out of   9312     2%  
+ Number of 4 input LUTs:                290  out of   9312     3%  
+    Number used as logic:               253
+    Number used as Shift registers:      37
+ Number of IOs:                          51
+ Number of bonded IOBs:                  29  out of     66    43%  
+ Number of GCLKs:                         2  out of     24     8%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 78    |
+cnt32_21                           | BUFG                   | 215   |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: 8.721ns (Maximum Frequency: 114.666MHz)
+   Minimum input arrival time before clock: 1.946ns
+   Maximum output required time after clock: 4.824ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 6.711ns (frequency: 149.009MHz)
+  Total number of paths / destination ports: 458 / 136
+-------------------------------------------------------------------------
+Delay:               6.711ns (Levels of Logic = 5)
+  Source:            serctrl0/datP_0 (FF)
+  Destination:       serctrl0/ledP_1 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: serctrl0/datP_0 to serctrl0/ledP_1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              8   0.591   0.932  serctrl0/datP_0 (serctrl0/datP_0)
+     LUT2_L:I0->LO         1   0.704   0.104  serctrl0/ledP_mux0000<2>11_SW0 (N52)
+     LUT4:I3->O            2   0.704   0.622  serctrl0/ledP_mux0000<2>11 (serctrl0/N15)
+     LUT4:I0->O            1   0.704   0.499  serctrl0/ledP_mux0000<2>20_SW0 (N105)
+     LUT4_L:I1->LO         1   0.704   0.135  serctrl0/ledP_mux0000<2>20 (serctrl0/ledP_mux0000<2>20)
+     LUT3:I2->O            1   0.704   0.000  serctrl0/ledP_mux0000<2>29 (serctrl0/ledP_mux0000<2>)
+     FDE:D                     0.308          serctrl0/ledP_1
+    ----------------------------------------
+    Total                      6.711ns (4.419ns logic, 2.292ns route)
+                                       (65.8% logic, 34.2% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'cnt32_21'
+  Clock period: 8.721ns (frequency: 114.666MHz)
+  Total number of paths / destination ports: 5155 / 357
+-------------------------------------------------------------------------
+Delay:               8.721ns (Levels of Logic = 6)
+  Source:            POKEYinst/audc_2_4 (FF)
+  Destination:       POKEYinst/AUDIO_OUT_7 (FF)
+  Source Clock:      cnt32_21 rising
+  Destination Clock: cnt32_21 rising
+
+  Data Path: POKEYinst/audc_2_4 to POKEYinst/AUDIO_OUT_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              5   0.591   0.712  POKEYinst/audc_2_4 (POKEYinst/audc_2_4)
+     LUT3_L:I1->LO         1   0.704   0.104  POKEYinst/Madd_sum_add0000_cy<1>1_SW0_SW0 (N95)
+     LUT4:I3->O            2   0.704   0.526  POKEYinst/Madd_sum_add0000_cy<1>1_SW0 (N54)
+     LUT3:I1->O            1   0.704   0.424  POKEYinst/Madd_sum_add0000_cy<2>11_SW0 (N86)
+     LUT4_D:I3->LO         1   0.704   0.104  POKEYinst/Madd_sum_add0000_cy<2>11 (N124)
+     LUT4:I3->O            0   0.704   0.000  POKEYinst/Madd_sum_add0002C21 (POKEYinst/Madd_sum_add0002C2)
+     MUXCY:DI->O           6   1.160   0.669  POKEYinst/Madd_sum_add0002_Madd_cy<4> (POKEYinst/Madd_sum_add0002_Madd_cy<4>)
+     FDRS:S                    0.911          POKEYinst/AUDIO_OUT_0
+    ----------------------------------------
+    Total                      8.721ns (6.182ns logic, 2.539ns route)
+                                       (70.9% logic, 29.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              1.946ns (Levels of Logic = 1)
+  Source:            rx (PAD)
+  Destination:       uart_rx0/kcuart/sync_reg (FF)
+  Destination Clock: clk rising
+
+  Data Path: rx to uart_rx0/kcuart/sync_reg
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   1.218   0.420  rx_IBUF (rx_IBUF)
+     FD:D                      0.308          uart_rx0/kcuart/sync_reg
+    ----------------------------------------
+    Total                      1.946ns (1.526ns logic, 0.420ns route)
+                                       (78.4% logic, 21.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'cnt32_21'
+  Total number of paths / destination ports: 22 / 22
+-------------------------------------------------------------------------
+Offset:              4.824ns (Levels of Logic = 1)
+  Source:            pokeyctrl0/cslP (FF)
+  Destination:       W1B<10> (PAD)
+  Source Clock:      cnt32_21 rising
+
+  Data Path: pokeyctrl0/cslP to W1B<10>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q              12   0.591   0.961  pokeyctrl0/cslP (pokeyctrl0/cslP)
+     OBUF:I->O                 3.272          W1B_10_OBUF (W1B<10>)
+    ----------------------------------------
+    Total                      4.824ns (3.863ns logic, 0.961ns route)
+                                       (80.1% logic, 19.9% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 3 / 3
+-------------------------------------------------------------------------
+Offset:              4.310ns (Levels of Logic = 1)
+  Source:            serctrl0/ledP_2 (FF)
+  Destination:       W2C<10> (PAD)
+  Source Clock:      clk rising
+
+  Data Path: serctrl0/ledP_2 to W2C<10>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              2   0.591   0.447  serctrl0/ledP_2 (serctrl0/ledP_2)
+     OBUF:I->O                 3.272          W2C_10_OBUF (W2C<10>)
+    ----------------------------------------
+    Total                      4.310ns (3.863ns logic, 0.447ns route)
+                                       (89.6% logic, 10.4% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 53.00 secs
+Total CPU time to Xst completion: 53.05 secs
+ 
+--> 
+
+Total memory usage is 155748 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :  104 (   0 filtered)
+Number of infos    :   14 (   0 filtered)
+

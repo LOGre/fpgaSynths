@@ -51,16 +51,31 @@ architecture Behavioral of aaatop is
 	signal ena32_4 : std_logic := '1';
 	signal ena32_8 : std_logic := '1';
 	signal ena32_16 : std_logic := '1';
+	signal pwm_out : std_logic := '0';
 begin
-	w2c(7 downto 0) <= data;
-	w2c(11 downto 8) <= addr;
-	w2c(15 downto 12) <= led;
+--	w2c(0) <= pwm_out;
+	w1a(15) <= pwm_out;
+	w1a(14) <= pwm_out;
+--	w1a(13 downto 0) <= (others => '0');
+	pwm_out <= audio_out(6);
+	w2c(7 downto 0) <= audio_out;
 	
-	w1b(0) <= ready_out;
-	w1b(1) <= ena_1_5M;
-	w1b(4 downto 2) <= cs_l & cs & rw_l;
+	wingbutled0 : entity work.wingbutled Port map(
+		io => w2c(15 downto 8),
+		buttons => open,
+		leds => led
+	);
+--	pwm : entity work.pwm Port map(
+--		input => audio_out,
+--		output => open,
+--		clk => clk
+--	);
+
+	w1b(12) <= ready_out;
+	w1b(11) <= ena_1_5M;
+	w1b(10 downto 8) <= cs_l & cs & rw_l;
 	
-	w1a(7 downto 0) <= audio_out;
+	w1b(7 downto 0) <= audio_out;
 
 	ena32_2 <= cnt32(3);
 	ena32_4 <= cnt32(2);
@@ -85,7 +100,8 @@ begin
 		AUDIO_OUT => audio_out,
 		--
 		PIN       => (others => '0'), 
-		ENA       => ena_1_5M,
+--		ENA       => ena_1_5M,
+		ENA       => '1',
 		CLK       => ena32_4
 --		CLK       => clk
 	);

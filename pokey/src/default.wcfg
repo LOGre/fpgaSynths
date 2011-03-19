@@ -18,105 +18,117 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="25" />
-   <wvobject fp_name="/tb_top/uut/rx" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">rx</obj_property>
-      <obj_property name="ObjectShortName">rx</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top/uut/tx" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">tx</obj_property>
-      <obj_property name="ObjectShortName">tx</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top/uut/w1a" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">w1a[15:0]</obj_property>
-      <obj_property name="ObjectShortName">w1a[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top/uut/w1b" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">w1b[15:0]</obj_property>
-      <obj_property name="ObjectShortName">w1b[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top/uut/w2c" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">w2c[15:0]</obj_property>
-      <obj_property name="ObjectShortName">w2c[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top/uut/clk" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top/uut/led" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">led[3:0]</obj_property>
-      <obj_property name="ObjectShortName">led[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top/uut/serdata" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">serdata[7:0]</obj_property>
-      <obj_property name="ObjectShortName">serdata[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top/uut/buffer_data_present" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">buffer_data_present</obj_property>
-      <obj_property name="ObjectShortName">buffer_data_present</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top/uut/read_buffer" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">read_buffer</obj_property>
-      <obj_property name="ObjectShortName">read_buffer</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_top/uut/data_in" type="array" db_ref_id="1">
+   <WVObjectSize size="28" />
+   <wvobject fp_name="/tb_top/uut/serctrl0/data_in" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">data_in[7:0]</obj_property>
       <obj_property name="ObjectShortName">data_in[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/latch_in" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">latch_in</obj_property>
-      <obj_property name="ObjectShortName">latch_in</obj_property>
+   <wvobject fp_name="/tb_top/uut/serctrl0/buffer_data_present_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">buffer_data_present_in</obj_property>
+      <obj_property name="ObjectShortName">buffer_data_present_in</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/ready_out" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">ready_out</obj_property>
-      <obj_property name="ObjectShortName">ready_out</obj_property>
+   <wvobject fp_name="/tb_top/uut/serctrl0/read_buffer_out" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">read_buffer_out</obj_property>
+      <obj_property name="ObjectShortName">read_buffer_out</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/addr" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">addr[3:0]</obj_property>
-      <obj_property name="ObjectShortName">addr[3:0]</obj_property>
+   <wvobject fp_name="/tb_top/uut/serctrl0/dat_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">dat_out[7:0]</obj_property>
+      <obj_property name="ObjectShortName">dat_out[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/data" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+   <wvobject fp_name="/tb_top/uut/serctrl0/latch_out" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">latch_out</obj_property>
+      <obj_property name="ObjectShortName">latch_out</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/rw_l" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">rw_l</obj_property>
-      <obj_property name="ObjectShortName">rw_l</obj_property>
+   <wvobject fp_name="/tb_top/uut/serctrl0/ready_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ready_in</obj_property>
+      <obj_property name="ObjectShortName">ready_in</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/cs" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">cs</obj_property>
-      <obj_property name="ObjectShortName">cs</obj_property>
+   <wvobject fp_name="/tb_top/uut/serctrl0/led_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">led_out[3:0]</obj_property>
+      <obj_property name="ObjectShortName">led_out[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/cs_l" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">cs_l</obj_property>
-      <obj_property name="ObjectShortName">cs_l</obj_property>
+   <wvobject fp_name="/tb_top/uut/serctrl0/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/ena_1_5m" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">ena_1_5m</obj_property>
-      <obj_property name="ObjectShortName">ena_1_5m</obj_property>
+   <wvobject fp_name="/tb_top/uut/serctrl0/stp" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">stp</obj_property>
+      <obj_property name="ObjectShortName">stp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/serctrl0/stn" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">stn</obj_property>
+      <obj_property name="ObjectShortName">stn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/serctrl0/read_bufferp" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">read_bufferp</obj_property>
+      <obj_property name="ObjectShortName">read_bufferp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/serctrl0/read_buffern" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">read_buffern</obj_property>
+      <obj_property name="ObjectShortName">read_buffern</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/serctrl0/datp" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">datp[7:0]</obj_property>
+      <obj_property name="ObjectShortName">datp[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/serctrl0/datn" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">datn[7:0]</obj_property>
+      <obj_property name="ObjectShortName">datn[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/serctrl0/latchp" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">latchp</obj_property>
+      <obj_property name="ObjectShortName">latchp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/serctrl0/latchn" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">latchn</obj_property>
+      <obj_property name="ObjectShortName">latchn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/serctrl0/ledp" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ledp[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ledp[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/serctrl0/ledn" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ledn[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ledn[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_top/uut/audio_out" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">audio_out[7:0]</obj_property>
       <obj_property name="ObjectShortName">audio_out[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/cnt32" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">cnt32[3:0]</obj_property>
-      <obj_property name="ObjectShortName">cnt32[3:0]</obj_property>
+   <wvobject fp_name="/tb_top/uut/pokeyctrl0/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/ena32_2" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">ena32_2</obj_property>
-      <obj_property name="ObjectShortName">ena32_2</obj_property>
+   <wvobject fp_name="/tb_top/uut/POKEYinst/addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">addr[3:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/ena32_4" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">ena32_4</obj_property>
-      <obj_property name="ObjectShortName">ena32_4</obj_property>
+   <wvobject fp_name="/tb_top/uut/POKEYinst/din" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">din[7:0]</obj_property>
+      <obj_property name="ObjectShortName">din[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/ena32_8" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">ena32_8</obj_property>
-      <obj_property name="ObjectShortName">ena32_8</obj_property>
+   <wvobject fp_name="/tb_top/uut/POKEYinst/rw_l" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rw_l</obj_property>
+      <obj_property name="ObjectShortName">rw_l</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_top/uut/ena32_16" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">ena32_16</obj_property>
-      <obj_property name="ObjectShortName">ena32_16</obj_property>
+   <wvobject fp_name="/tb_top/uut/POKEYinst/cs" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cs</obj_property>
+      <obj_property name="ObjectShortName">cs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/POKEYinst/cs_l" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">cs_l</obj_property>
+      <obj_property name="ObjectShortName">cs_l</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/POKEYinst/ena" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/w1a" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">w1a[15:0]</obj_property>
+      <obj_property name="ObjectShortName">w1a[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_top/uut/w2c" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">w2c[15:0]</obj_property>
+      <obj_property name="ObjectShortName">w2c[15:0]</obj_property>
    </wvobject>
 </wave_config>

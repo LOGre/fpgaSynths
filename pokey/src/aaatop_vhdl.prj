@@ -1,0 +1,8 @@
+vhdl work "C:\nico\hackerspace\fpga\git\fpgaSynths\pokey\src\kcuart_rx.vhd"
+vhdl work "C:\nico\hackerspace\fpga\git\fpgaSynths\pokey\src\bbfifo_16x8.vhd"
+vhdl work "C:\nico\hackerspace\fpga\git\fpgaSynths\pokey\src\wingbutled.vhd"
+vhdl work "C:\nico\hackerspace\fpga\git\fpgaSynths\pokey\src\uart_rx.vhd"
+vhdl work "C:\nico\hackerspace\fpga\git\fpgaSynths\pokey\src\serctrl.vhd"
+vhdl work "C:\nico\hackerspace\fpga\git\fpgaSynths\pokey\src\pokeyctrl.vhd"
+vhdl work "C:\nico\hackerspace\fpga\git\fpgaSynths\pokey\src\pokey.vhd"
+vhdl work "C:\nico\hackerspace\fpga\git\fpgaSynths\pokey\src\aaatop.vhd"

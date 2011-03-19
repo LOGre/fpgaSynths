@@ -1,0 +1,59 @@
+Release 12.3 ngdbuild M.70d (nt)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+
+Command Line: H:\xilinx\12.3\ISE_DS\ISE\bin\nt\unwrapped\ngdbuild.exe -intstyle
+ise -dd _ngo -nt timestamp -uc BPC3003_2.03+.ucf -p xc3s500e-vq100-4 aaatop.ngc
+aaatop.ngd
+
+Reading NGO file "C:/nico/hackerspace/fpga/git/fpgaSynths/pokey/src/aaatop.ngc"
+...
+Gathering constraint information from source properties...
+Done.
+
+Annotating constraints to design from ucf file "BPC3003_2.03+.ucf" ...
+Resolving constraint associations...
+Checking Constraint Associations...
+Done...
+
+Checking expanded design ...
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<8>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<9>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<10>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<11>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<12>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<13>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1B<13>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1B<14>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1B<15>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W2C<9>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'tx' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W2C<11>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<0>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W2C<13>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<1>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<2>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W2C<15>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<3>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<4>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<5>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<6>' has no legal driver
+WARNING:NgdBuild:470 - bidirect pad net 'W1A<7>' has no legal driver
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:  22
+
+Total memory usage is 80096 kilobytes
+
+Writing NGD file "aaatop.ngd" ...
+Total REAL time to NGDBUILD completion:  13 sec
+Total CPU time to NGDBUILD completion:   11 sec
+
+Writing NGDBUILD log file "aaatop.bld"...
