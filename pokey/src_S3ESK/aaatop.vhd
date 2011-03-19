@@ -45,6 +45,11 @@ architecture Behavioral of aaatop is
 	signal 		cs_l             			: std_logic;
 	signal 		ena_pokey            	: std_logic;
 	
+	--
+	-- Signals for PWL
+	--	
+	signal pwm_out : std_logic := '0';	
+	
 	-- signal for audio
 	signal audio_out : std_logic_vector(7 downto 0) := (others => '0');
 
@@ -65,7 +70,16 @@ begin
 	W2C(4 downto 1) <= led;
 	W2C(5) <= ready_out;
 	W2C(6) <= ena_pokey;
-	W2C(0) <= audio_out(7);
+	W2C(7) <= pwm_out;
+	W2C(8) <= rx;
+	
+	W2C(0) <= pwm_out;
+
+	PWMinst: entity work.pwm Port map(
+		input => audio_out,
+		output => pwm_out,
+		clk => clk
+	);
 
 	POKEYinst : entity work.POKEY Port map(
 		ADDR      => addr,

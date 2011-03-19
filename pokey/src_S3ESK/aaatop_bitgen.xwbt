@@ -1,8 +1,8 @@
 INTSTYLE=ise
-INFILE=D:\Xilinx\projects\S3ESK_pokey\aaatop.ncd
-OUTFILE=D:\Xilinx\projects\S3ESK_pokey\aaatop.bit
+INFILE=D:\projects\hacklab\github\fpgaSynths\pokey\src_S3ESK\aaatop.ncd
+OUTFILE=D:\projects\hacklab\github\fpgaSynths\pokey\src_S3ESK\aaatop.bit
 FAMILY=Spartan3E
 PART=xc3s500e-4fg320
-WORKINGDIR=D:\Xilinx\projects\S3ESK_pokey
+WORKINGDIR=D:\projects\hacklab\github\fpgaSynths\pokey\src_S3ESK
 LICENSE=WebPack
 USER_INFO=0_0_752

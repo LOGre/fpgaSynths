@@ -18,7 +18,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="8" />
+   <WVObjectSize size="11" />
    <wvobject fp_name="/tb_top/w2c" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">w2c[15:0]</obj_property>
       <obj_property name="ObjectShortName">w2c[15:0]</obj_property>
@@ -92,6 +92,99 @@
          <obj_property name="ElementShortName">data_out[7:0]</obj_property>
          <obj_property name="ObjectShortName">data_out[7:0]</obj_property>
          <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group19" type="group">
+      <obj_property name="label">serialctrl</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/tb_top/uut/serctrl0/cntp" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">cntp[3:0]</obj_property>
+         <obj_property name="ObjectShortName">cntp[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/serctrl0/stp" type="other" db_ref_id="1">
+         <obj_property name="ElementShortName">stp</obj_property>
+         <obj_property name="ObjectShortName">stp</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/serctrl0/stn" type="other" db_ref_id="1">
+         <obj_property name="ElementShortName">stn</obj_property>
+         <obj_property name="ObjectShortName">stn</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/serctrl0/clk" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/serctrl0/buffer_data_present_in" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">buffer_data_present_in</obj_property>
+         <obj_property name="ObjectShortName">buffer_data_present_in</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/serctrl0/datn" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">datn[7:0]</obj_property>
+         <obj_property name="ObjectShortName">datn[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/serctrl0/datp" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">datp[7:0]</obj_property>
+         <obj_property name="ObjectShortName">datp[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/serctrl0/data_in" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">data_in[7:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/serctrl0/dat_out" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">dat_out[7:0]</obj_property>
+         <obj_property name="ObjectShortName">dat_out[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group29" type="group">
+      <obj_property name="label">pokeyctrl</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/tb_top/uut/pokeyctrl0/stp" type="other" db_ref_id="1">
+         <obj_property name="ElementShortName">stp</obj_property>
+         <obj_property name="ObjectShortName">stp</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/pokeyctrl0/stn" type="other" db_ref_id="1">
+         <obj_property name="ElementShortName">stn</obj_property>
+         <obj_property name="ObjectShortName">stn</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/pokeyctrl0/addrn" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">addrn[3:0]</obj_property>
+         <obj_property name="ObjectShortName">addrn[3:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/pokeyctrl0/addrp" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">addrp[3:0]</obj_property>
+         <obj_property name="ObjectShortName">addrp[3:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/pokeyctrl0/dap" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">dap[7:0]</obj_property>
+         <obj_property name="ObjectShortName">dap[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/pokeyctrl0/dan" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">dan[7:0]</obj_property>
+         <obj_property name="ObjectShortName">dan[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/pokeyctrl0/data_out" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">data_out[7:0]</obj_property>
+         <obj_property name="ObjectShortName">data_out[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/pokeyctrl0/data_in" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">data_in[7:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group38" type="group">
+      <obj_property name="label">pokey</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/tb_top/uut/POKEYinst/audio_out" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">audio_out[7:0]</obj_property>
+         <obj_property name="ObjectShortName">audio_out[7:0]</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>
