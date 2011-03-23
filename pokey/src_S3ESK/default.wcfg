@@ -182,6 +182,26 @@
    <wvobject fp_name="group38" type="group">
       <obj_property name="label">pokey</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/tb_top/uut/POKEYinst/clk" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/POKEYinst/chan_ena[4]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">chan_ena[4]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/POKEYinst/chan_ena[3]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">chan_ena[3]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/POKEYinst/chan_ena[2]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">chan_ena[2]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/uut/POKEYinst/chan_ena[1]" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">chan_ena[1]</obj_property>
+      </wvobject>
       <wvobject fp_name="/tb_top/uut/POKEYinst/audio_out" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">audio_out[7:0]</obj_property>
          <obj_property name="ObjectShortName">audio_out[7:0]</obj_property>

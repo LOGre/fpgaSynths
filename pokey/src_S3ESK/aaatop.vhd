@@ -22,22 +22,24 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 entity aaatop is
     Port ( rx : in  STD_LOGIC;
-           tx : inout  STD_LOGIC;
-           W2C : inout  STD_LOGIC_VECTOR (15 downto 0);
+           --tx : inout  STD_LOGIC;
+           --W2C : inout  STD_LOGIC_VECTOR (15 downto 0);
+			  audio : out  STD_LOGIC;
            clk : in  STD_LOGIC);
 end aaatop;
 
 architecture Behavioral of aaatop is
 
-	-- signal reset 							: std_logic;
-	signal 		led              			: std_logic_vector(3 downto 0);
+	-- serialctrl
+	signal 		led              			: std_logic_vector(3 downto 0);	
 	signal 		serdata              	: std_logic_vector(7 downto 0);
 	signal 		buffer_data_present		: std_logic;
 	signal 		read_buffer					: std_logic;
-	signal 		data_in              	: std_logic_vector(7 downto 0);
+	signal 		data_ser              	: std_logic_vector(7 downto 0);
 	signal 		latch_in	 					: std_logic;
-	-- signal reset_in	 					: std_logic;
 	signal 		ready_out	 				: std_logic;
+	
+	-- pokeyctrl
 	signal 		addr               		: std_logic_vector(3 downto 0);
 	signal 		data               		: std_logic_vector(7 downto 0);
 	signal 		rw_l          			   : std_logic;
@@ -46,12 +48,13 @@ architecture Behavioral of aaatop is
 	signal 		ena_pokey            	: std_logic;
 	
 	--
-	-- Signals for PWL
+	-- Signals for PWM
 	--	
-	signal pwm_out : std_logic := '0';	
+	signal 		pwm_out : std_logic := '0';	
 	
 	-- signal for audio
-	signal audio_out : std_logic_vector(7 downto 0) := (others => '0');
+	signal 		audio_out : std_logic_vector(7 downto 0) := (others => '0');
+	signal 		vumeter : std_logic_vector(3 downto 0) := (others => '0');
 
 	--
 	-- Signals for UART connections
@@ -65,76 +68,75 @@ architecture Behavioral of aaatop is
 	signal		clock178Mhz_count 		: integer range 0 to 27 :=0;
 	signal     	clock178Mhz 				: std_logic;
 
+	
 
 begin
-	W2C(4 downto 1) <= led;
-	W2C(5) <= ready_out;
-	W2C(6) <= ena_pokey;
-	W2C(7) <= pwm_out;
-	W2C(8) <= rx;
+	--W2C(4 downto 1) <= vumeter;
+	--W2C(8 downto 5) <= addr(3 downto 0);
+	--W2C(8 downto 1) <= data;
+	--W2C(6) <= ena_pokey;
+	--W2C(7) <= audio_out(0);
+	--W2C(8) <= rx;
 	
-	W2C(0) <= pwm_out;
+	audio <= pwm_out;
 
-	PWMinst: entity work.pwm Port map(
-		input => audio_out,
-		output => pwm_out,
-		clk => clk
+	uart_rx0 : entity work.uart_rx Port map(
+		serial_in 					=> rx,
+		data_out 					=> serdata,
+		read_buffer 				=> read_buffer,
+		reset_buffer 				=> '0',
+		en_16_x_baud 				=> en_16_x_baud,
+		buffer_data_present 		=> buffer_data_present,
+		buffer_full 				=> open,
+		buffer_half_full 			=> open,
+		clk						 	=> clk
 	);
-
-	POKEYinst : entity work.POKEY Port map(
-		ADDR      => addr,
-		DIN       => data,
-		DOUT      => open,
-		DOUT_OE_L => open,
-		RW_L      => rw_l,
-		CS        => cs,
-		CS_L      => cs_l,
-		--
-		AUDIO_OUT => audio_out,
-		--
-		PIN       => (others => '0'), 
-		ENA       => ena_pokey,
-		CLK       => clock178Mhz
+	
+	serctrl0 : entity work.serctrl Port map(
+		data_in 						=> serdata,
+		buffer_data_present_in 	=> buffer_data_present,
+		read_buffer_out 			=> read_buffer,
+		dat_out 						=> data_ser,
+		latch_out 					=> latch_in,
+		ready_in 					=> ready_out,
+		led_out 						=> led,
+		clk 							=> clk
 	);
 	
 	pokeyctrl0 : entity work.pokeyctrl Port map( 
-		addr_out => addr,
-		data_out => data,
-		rw_l_out	=> rw_l,
-		cs_out => cs,
-		cs_l_out	=> cs_l,
-		enable_out => ena_pokey,
-		clk => clock178Mhz,
-		data_in => data_in,
-		latch_in => latch_in,
---		reset_in => reset_in,
-		ready_out => ready_out
-	);
-	serctrl0 : entity work.serctrl Port map(
-		data_in => serdata,
-		buffer_data_present_in => buffer_data_present,
-		read_buffer_out => read_buffer,
---		reset_in => reset,
-		dat_out => data_in,
-		latch_out => latch_in,
-		ready_in => ready_out,
---		reset_out => reset_in,
-		led_out => led,
-		clk => clk
-	);
+		addr_out 					=> addr,
+		data_out 					=> data,
+		rw_l_out						=> rw_l,
+		cs_out 						=> cs,
+		cs_l_out						=> cs_l,
+		enable_out 					=> ena_pokey,
+		clk 							=> clock178Mhz,
+		data_in 						=> data_ser,
+		latch_in 					=> latch_in,
+		ready_out 					=> ready_out
+	);	
 
-
-	uart_rx0 : entity work.uart_rx Port map(
-		serial_in => rx,
-		data_out => serdata,
-		read_buffer => read_buffer,
-		reset_buffer => '0',
-		en_16_x_baud => en_16_x_baud,
-		buffer_data_present => buffer_data_present,
-		buffer_full => open,
-		buffer_half_full => open,
-		clk => clk
+	POKEYinst : entity work.POKEY Port map(
+		ADDR      					=> addr,
+		DIN       					=> data,
+		DOUT      					=> open,
+		DOUT_OE_L 					=> open,
+		RW_L      					=> rw_l,
+		CS        					=> cs,
+		CS_L      					=> cs_l,
+		--
+		AUDIO_OUT 					=> audio_out,
+		--
+		PIN       					=> (others => '0'), 
+		ENA       					=> ena_pokey,
+		CLK       					=> clock178Mhz
 	);
+	
+	PWMinst: entity work.pwm Port map(
+		input 						=> audio_out,
+		output 						=> pwm_out,
+		clk 							=> clk
+	);	
 	
   --
   -- Set baud rate to 115200 for the UART communications
@@ -173,5 +175,33 @@ begin
 		end if;
     end if;
   end process clock178Mhz_timer;	
+
+	--
+	-- VU Meter
+	--
+	
+	process(audio_out)
+	begin
+		if unsigned(audio_out) > x"70" then
+			vumeter(0) <= '1';
+		else
+			vumeter(0) <= '0';
+		end if;
+		if unsigned(audio_out) > x"50" then
+			vumeter(1) <= '1';
+		else
+			vumeter(1) <= '0';
+		end if;
+		if unsigned(audio_out) > x"30" then
+			vumeter(2) <= '1';
+		else
+			vumeter(2) <= '0';
+		end if;
+		if unsigned(audio_out) > x"10" then
+			vumeter(3) <= '1';
+		else
+			vumeter(3) <= '0';
+		end if;
+	end process;	
 
 end Behavioral;

@@ -37,7 +37,6 @@ Port (
 	-- input signals	
 	data_in 		: in  STD_LOGIC_VECTOR (7 downto 0);
 	latch_in 	: in  STD_LOGIC;
---	reset_in 	: in  STD_LOGIC;
 	ready_out 	: out  STD_LOGIC
 	);
 end pokeyctrl ;
@@ -68,7 +67,6 @@ architecture Behavioral of pokeyctrl is
 	
 	-- ctrl signals
 	signal stP,stN 		: s_t := s_waitaddr;
---	signal resetP,resetN : std_logic := '1';
 	signal readyP,readyN : std_logic := '0';
 	signal cnt : unsigned(CNTLEN-1 downto 0) := to_unsigned(0,CNTLEN);
 	
@@ -105,8 +103,8 @@ begin
 				rwlN <= '0';
 				cslN <= '1';
 				csN <= '0';
-				addrN <= x"f";
-				daN <= x"ff";
+				--addrN <= x"0";
+				--daN <= x"ff";
 				readyN <= '1';
 				if latch_in='1' then
 					addrN <= data_in(3 downto 0);

@@ -120,7 +120,7 @@ BEGIN
 		write_buffer <= '0';
 		wait for clk_period;
 
-		data <= x"90";
+		data <= x"47";
 		write_buffer <= '1';
 		wait for clk_period;
 		write_buffer <= '0';
@@ -137,6 +137,30 @@ BEGIN
 		wait for clk_period;
 		write_buffer <= '0';
 		wait for clk_period;
+		
+		data <= x"02";
+		write_buffer <= '1';
+		wait for clk_period;
+		write_buffer <= '0';
+		wait for clk_period;
+
+		data <= x"47";
+		write_buffer <= '1';
+		wait for clk_period;
+		write_buffer <= '0';
+		wait for clk_period;
+
+		data <= x"03";
+		write_buffer <= '1';
+		wait for clk_period;
+		write_buffer <= '0';
+		wait for clk_period;
+
+		data <= x"AF";
+		write_buffer <= '1';
+		wait for clk_period;
+		write_buffer <= '0';
+		wait for clk_period;		
 
 		data <= x"08";
 		write_buffer <= '1';
