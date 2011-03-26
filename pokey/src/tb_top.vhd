@@ -40,8 +40,6 @@ ARCHITECTURE behavior OF tb_top IS
     PORT(
          rx : IN  std_logic;
          tx : INOUT  std_logic;
-         W1A : INOUT  std_logic_vector(15 downto 0);
-         W1B : INOUT  std_logic_vector(15 downto 0);
          W2C : INOUT  std_logic_vector(15 downto 0);
          clk : IN  std_logic
         );
@@ -51,28 +49,25 @@ ARCHITECTURE behavior OF tb_top IS
    --Inputs
    signal rx : std_logic := '0';
    signal clk : std_logic := '0';
-
+	
 	--BiDirs
    signal tx : std_logic;
-   signal W1A : std_logic_vector(15 downto 0);
-   signal W1B : std_logic_vector(15 downto 0);
    signal W2C : std_logic_vector(15 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 31.25 ns;
+   constant clk_period : time := 20.0 ns;
+	signal clk_tx_count : integer range 0 to 26 :=0;
+	signal en_16_x_baud : std_logic;	
  
 signal data : std_logic_vector(7 downto 0) := (others => '0');
 signal write_buffer : std_logic := '0';
 BEGIN
-	w1a <= (others => 'Z');
 	w2c(0) <= 'Z';
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: aaatop PORT MAP (
           rx => rx,
           tx => tx,
-          W1A => W1A,
-          W1B => W1B,
           W2C => W2C,
           clk => clk
         );
@@ -81,7 +76,7 @@ BEGIN
 		data_in => data,
 		write_buffer => write_buffer,
 		reset_buffer => '0',
-		en_16_x_baud => '1',
+		en_16_x_baud => en_16_x_baud,
 		serial_out => rx,
 		buffer_full => open,
 		buffer_half_full => open,
@@ -97,6 +92,19 @@ BEGIN
 		wait for clk_period/2;
    end process;
  
+    -- Clock process definitions
+   clk_tx: process(clk)
+   begin
+    if clk'event and clk='1' then
+      if clk_tx_count=26 then
+         clk_tx_count <= 0;
+         en_16_x_baud <= '1';
+       else
+         clk_tx_count <= clk_tx_count + 1;
+         en_16_x_baud <= '0';
+      end if;
+    end if;
+   end process clk_tx;
 
    -- Stimulus process
    stim_proc: process
@@ -104,7 +112,6 @@ BEGIN
       -- hold reset state for 100 ns.
       wait for 100 ns;	
 
-      wait for clk_period*10;
 
       -- insert stimulus here 
 		data <= x"00";
@@ -113,7 +120,7 @@ BEGIN
 		write_buffer <= '0';
 		wait for clk_period;
 
-		data <= x"90";
+		data <= x"47";
 		write_buffer <= '1';
 		wait for clk_period;
 		write_buffer <= '0';
@@ -130,6 +137,30 @@ BEGIN
 		wait for clk_period;
 		write_buffer <= '0';
 		wait for clk_period;
+		
+		data <= x"02";
+		write_buffer <= '1';
+		wait for clk_period;
+		write_buffer <= '0';
+		wait for clk_period;
+
+		data <= x"47";
+		write_buffer <= '1';
+		wait for clk_period;
+		write_buffer <= '0';
+		wait for clk_period;
+
+		data <= x"03";
+		write_buffer <= '1';
+		wait for clk_period;
+		write_buffer <= '0';
+		wait for clk_period;
+
+		data <= x"AF";
+		write_buffer <= '1';
+		wait for clk_period;
+		write_buffer <= '0';
+		wait for clk_period;		
 
 		data <= x"08";
 		write_buffer <= '1';

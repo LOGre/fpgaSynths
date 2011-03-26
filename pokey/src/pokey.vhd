@@ -256,9 +256,9 @@ begin
   begin
     -- chip in reset if bits 1..0 of skctls are both zero
     reset <= '0';
-    if (skctls(1 downto 0) = "00") then
-      reset <= '1';
-    end if;
+    --if (skctls(1 downto 0) = "00") then
+    --  reset <= '1';
+    --end if;
   end process;
 
   p_rdata : process(oe, ADDR, pot_val, pin_reg_gated, kbcode, random, serin, irqst, skstat)

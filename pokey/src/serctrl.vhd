@@ -20,159 +20,64 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
+
 entity serctrl is
 Port (
-	data_in : in  STD_LOGIC_VECTOR (7 downto 0);
-	buffer_data_present_in : in std_logic;
-	read_buffer_out : out std_logic;
---	reset_in : in  STD_LOGIC;
-	
-	dat_out : out  STD_LOGIC_VECTOR (7 downto 0);
-	latch_out : out  STD_LOGIC;
-	ready_in : in  STD_LOGIC;
---	reset_out : out  STD_LOGIC;
-	led_out : out std_logic_vector(3 downto 0);
-
-	clk : in  STD_LOGIC
+	data_in 						: in  STD_LOGIC_VECTOR (7 downto 0);
+	buffer_data_present_in 	: in std_logic;
+	read_buffer_out 			: out std_logic;
+	dat_out 						: out  STD_LOGIC_VECTOR (7 downto 0);
+	latch_out 					: out  STD_LOGIC;
+	ready_in 					: in  STD_LOGIC;
+	led_out 						: out std_logic_vector(3 downto 0);
+	clk 							: in  STD_LOGIC
 );
 end serctrl;
 
-----this arch read incoming bytes as soon as they arrive, whatever receiver status (eg: ready_in=0 ?)
---architecture Behavioral of serctrl is
---type st_t is (s_read,s_wait,s_write);
---signal stP,stN : st_t := s_read;
---signal read_bufferP,read_bufferN : std_logic := '0';
---signal datP,datN : STD_LOGIC_VECTOR (7 downto 0) := (others => '0');
---signal latchP,latchN : std_logic := '0';
---begin
---	read_buffer_out <= read_bufferP;
---	reset_out <= reset_in;
---	dat_out <= datP;
---	latch_out <= latchP;
---
---	process(data_in,buffer_data_present_in,ready_in,stP,latchP,datP,read_bufferP)
---	begin
---		read_bufferN <= read_bufferP;
---		datN <= datP;
---		latchN <= latchP;
---		stN <= stP;
---		case stP is
---			when s_read =>
---				if buffer_data_present_in='1' then
---					read_bufferN <= '1';
---					datN <= data_in;
---					latchN <= '0';
---					stN <= s_wait;
---				else
---					datN <= (others => '0');
---					latchN <= '0';
---				end if;
---			when s_wait =>
---				read_bufferN <= '0';
---				if ready_in='1' then
---					latchN <= '1';
---					stN <= s_write;
---				end if;
---			when s_write =>
---				if ready_in='1' then
---					latchN <= '1';
---				else
---					latchN <= '0';
---					stN <= s_read;
---				end if;
---		end case;
---	end process;
---
---	process(clk)
---	begin
---		if rising_edge(clk) then
---			read_bufferP <= read_bufferN;
---			datP <= datN;
---			latchP <= latchN;
---			stP <= stN;
---		end if;
---	end process;
---
---end Behavioral;
 
 ----this arch waits receiver is ready before reading incoming bytes (eg: ready_in=1)
 architecture Behavioral of serctrl is
-type st_t is (s_wait,s_read,s_write
---,s_skip
-);
+
+type st_t is (s_wait,s_read,s_write);
+
 signal stP,stN : st_t := s_wait;
 signal read_bufferP,read_bufferN : std_logic := '0';
 signal datP,datN : STD_LOGIC_VECTOR (7 downto 0) := (others => '0');
 signal latchP,latchN : std_logic := '0';
 signal ledP,ledN : std_logic_vector(3 downto 0) := (others => '0');
-signal cntP,cntN : unsigned(3 downto 0) := to_unsigned(0,4);
 begin
 	read_buffer_out <= read_bufferP;
---	reset_out <= reset_in;
 	dat_out <= datP;
 	latch_out <= latchP;
 	led_out <= ledP;
---	led_out <= std_logic_vector(cnt);
 
-	process(
-	cntP,
-	data_in,ledP,buffer_data_present_in,ready_in,stP,latchP,datP,read_bufferP)
+	process(data_in,ledP,buffer_data_present_in,ready_in,stP,latchP,datP,read_bufferP)
 	begin
 		read_bufferN <= read_bufferP;
 		datN <= datP;
 		latchN <= latchP;
 		stN <= stP;
 		ledN <= ledP;
---		ledN <= std_logic_vector(cnt);
-		cntN <= cntP;
+		
 		case stP is
 			when s_wait =>
---				ledN <= x"1";
 				read_bufferN <= '0';
 				datN <= (others => '0');
 				latchN <= '0';
+							
 				if buffer_data_present_in='1' then
 					stN <= s_read;
---					if data_in(7 downto 4)=x"3" then
---						datN <= x"0" & data_in(3 downto 0);
---					elsif data_in=x"62" then
---						datN <= x"fb";
---					elsif data_in=x"66" then
---						datN <= x"0f";
---					elsif data_in=x"61" then
---						datN <= x"0a";
---					else
---						stN <= s_skip;
-						cntN <= cntP+1;
---					end if;
---					ledN <= std_logic_vector(unsigned(ledP) + 1);
 					datN <= data_in;
 					read_bufferN <= '1';
+					ledN <= data_in(3 downto 0);
 				end if;
 			when s_read =>
-		if datP=x"00" and cntP=1 then
-			ledN <= x"1";
-		elsif datP=x"90" and cntP=2 then
-			ledN <= x"2";
-		elsif datP=x"01" and cntP=3 then
-			ledN <= x"3";
-		elsif datP=x"AF" and cntP=4 then
-			ledN <= x"4";
-		elsif datP=x"08" and cntP=5 then
-			ledN <= x"5";
-		elsif datP=x"00" and cntP=6 then
-			ledN <= x"6";
-		else
---			ledN <= x"F";
-		end if;
---				ledN <= x"2";
 				read_bufferN <= '0';
 				if ready_in='1' then
 					latchN <= '1';
 					stN <= s_write;
 				end if;
 			when s_write =>
---				ledN <= x"4";
 				read_bufferN <= '0';
 				if ready_in='1' then
 --					latchN <= '1';
@@ -180,9 +85,6 @@ begin
 					latchN <= '0';
 					stN <= s_wait;
 				end if;
---			when s_skip =>
---				read_bufferN <= '1';
---				stN <= s_wait;
 		end case;
 	end process;
 
@@ -194,7 +96,6 @@ begin
 			latchP <= latchN;
 			stP <= stN;
 			ledP <= ledN;
-			cntP <= cntN;
 		end if;
 	end process;
 
