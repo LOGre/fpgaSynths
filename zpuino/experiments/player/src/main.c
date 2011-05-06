@@ -15,8 +15,17 @@
 #include <stdint.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+#include <sys/types.h>
 #include <fcntl.h>
 #include "serial.h"
+
+
+static void send_sync_sequence(serial_handle_t* h)
+{
+  static const uint16_t sync_seq = 0xa5a5;
+  size_t nwritten;
+  serial_write(h, (const void*)&sync_seq, 2, &nwritten);
+}
 
 
 int main(int ac, char** av)
@@ -50,6 +59,8 @@ int main(int ac, char** av)
   saved_size = st.st_size;
   saved_addr = addr;
 
+  send_sync_sequence(&handle);
+
   while (1)
   {
     usleep(20000);
@@ -60,9 +71,17 @@ int main(int ac, char** av)
       addr = saved_addr;
     }
     
-    serial_write(&handle, addr, 28, &nwritten);
-    addr += 28;
-    size -= 28;
+    if (serial_write(&handle, addr, 28, &nwritten) == -1)
+    {
+      printf("serial_write() == -1\n");
+    }
+    else if (nwritten != 28)
+    {
+      printf("nwritten != 28\n");
+    }
+
+    addr += nwritten;
+    size -= nwritten;
   }
 
   close(fd);
