@@ -1,0 +1,11 @@
+PREFS___board___upload___speed=1000000
+PREFS___board___build___f_cpu=96000000L
+PREFS___board___upload___maximum_size=12160
+PREFS___board___name=ZPUino on Papilio One (250) board
+PREFS___board___build___extraCflags=-D__ZPUINO_PAPILIO_ONE__ -D__S3E_250__ -nostartfiles
+PREFS___board___upload___protocol=zpuino-serial
+PREFS___board___build___core=zpuino
+COREPATH=/home/texane/repo/zpuino/arduino-0022-ZA4/hardware/zpuino/cores/zpuino
+AVRPATH=
+BUILDPATH=$(PWD)
+REVISION=22

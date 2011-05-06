@@ -1,0 +1,36 @@
+The whole stuff is still a bit confused, waiting to be ordered a bit.
+Here is how I got the whole stuff working:
+
+. building the bitstream
+.. ~/repo/zpuino/zpuino.git/zpu/hdl/zpuino/boards/papilio-one/s3e250
+.. export PATH=$PATH:/home/texane/repo/zpuino/toolchain/bin:/opt/Xilinx/12.3/ISE_DS/ISE/bin/lin
+.. make
+.. produces the papilio_routed_one.bit
+.. cp to ~/tmp/ for the next step
+
+. sending the bitstream to the fpga and configuring the bootloader
+.. ~/repo/zpuino/examples/hello/write.sh contains a script for:
+.. sending the bitstream to the fpga
+.. putting the bootloader into programming mode
+
+. uploading the user program:
+.. run the arduino IDE
+.. export PATH=$PATH:/home/texane/repo/zpuino/toolchain/bin:/opt/Xilinx/12.3/ISE_DS/ISE/bin/lin
+.. ~/repo/zpuino/arduino-0022-ZA4/arduino
+.. example: /home/texane/sketchbook/fu/fu.pde 
+
+The script directory contains the basic stuff needed to compile and upload without the IDE.
+
+First, the binary must be compiled. This is the role of the various Makefile present
+in this directory, and the core subdirectory. For this example, main.bin should be
+produced by typing the following command:
+make
+
+Then, the zpuino bitstream has to be uploaded and the bootloader set in programming
+mode. This is the the ./mode.sh shell script role:
+./mode.sh
+
+Finally, the previously generated binary file can be uploaded with the ./write.sh script:
+./write.sh
+
+A success message should be printed.
