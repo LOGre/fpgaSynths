@@ -1,0 +1,11 @@
+PREFS___board___upload___speed=250000
+PREFS___board___build___f_cpu=96000000L
+PREFS___board___upload___maximum_size=12160
+PREFS___board___name=ZPUino on S3ESK (500) board
+PREFS___board___build___extraCflags=-D__S3E_500__ -nostartfiles
+PREFS___board___upload___protocol=zpuino-serial
+PREFS___board___build___core=zpuino
+COREPATH=$(ZPULOGSK)/lib
+AVRPATH=
+BUILDPATH=$(PWD)
+REVISION=22
