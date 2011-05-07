@@ -65,7 +65,7 @@ void setup()
 
 void loop()
 {
-  Serial.println("Starting microprog.....");
+  // Serial.println("Starting microprog.....");
 
   // wait for the sync sequence
   // this may be invalid since 0xa5 can be a valid
@@ -88,7 +88,7 @@ void loop()
   }
 
 on_synced:
-  Serial.println("got sync .....");
+  // Serial.println("got sync .....");
   
   // fill buffer
   while(buffer.count() < QUEUE_MAX_SIZE)
@@ -100,7 +100,7 @@ on_synced:
     // Serial.println(buffer.count());
   }
 
-  Serial.println("buffered .....");
+  // Serial.println("buffered .....");
 
   // set timers
   setup50HzInt();

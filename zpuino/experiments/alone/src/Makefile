@@ -1,9 +1,14 @@
-PATH+=:/home/texane/repo/zpuino/toolchain/bin:/opt/Xilinx/12.3/ISE_DS/ISE/bin/lin
-all: all-target
-include $(PWD)/Common.mak
+PATH+=:$(TOOLCHAIN_DIR)
 TARGET=main
+all: all-target
+clean:
+	(cd core && make clean)
+	-rm main.o delay.o 2> /dev/null
+fclean:	clean
+	-rm $(TARGET).bin $(TARGET).elf $(TARGET).hex $(TARGET).size 2> /dev/null
+include $(PWD)/Common.mak
 core/libcore.a:
 	$(MAKE) -C core libcore.a
-TARGETOBJ=main.o
+TARGETOBJ=main.o delay.o
 LIBS+=core/libcore.a
-include /home/texane/repo/zpuino/arduino-0022-ZA4/hardware/zpuino/cores/zpuino/Rules.mak
+include $(ARDUINO_DIR)/hardware/zpuino/cores/zpuino/Rules.mak

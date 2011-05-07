@@ -1,6 +1,9 @@
+--
 The whole stuff is still a bit confused, waiting to be ordered a bit.
 Here is how I got the whole stuff working:
 
+
+--
 . building the bitstream
 .. ~/repo/zpuino/zpuino.git/zpu/hdl/zpuino/boards/papilio-one/s3e250
 .. export PATH=$PATH:/home/texane/repo/zpuino/toolchain/bin:/opt/Xilinx/12.3/ISE_DS/ISE/bin/lin
@@ -13,24 +16,29 @@ Here is how I got the whole stuff working:
 .. sending the bitstream to the fpga
 .. putting the bootloader into programming mode
 
-. uploading the user program:
+. compiling and uploading a user program via the ARDUINO IDE:
 .. run the arduino IDE
 .. export PATH=$PATH:/home/texane/repo/zpuino/toolchain/bin:/opt/Xilinx/12.3/ISE_DS/ISE/bin/lin
 .. ~/repo/zpuino/arduino-0022-ZA4/arduino
 .. example: /home/texane/sketchbook/fu/fu.pde 
 
-The script directory contains the basic stuff needed to compile and upload without the IDE.
 
-First, the binary must be compiled. This is the role of the various Makefile present
-in this directory, and the core subdirectory. For this example, main.bin should be
-produced by typing the following command:
-make
+--
+. compiling and uploading a user program without the ARDUINO IDE:
 
-Then, the zpuino bitstream has to be uploaded and the bootloader set in programming
+.. copy the zpuino/experiments/alone/ directory contents in a new directory. It contains the needed
+files and can be used as a template for new projects
+
+.. set environment variables, as shown below:
+export ARDUINO_DIR=/home/texane/repo/zpuino/arduino-0022-ZA4 ;
+export TOOLCHAIN_DIR=/home/texane/repo/zpuino/toolchain/bin ;
+
+.. compile the program with make. A main.bin is produced and is the file to upload.
+
+.. Then, the zpuino bitstream has to be uploaded and the bootloader set in programming
 mode. This is the the ./mode.sh shell script role:
 ./mode.sh
 
-Finally, the previously generated binary file can be uploaded with the ./write.sh script:
+.. Finally, the previously generated binary file can be uploaded with the ./write.sh script:
 ./write.sh
-
 A success message should be printed.
