@@ -14,8 +14,15 @@ ARFLAGS=crs
 all-target: $(TARGET).a
 
 $(TARGET).a: $(TARGETOBJ)
-	$(AR) $(ARFLAGS) $(TARGETLIB) $@ $+
+	$(AR) $(ARFLAGS) $(TARGETLIB)
+
+install:
+	-cp $(TARGETLIB) $(ZPULOGSDK)/lib/
+	-cp $(TARGETHEADER) $(ZPULOGSDK)/include/
 	
 clean:
 	-rm $(TARGETOBJ)
+	-rm $(TARGETLIB)
+	-rm $(ZPULOGSDK)/lib/$(TARGETLIB)
+	-rm $(ZPULOGSDK)/include/$(TARGETHEADER)
 	
