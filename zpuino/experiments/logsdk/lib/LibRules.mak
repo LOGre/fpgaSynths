@@ -21,8 +21,8 @@ install:
 	-cp $(TARGETHEADER) $(ZPULOGSDK)/include/
 	
 clean:
-	-rm $(TARGETOBJ)
-	-rm $(TARGETLIB)
-	-rm $(ZPULOGSDK)/lib/$(TARGETLIB)
-	-rm $(ZPULOGSDK)/include/$(TARGETHEADER)
+	-rm -f  $(TARGETOBJ)
+	-rm -f  $(TARGETLIB)
+	-rm -f $(ZPULOGSDK)/lib/$(TARGETLIB)
+	-rm -f $(ZPULOGSDK)/include/$(TARGETHEADER)
 	
