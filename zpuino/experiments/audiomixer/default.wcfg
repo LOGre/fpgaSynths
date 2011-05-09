@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="D:/Xilinx/projects/audiomixer/tb_mixer_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="tb_mixer" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="13" />
+   <wvobject fp_name="/tb_mixer/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/ena" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/data_in1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_in1[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in1[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/data_in2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_in2[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in2[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/data_in3" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_in3[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in3[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/data_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_out[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/clk_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/uut/ena" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/uut/cnt_div" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt_div[1:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt_div[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/uut/audio_mix" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">audio_mix[9:0]</obj_property>
+      <obj_property name="ObjectShortName">audio_mix[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/uut/audio_final" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">audio_final[9:0]</obj_property>
+      <obj_property name="ObjectShortName">audio_final[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mixer/uut/current_input" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">current_input[7:0]</obj_property>
+      <obj_property name="ObjectShortName">current_input[7:0]</obj_property>
+   </wvobject>
+</wave_config>
