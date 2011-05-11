@@ -47,7 +47,7 @@ ARCHITECTURE behavior OF tb_mixer IS
          data_in1 : IN  std_logic_vector(7 downto 0);
          data_in2 : IN  std_logic_vector(7 downto 0);
          data_in3 : IN  std_logic_vector(7 downto 0);
-         data_out : OUT  std_logic_vector(7 downto 0)
+         audio_out : OUT  std_logic
         );
     END COMPONENT;
     
@@ -61,7 +61,7 @@ ARCHITECTURE behavior OF tb_mixer IS
    signal data_in3 : std_logic_vector(7 downto 0) := (others => '0');
 
  	--Outputs
-   signal data_out : std_logic_vector(7 downto 0);
+   signal audio_out : std_logic;
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -76,7 +76,7 @@ BEGIN
           data_in1 => data_in1,
           data_in2 => data_in2,
           data_in3 => data_in3,
-          data_out => data_out
+          audio_out => audio_out
         );
 
    -- Clock process definitions
@@ -93,7 +93,11 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 10 ns.
-      wait for 10 ns;	
+		wait for 10 ns;
+		rst <= '1';
+		
+		wait for 10 ns;			
+		rst <= '0';	
 		ena <= '1';
 
       wait for clk_period*10;
@@ -113,7 +117,19 @@ BEGIN
 
 		data_in1 <= x"FF";
 		data_in2 <= x"FF";
-		data_in3 <= x"FF";			
+		data_in3 <= x"FF";		
+
+      wait for clk_period*10;
+
+		data_in1 <= x"0F";
+		data_in2 <= x"0F";
+		data_in3 <= x"00";			
+
+      wait for clk_period*10;
+
+		data_in1 <= x"00";
+		data_in2 <= x"0F";
+		data_in3 <= x"0F";	
 
       wait;
    end process;

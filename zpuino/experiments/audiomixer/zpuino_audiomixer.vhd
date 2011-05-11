@@ -41,36 +41,61 @@ library ieee;
   use ieee.std_logic_arith.all;
   use ieee.std_logic_unsigned.all;
 
--- library work;
+library work;
 --use work.zpupkg.all;
 
 entity zpuino_audiomixer is
 	port (
     clk:      	in std_logic;
     rst:      	in std_logic;
-    ena:		in std_logic;
+    ena:			in std_logic;
     
     data_in1:  	in std_logic_vector(7 downto 0);
     data_in2:  	in std_logic_vector(7 downto 0);
     data_in3:  	in std_logic_vector(7 downto 0);
     
-    data_out: 	out std_logic_vector(7 downto 0)
+    audio_out: 	out std_logic
     );
 end entity zpuino_audiomixer;
 
 architecture behave of zpuino_audiomixer is
 
 -- divier per input
-signal cnt_div: 		std_logic_vector(1 downto 0) := (others => '0');
+signal cnt_div: 			std_logic_vector(1 downto 0) := (others => '0');
 
 -- accumulator for each input, on 9 bits, enough for 3 inputs@8bits
 signal audio_mix: 		std_logic_vector(9 downto 0) := (others => '0'); 
 
 -- to store final accumulator value
-signal audio_final: 	std_logic_vector(9 downto 0) := (others => '0');
+signal audio_final: 		std_logic_vector(9 downto 0) := (others => '0');
 signal current_input:	std_logic_vector(7 downto 0) := (others => '0');
+signal data_out:			std_logic_vector(7 downto 0) := (others => '0');
+
+-- DAC
+component simple_sigmadelta is
+  generic (
+    BITS: integer := 8
+  );
+	port (
+    clk:      in std_logic;
+    rst:      in std_logic;
+    data_in:  in std_logic_vector(BITS-1 downto 0);
+    data_out: out std_logic
+    );
+end component simple_sigmadelta;
 
 begin
+
+	sdo: simple_sigmadelta
+	generic map (
+		BITS =>  8
+	)
+	port map (
+		clk       => clk,
+		rst       => rst,
+		data_in   => data_out,
+		data_out  => audio_out
+	);
 
 	-- divide clock by input channels number
 	p_divider : process
