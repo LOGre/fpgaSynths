@@ -113,6 +113,7 @@ begin
 	-- assign an input
 	p_chan_mixer : process(cnt_div, data_in1, data_in2, data_in3)
 	begin
+		current_input <= x"00";
 		case cnt_div(1 downto 0) is
 			when "11" =>
 				current_input <= data_in1;
