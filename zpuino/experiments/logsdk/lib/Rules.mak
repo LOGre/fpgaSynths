@@ -11,7 +11,8 @@ EXTRACFLAGS+=$(PREFS___board___build___extraCflags)
 CFLAGS=$(EXTRACFLAGS) -DZPU -Wall -Os -ffunction-sections -fdata-sections -nostartfiles -mmult -mdiv -mno-callpcrel -mno-pushspadd -mno-poppcrel -I$(COREPATH) -I$(ZPULOGSDK)/include
 CXXFLAGS=$(CFLAGS) -fno-exceptions -fno-rtti
 ARFLAGS=crs
-LDFLAGS=-nostartfiles -Wl,-T -Wl,$(ZPULOGSDK)/lib/zpuino.lds $(ZPULOGSDK)/lib/libcore.a -Wl,--relax -Wl,--gc-sections
+LDFLAGS=-nostartfiles -Wl,-T -Wl,$(ZPULOGSDK)/lib/zpuino.lds -Wl,--relax -Wl,--gc-sections
+LIBS=$(ZPULOGSDK)/lib/libcore.a
 
 $(TARGET).elf: $(TARGETOBJ) $(LIBS)
 	$(CC) -o $@ $(TARGETOBJ) $(LDFLAGS) -Wl,--whole-archive $(LIBS) -Wl,--no-whole-archive
