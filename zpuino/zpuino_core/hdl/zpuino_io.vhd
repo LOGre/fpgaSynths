@@ -138,6 +138,7 @@ architecture behave of zpuino_io is
   signal audio_dac: std_logic;
   signal ym2149_audio1: std_logic_vector(7 downto 0);
   signal ym2149_audio2: std_logic_vector(7 downto 0);
+  signal pokey_audio1: std_logic_vector(7 downto 0);
 
   -- Audio mixer
 	component zpuino_audiomixer is
@@ -511,7 +512,7 @@ begin
     re        => slot_re(10),
     busy      => slot_busy(10),
     interrupt => slot_interrupt(10),
-    data_out => ym2149_audio1
+    data_out  => ym2149_audio1
   );
 
   --
@@ -536,7 +537,7 @@ begin
   -- IO SLOT 12
   --
 
-  slot12: zpuino_empty_device
+  slot12: POKEY
   port map (
     clk       => clk,
 	rst       => areset,
@@ -546,7 +547,8 @@ begin
     we        => slot_we(12),
     re        => slot_re(12),
     busy      => slot_busy(12),
-    interrupt => slot_interrupt(12)
+    interrupt => slot_interrupt(12),
+    data_out  => pokey_audio1
   );
 
   --
@@ -612,7 +614,7 @@ begin
     
     data_in1	=> ym2149_audio1,
     data_in2  	=> ym2149_audio2,
-    data_in3  	=> x"00",
+    data_in3  	=> pokey_audio1,
     
     audio_out 	=> audio_dac
   );
@@ -646,6 +648,7 @@ begin
     end if;
     gpio_spp_data(13) <= sigmadelta_spp_data(1); -- PPS14 : SIGMADELTA1 DATA
     gpio_spp_data(14) <= audio_dac; -- PPS14 : SIGMADELTA1 DATA
+    
     -- External interrupt lines
     ivecs(16) <= gpio_spp_read(1);
     ivecs(17) <= gpio_spp_read(2);
