@@ -4,14 +4,13 @@
 #include <zpuino-types.h>
 #include <register.h>
 
-#define POKEY_BASE IO_SLOT(device_slot)
+#define POKEY_BASE IO_SLOT(pokey_device_slot)
 #define POKEY_REG(x) REGISTER(POKEY_BASE,x)
 
 #define POKEY_REG_AUDIOCTRL 	0x08
 
 typedef enum pokey_channel {POKEY_CH_A,POKEY_CH_B,POKEY_CH_C,POKEY_CH_D} pokey_channel_t;
 
-unsigned int device_slot;
 
 /*
  * 	void setDeviceSlot(unsigned int slot);
@@ -19,7 +18,7 @@ unsigned int device_slot;
  *  Set Zpuino device slot for the given Pokey
  * 
  */ 
-void setDeviceSlot(unsigned int slot);
+void pokey_setDeviceSlot(unsigned int slot);
 
 /*
  * 	void setChannelPeriodMultiplier(pokey_channel_t channel, uint8_t multiplier);
@@ -34,7 +33,7 @@ void setDeviceSlot(unsigned int slot);
  * 	which means the closest we can get is 72 (actually 437.8 Hz).
  * 
  */
-void setChannelPeriodMultiplier(pokey_channel_t channel, uint8_t multiplier);
+void pokey_setChannelPeriodMultiplier(pokey_channel_t channel, uint8_t multiplier);
 
 /*
  * 	void setChannelControl(pokey_channel_t channel, uint8_t controlData);
@@ -64,7 +63,7 @@ void setChannelPeriodMultiplier(pokey_channel_t channel, uint8_t multiplier);
  *	this channel is kept at a flat level specified by the volume register.
  * 
  */
-void setChannelControl(pokey_channel_t channel, uint8_t controlData);
+void pokey_setChannelControl(pokey_channel_t channel, uint8_t controlData);
 
 /*
  * 	void setAudioCtrl(uint8_t controlData)
@@ -92,6 +91,13 @@ void setChannelControl(pokey_channel_t channel, uint8_t controlData);
  *		High-pass 2-4: (Needs more research): If set, the channel 2 will only play if its period is less than that of channel 4. 
  *
  */
-void setAudioCtrl(uint8_t controlData);
+void pokey_setAudioCtrl(uint8_t controlData);
+
+/*
+ * wrappers
+ * 
+ */ 
+void pokey_setChannelVolume(pokey_channel_t channel, uint8_t volume);
+void pokey_setChannelDistortion(pokey_channel_t channel, uint8_t distortion);
 
 #endif /* __POKEY_H__ */
