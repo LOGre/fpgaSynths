@@ -1,43 +1,31 @@
 #include "zpuino.h"
 #include "delay.h"
+#include "../../logsdk/src/ym2149/ym2149.h"
 
-/*
-static inline void write_dac01(void)
-{
-  const uint32_t data = (MV_TO_DAC(1600) << 0) | (MV_TO_DAC(2500) << 16);
-  SIGMADELTADATA = data;
-}
-*/
-
-static void write_dac0(unsigned int value)
-{
-#define MV_TO_DAC(__mv) ((__mv) * 19)
-  SIGMADELTADATA = value;
-}
-
-static unsigned int fade_value = 0;
+#define OUTPUTPIN 0
 
 void _zpu_interrupt(void)
 {
-  static unsigned int edge_value = 0;
-
-  /* digitalWrite(0, gpio_value); */
-  edge_value ^= 1;
-  write_dac0(edge_value * MV_TO_DAC(fade_value));
   TMR0CTL &= ~BIT(TCTLIF);
 }
 
-#define YM2149BASE IO_SLOT(10)
-#define YM2149REG(x) REGISTER(YM2149BASE,x)
-#define OUTPUTPIN 0
-
 void setup(void)
 {
-  // error proof constant note
-  YM2149REG(0x05) = 0x05;
-  YM2149REG(0x04) = 0x00;
-  YM2149REG(0x07) = 0x3B;
-  YM2149REG(0x0A) = 0x0f;
+  /* set channel C (ie. 2) freq and level */
+
+  /* first ym module */
+  setDeviceSlot(10);
+  setChannelFrequency(YM2149_CH_C, 0x0500);
+  setChannelMixerNoise(YM2149_CH_C, 1);
+  setChannelMixerTone(YM2149_CH_C, 0);
+  setChannelVolume(YM2149_CH_C, 0x0f);
+
+  /* second ym module */
+  setDeviceSlot(11);
+  setChannelFrequency(YM2149_CH_C, 0x0500);
+  setChannelMixerNoise(YM2149_CH_C, 1);
+  setChannelMixerTone(YM2149_CH_C, 0);
+  setChannelVolume(YM2149_CH_C, 0x0f);
 
   /* Serial.begin(9600); */
 
@@ -67,9 +55,9 @@ void setup(void)
   pinModePPS(15, HIGH);
   outputPinForFunction(15, IOPIN_SIGMADELTA0);
 #elif 1
-  // SPKR thru PPS
-  pinMode(OUTPUTPIN,OUTPUT);
-  pinModePPS(OUTPUTPIN,HIGH);
+  /* SPKR thru PPS */
+  pinMode(OUTPUTPIN, OUTPUT);
+  pinModePPS(OUTPUTPIN, HIGH);
   outputPinForFunction( OUTPUTPIN, 14);
 #elif 0
   pinMode(0, OUTPUT);
@@ -83,6 +71,8 @@ void setup(void)
   /* enable channel 0 */
   SIGMADELTACTL = (1 << 1) | (1 << 0);
 #endif
+
+  while (1);
 }
 
 
@@ -98,34 +88,5 @@ static inline void enable_timer_int(void)
 
 void loop(void)
 {
-  unsigned int note_index = 0;
-  unsigned int delay_index;
-
-  static const unsigned int note_freq[] =
-  { 2093, 2349, 2637, 2794, 3136, 3520, 3951, 4186 };
-
-  while (1)
-  {
-    /* reset fade value */
-    disable_timer_int();
-    fade_value = 0;
-    enable_timer_int();
-
-    /* change note every 1 sec */
-    for (delay_index = 0; delay_index < 10; ++delay_index)
-    {
-      delay(100);
-
-      disable_timer_int();
-      fade_value += 310;
-      enable_timer_int();
-    }
-
-    /* setup timer */
-    TMR0CNT = 0;
-    TMR0CMP = ((CLK_FREQ/64) / (2 * note_freq[note_index])) - 1;
-    note_index = (note_index + 1) & (8 - 1);
-
-    /* Serial.println("baz"); */
-  }
+  while (1) ;
 }
