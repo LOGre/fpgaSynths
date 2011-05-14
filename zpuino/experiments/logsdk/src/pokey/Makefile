@@ -1,7 +1,7 @@
-EXTRACFLAGS+=-I$(PWD)/..
+EXTRACFLAGS+=-I$(PWD)
 
 TARGETOBJ = pokey.o
-TARGETLIB = pokey.a 
+TARGETLIB = libpokey.a 
 TARGETHEADER = pokey.h
 	
 include $(ZPULOGSDK)/lib/Papilio250K.mak

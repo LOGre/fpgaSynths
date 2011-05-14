@@ -1,7 +1,7 @@
 EXTRACFLAGS+=-I$(PWD)
 
 TARGETOBJ = knob.o
-TARGETLIB = knob.a 
+TARGETLIB = libknob.a 
 TARGETHEADER = knob.h
 	
 include $(ZPULOGSDK)/lib/S3ESK.mak
