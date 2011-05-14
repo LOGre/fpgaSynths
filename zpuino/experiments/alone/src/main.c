@@ -11,21 +11,25 @@ void _zpu_interrupt(void)
 
 void setup(void)
 {
-  /* set channel C (ie. 2) freq and level */
+  /* set all the channels to same frequency, max level, no noise */
 
-  /* first ym module */
-  setDeviceSlot(10);
-  setChannelFrequency(YM2149_CH_C, 0x0500);
-  setChannelMixerNoise(YM2149_CH_C, 1);
-  setChannelMixerTone(YM2149_CH_C, 0);
-  setChannelVolume(YM2149_CH_C, 0x0f);
+  unsigned int slots[] = { 10, 11 };
+  unsigned int i;
+  ym2149_channel_t chan;
 
-  /* second ym module */
-  setDeviceSlot(11);
-  setChannelFrequency(YM2149_CH_C, 0x0500);
-  setChannelMixerNoise(YM2149_CH_C, 1);
-  setChannelMixerTone(YM2149_CH_C, 0);
-  setChannelVolume(YM2149_CH_C, 0x0f);
+  for (i = 0; i < sizeof(slots) / sizeof(slots[0]); ++i)
+  {
+    /* select the YM module */
+    setDeviceSlot(slots[i]);
+
+    for (chan = YM2149_CH_A; chan < YM2149_CH_MAX; ++chan)
+    {
+      setChannelFrequency(chan, 0x0500);
+      setChannelMixerNoise(chan, 1); /* 1 means disabled */
+      setChannelMixerTone(chan, 0);
+      setChannelVolume(chan, 0x0f);
+    }
+  }
 
   /* Serial.begin(9600); */
 
@@ -71,8 +75,6 @@ void setup(void)
   /* enable channel 0 */
   SIGMADELTACTL = (1 << 1) | (1 << 0);
 #endif
-
-  while (1);
 }
 
 

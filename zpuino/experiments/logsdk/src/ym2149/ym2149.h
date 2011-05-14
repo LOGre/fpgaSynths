@@ -15,7 +15,14 @@
 #define YM2149_REG_NOISE 			0x06
 
 
-typedef enum ym2149_channel {YM2149_CH_A,YM2149_CH_B,YM2149_CH_C} ym2149_channel_t;
+typedef enum ym2149_channel
+{
+  YM2149_CH_A = 0,
+  YM2149_CH_B,
+  YM2149_CH_C,
+  YM2149_CH_MAX
+} ym2149_channel_t;
+
 typedef enum ym2149_mixerType {YM2149_NOISE, YM2149_TONE} ym2149_mixerType_t;
 typedef enum ym2149_volumeType {YM2149_VOLMANUAL, YM2149_VOLENVELOPE} ym2149_volumeType_t;
 typedef enum ym2149_envelopeShape {YM2149_ENV_0000, YM2149_ENV_0100, YM2149_ENV_1000, YM2149_ENV_1001, YM2149_ENV_1010, YM2149_ENV_1011, YM2149_ENV_1100, YM2149_ENV_1101, YM2149_ENV_1110, YM2149_ENV_1111} ym2149_envelopeShape_t;
