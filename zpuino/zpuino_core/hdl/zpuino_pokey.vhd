@@ -210,7 +210,8 @@ begin
 
   p_dividers : process
   begin
-    wait until rising_edge(clk177);
+    wait until rising_edge(clk);
+    if clk177='1' then
     if (ena = '1') then
       ena_64k <= '0';
       if cnt_64k = "00000" then
@@ -227,6 +228,7 @@ begin
       else
         cnt_15k <= cnt_15k - "1";
       end if;
+    end if;
     end if;
   end process;
 
@@ -447,8 +449,8 @@ begin
     --
     -- nasty frig to easily get exact chip behaviour in high speed mode
     -- fout = fin / 2(audf + n) when n=4 or 7 in 16 bit mode
-    wait until rising_edge(clk177);
-    if (ena = '1') then
+    wait until rising_edge(clk);
+    if (ena = '1' and clk177='1') then
       tone_gen_div <= "0000";
 
       if (audctl(4) = '1') then -- chan 1/2 joined
@@ -562,8 +564,8 @@ begin
 
   p_audio_out : process
   begin
-    wait until rising_edge(clk177);
-    if (ena = '1') then
+    wait until rising_edge(clk);
+    if (ena = '1' and clk177='1') then
       for i in 1 to 4 loop
         -- filter reg
         if (tone_gen_div(3) = '1') then -- tone gen 1 clocked by gen 3
