@@ -113,9 +113,9 @@ architecture behave of s3e_eval_zpuino is
   signal tx: std_logic;
 
   constant spp_cap_in: std_logic_vector(zpuino_gpio_count-1 downto 0) :=
-    "00000000001111111111111111111111111111111111111111111111";
+    "000000000000001111111111111111111111111111111111111111111111";
   constant spp_cap_out: std_logic_vector(zpuino_gpio_count-1 downto 0) :=
-    "00000000001111111111111111111111111111111111111111111111";
+    "000000000000001111111111111111111111111111111111111111111111";
 
 
 begin
@@ -135,13 +135,15 @@ begin
   port map (
     clkin   => clk,
     rstin   => rst,
-    clkout  => sysclk,
+    clkout  => sysclk,	
     rstout  => clkgen_rst
   );
 
   FPGA_INIT_B<='0';
 
-  bufgen: for i in 0 to zpuino_gpio_count-1-3 generate
+  
+  --bufgen: for i in 0 to zpuino_gpio_count-1-3 generate
+  bufgen: for i in 0 to 52 generate
     iop: IOPAD
       port map(
         I => gpio_o(i),
@@ -159,6 +161,12 @@ begin
   rotapad: IPAD port map ( PAD => ROT_A,  O => gpio_i(53),  C => sysclk );
   rotbpad: IPAD port map ( PAD => ROT_B,  O => gpio_i(54),  C => sysclk );
   rotcpad: IPAD port map ( PAD => ROT_CENTER,  O => gpio_i(55),  C => sysclk );
+  
+  -- Slide Swirches
+  sw0_pad: IPAD port map ( PAD => GPIO(56),  O => gpio_i(56),  C => sysclk );
+  sw1_pad: IPAD port map ( PAD => GPIO(57),  O => gpio_i(57),  C => sysclk );
+  sw2_pad: IPAD port map ( PAD => GPIO(58),  O => gpio_i(58),  C => sysclk );
+  sw3_pad: IPAD port map ( PAD => GPIO(59),  O => gpio_i(59),  C => sysclk );
   
   zpuino:zpuino_top
   generic map (
