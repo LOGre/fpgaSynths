@@ -240,28 +240,28 @@ begin
   end process;
 
 
-  p_divider              : process
-  begin
-    wait until rising_edge(CLK);
-    -- / 8 when SEL is high and /16 when SEL is low
-    if (ENA = '1') then
-      ena_div <= '0';
-      ena_div_noise <= '0';
-      if (cnt_div = "0000") then
-        cnt_div <= (not I_SEL_L) & "111";
-        ena_div <= '1';
+ p_divider              : process
+ begin
+   wait until rising_edge(CLK);
+   -- / 8 when SEL is high and /16 when SEL is low
+   if (ENA = '1') then
+     ena_div <= '0';
+     ena_div_noise <= '0';
+     if divclken='1' then
+     if (cnt_div = "0000") then
+       cnt_div <= (not I_SEL_L) & "111";
+       ena_div <= '1';
 
-        noise_div <= not noise_div;
-        if (noise_div = '1') then
-          ena_div_noise <= '1';
-        end if;
-      else
-        if divclken='1' then
-          cnt_div <= cnt_div - "1";
-        end if;
-      end if;
-    end if;
-  end process;
+       noise_div <= not noise_div;
+       if (noise_div = '1') then
+         ena_div_noise <= '1';
+       end if;
+     else
+         cnt_div <= cnt_div - "1";
+     end if;
+     end if;
+   end if;
+ end process;
 
   p_noise_gen            : process
     variable noise_gen_comp : std_logic_vector(4 downto 0);
