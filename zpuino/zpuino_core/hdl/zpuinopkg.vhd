@@ -277,5 +277,21 @@ package zpuinopkg is
     data_out: out std_logic_vector(7 downto 0)
   );
   end component POKEY;
+  
+  component zpuino_SN76489 is
+  port (
+    clk:    in std_logic;
+    rst:    in std_logic;
+    write:  in std_logic_vector(wordSize-1 downto 0);
+    read:   out std_logic_vector(wordSize-1 downto 0);
+    address:   in std_logic_vector(10 downto 2);
+    we:     in std_logic;
+    re:     in std_logic;
+    busy:   out std_logic;
+    interrupt:   out std_logic;
+
+    data_out: out std_logic_vector(7 downto 0)
+  );
+  end component zpuino_SN76489;  
 
 end package zpuinopkg;
