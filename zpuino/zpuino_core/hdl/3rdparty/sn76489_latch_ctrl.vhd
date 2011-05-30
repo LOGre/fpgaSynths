@@ -131,8 +131,6 @@ begin
 
   r2_o       <= reg_q(2);
 
-  ready_o    <=   ready_q
-                when ce_n_i = '0' else
-                  '1';
+  ready_o    <=   ready_q; -- when ce_n_i = '0' else '1'; I don't get it....
 
 end rtl;
