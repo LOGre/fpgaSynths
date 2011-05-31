@@ -14,8 +14,8 @@ entity zpuino_SN76489 is
   port (
     clk:      in std_logic;
     rst:      in std_logic;
-    read:     out std_logic_vector(32-1 downto 0);
-    write:    in std_logic_vector(32-1 downto 0);
+    read:     out std_logic_vector(wordSize-1 downto 0);
+    write:    in std_logic_vector(wordSize-1 downto 0);
     address:  in std_logic_vector(10 downto 2);
     we:       in std_logic;
     re:       in std_logic;
@@ -76,7 +76,7 @@ begin
 		end if;
 	end process;
 
-	-- FSM : set current state with synchronous reset
+	-- FSM : set current state with synchronosu reset
 	state_reg: process(clk, rst)
 	begin
 		if rising_edge(clk) then
@@ -95,22 +95,22 @@ begin
 		
 		-- use case statement to show the state transistion
 		case current_state is	 
-			 when st_idle =>	-- nothing to latch
+			 when st_idle =>				-- nothing to latch
 				if we='0' then 
 					 next_state <= st_idle;
 				else
 					 next_state <= st_writeReg;
 				end if;	        
-			 when st_writeReg =>	-- we is high, data not yet read by sn76489
-				if ready='1' then 
+			 when st_writeReg =>			-- we is high, data not yet read by sn76489
+				if ready='0' then 		-- if ready low, SN76489 is busy so databus is read
 					 next_state <= st_dataRead;
-				else
+				else							-- else... databus not yet read
 					 next_state <= st_writeReg;
 				end if;
-			 when st_dataRead => -- the SN is ready to latch data	
-				if ready='1' then
+			 when st_dataRead => 		-- the SN is ready to latch data	
+				if ready='0' then			-- if ready low, SN76489 is busy so data not yet latched
 					 next_state <= st_dataRead;
-				else
+				else							-- not busy anymore, send 2nd byte if needed
 					case address is
 					  when "000000000" => 
 						next_state <= st_writeReg2;				
@@ -118,20 +118,20 @@ begin
 						next_state <= st_writeReg2;
 					  when "000000100" =>
 						next_state <= st_writeReg2;                                    
-					  when others =>
+					  when others =>		-- no 2nd byte needed, goto idle
 						next_state <= st_idle;
 					end case;			
 				end if;	
 			 when st_writeReg2 =>	-- we is high
-				if ready='1' then 
+				if ready='0' then 	-- if ready low, SN76489 is busy so databus is read
 					 next_state <= st_dataRead2;
-				else
+				else					 	-- else... databus not yet read
 					 next_state <= st_writeReg2;
 				end if;
-			 when st_dataRead2 =>	
-				if ready='1' then
+			 when st_dataRead2 =>	-- the SN is ready to latch data	
+				if ready='0' then		-- if ready low, SN76489 is busy so data not yet latched
 					 next_state <= st_dataRead2;
-				else			
+				else						-- not busy anymore, finish ! goto idle
 					 next_state <= st_idle;
 				end if;				
 			 when others => null;
@@ -143,33 +143,33 @@ begin
 		begin
 		 
 			-- default value is don't care
-			d <= (others => DontCareValue);
+			d <= (others => 'X');
 			we_n <= '1';
 			ce_n <= '1';
 			busy <= '0';	
 
 			case current_state is
-				when st_idle => 		-- nothing to do
+				when st_idle => 		-- nothing to do, ce and we high
 					d <= (others => '0');
 					we_n <= '1';
 					ce_n <= '1';
 					busy <= '0';	
-				when st_writeReg =>	-- we is high
+				when st_writeReg =>	-- tell the SN76489 we want to send data : we low, ce low
 					d <= d_i1;
 					we_n <= '0';
 					ce_n <= '0';
 					busy <= '1';  
-				when st_dataRead =>	-- ready is high
+				when st_dataRead =>	-- the data is being latched, tell the SN76489 we have finished: ce high
 					d <= d_i1;
 					we_n <= '1';
 					ce_n <= '1';
 					busy <= '1';	
-				when st_writeReg2 =>	-- we is high
+				when st_writeReg2 =>	-- tell the SN76489 we want to send data : we low, ce low
 					d <= d_i2;
 					we_n <= '0';
 					ce_n <= '0';
 					busy <= '1'; 
-				 when st_dataRead2 =>	-- ready is high
+				 when st_dataRead2 => -- the data is being latched, tell the SN76489 we have finished: ce high
 					d <= d_i2;
 					we_n <= '1';
 					ce_n <= '1';

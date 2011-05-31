@@ -70,7 +70,7 @@ ARCHITECTURE behavior OF tb IS
    signal data_out : std_logic_vector(7 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 10.41 ns;
+   constant clk_period : time := 10.41 ns; -- 50 ns; --10.41 ns;
  
 BEGIN
  
@@ -103,30 +103,74 @@ BEGIN
    begin		
       -- hold reset state for 100 ns.
 		rst <= '1';
-      wait for 20 ns;	
+      wait for 100 ns;	
 		rst <= '0';
 
-      wait for clk_period*10;
+      wait for clk_period*100;
 		we <= '1';
-		address <= "000000010";
-		write <= x"00000312";
+		address <= "000000000";
+		write <= x"0000011c";
 		
-		wait for clk_period*10;
+		wait for clk_period*100;
 		loopBusy: WHILE (busy = '1') LOOP 
 		WAIT FOR clk_period;
 		END LOOP loopBusy;
 		we <= '0';
 		
-      wait for clk_period*10;
+      wait for clk_period*100;
 		we <= '1';
 		address <= "000000001";
-		write <= x"00000006";		
+		write <= x"00000000";		
 
-		wait for clk_period*10;
+		wait for clk_period*100;
 		loopBusy2: WHILE (busy = '1') LOOP 
 		WAIT FOR clk_period;
 		END LOOP loopBusy2;
 		we <= '0';
+		
+--      wait for clk_period*100;
+--		we <= '1';
+--		address <= "000000010";
+--		write <= x"0000011c";
+--		
+--		wait for clk_period*100;
+--		loopBusy3: WHILE (busy = '1') LOOP 
+--		WAIT FOR clk_period;
+--		END LOOP loopBusy3;
+--		we <= '0';
+--		
+--      wait for clk_period*100;
+--		we <= '1';
+--		address <= "000000011";
+--		write <= x"00000000";		
+--
+--		wait for clk_period*100;
+--		loopBusy4: WHILE (busy = '1') LOOP 
+--		WAIT FOR clk_period;
+--		END LOOP loopBusy4;
+--		we <= '0';		
+--		
+--      wait for clk_period*100;
+--		we <= '1';
+--		address <= "000000100";
+--		write <= x"0000011c";
+--		
+--		wait for clk_period*100;
+--		loopBusy5: WHILE (busy = '1') LOOP 
+--		WAIT FOR clk_period;
+--		END LOOP loopBusy5;
+--		we <= '0';
+--		
+--      wait for clk_period*100;
+--		we <= '1';
+--		address <= "000000101";
+--		write <= x"00000000";		
+--
+--		wait for clk_period*100;
+--		loopBusy6: WHILE (busy = '1') LOOP 
+--		WAIT FOR clk_period;
+--		END LOOP loopBusy6;
+--		we <= '0';			
 
       wait;
    end process;
