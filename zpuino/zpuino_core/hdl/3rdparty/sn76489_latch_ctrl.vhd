@@ -93,15 +93,16 @@ begin
 
     elsif clock_i'event and clock_i = '1' then
       -- READY Flag Output ----------------------------------------------------
-      if ready_q = '0' and we_q then
+      if ready_q = '1' and we_q then
         if clk_en_i then
-          -- assert READY when write access happened
-          ready_q <= '1';
+          -- deassert READY when write access happened (=busy)
+          ready_q <= '0';
         end if;
       elsif ce_n_i = '1' then
-        -- deassert READY when access has finished
-        ready_q <= '0';
+        -- assert READY when access has finished (=available)
+        ready_q <= '1';
       end if;
+
 
       -- Register Selection ---------------------------------------------------
       if ce_n_i = '0' and we_n_i = '0' then
@@ -131,6 +132,6 @@ begin
 
   r2_o       <= reg_q(2);
 
-  ready_o    <=   ready_q; -- when ce_n_i = '0' else '1'; I don't get it....
+  ready_o    <= ready_q when ce_n_i = '0' else '1';
 
 end rtl;
