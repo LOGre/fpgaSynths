@@ -70,6 +70,9 @@
 #define FPGA_PIN_L14 57
 #define FPGA_PIN_H18 58
 #define FPGA_PIN_N17 59
+#define FPGA_PIN_V4 60
+#define FPGA_PIN_H13 61
+#define FPGA_PIN_V18 62
 
 #define FPGA_LED_0 FPGA_PIN_F12
 #define FPGA_LED_1 FPGA_PIN_E12
