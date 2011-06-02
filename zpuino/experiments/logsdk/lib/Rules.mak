@@ -29,10 +29,10 @@ $(TARGET).size: $(TARGET).hex
 	$(SIZE) $< > $@
 	
 clean:
-	-rm $(TARGETOBJ)
+	-rm -f $(TARGETOBJ)
 	
 fclean: clean
-	-rm $(TARGET).bin $(TARGET).elf $(TARGET).hex $(TARGET).size
+	-rm -f $(TARGET).bin $(TARGET).elf $(TARGET).hex $(TARGET).size
 	
 program:
 	zpuinoprogrammer -d /dev/ttyUSB0 -v -v -b $(TARGET).bin -s 115200 	
