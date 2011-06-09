@@ -1,6 +1,6 @@
 #include <serial.h>
 
-static unsigned int ioslot = 1;
+static unsigned int ioslot = IO_SLOT(1);
 
 /*
  * 
