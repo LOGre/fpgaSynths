@@ -83,14 +83,31 @@ void _zpu_interrupt(void)
 	
 	ymbuffer[7] = note; // fine freq env
 	
+	static int cutoffperiod = 1;
+	if(!(cutoffperiod % 90))
+	{
+		static int cutoff_down = 1;
+		if(cutoff_down)
+		{
+			if(cutoff > 0x9) cutoff -= 2;
+			else cutoff_down = 0;
+		}
+		else
+		{
+			if(cutoff < 0x18) cutoff++;
+			else cutoff_down = 1;
+		}
+	}
+	cutoffperiod++;
+	
 	buzzerFreq = cutoff;
 	buzzerFreq -= speedCounter;
 	
 	note <<= 3;
 	note /= buzzerFreq;
 	
-	ymbuffer[9] = note & 0xFF; // rough freq tone A
-	ymbuffer[11] = (note >> 8) & 0xFF;  // fine freq tone A
+	ymbuffer[11] = note & 0xFF; // rough freq tone A
+	ymbuffer[9] = (note >> 8) & 0xFF;  // fine freq tone A
 	
 	int i=0;
 	for(i=0; i<6; i++)
@@ -147,7 +164,7 @@ void setupTimer()
 {
 	// Setup timer for 50hz
 	TMR0CNT = 0;                          /* Clear timer counter */
-	TMR0CMP = ((CLK_FREQ/50) / 5) - 1;   /* Set up timer cmp to 30000 ticks, /64 prescaler */
+	TMR0CMP = ((CLK_FREQ/64) / 50) - 1;   /* Set up timer cmp to 30000 ticks, /64 prescaler */
 	//TMR0CMP = (CLK_FREQ/(5*1024))-1;
 	
 	//TMR0CTL = BIT(TCTLENA)|BIT(TCTLCCM)|BIT(TCTLDIR)|BIT(TCTLCP2)|BIT(TCTLCP1)|BIT(TCTLCP0)|BIT(TCTLIEN);  /* set prescaler to 64 (16 would be enough...)*/
@@ -179,9 +196,9 @@ void setup(void)
 	LCD_init();	
 	
 	// init SPKR thru PPS
-	pinMode(OUTPUTPIN,OUTPUT);
-	pinModePPS(OUTPUTPIN,HIGH);
-	outputPinForFunction( OUTPUTPIN, 14); 	
+	//pinMode(OUTPUTPIN,OUTPUT);
+	//pinModePPS(OUTPUTPIN,HIGH);
+	//outputPinForFunction( OUTPUTPIN, 14); 	
 	
 	pokey_setDeviceSlot(12); 
 	pokey_setAudioCtrl(0x0); // default settings
