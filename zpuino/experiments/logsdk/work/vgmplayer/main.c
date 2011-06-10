@@ -9,9 +9,8 @@
 
 #define SN76489BASE IO_SLOT(14)
 #define SN76489REG(x) REGISTER(SN76489BASE,x)
-#define OUTPUTPIN FPGA_PIN_D7
 
-#define QUEUE_MAX_SIZE ((16+8)*8)
+#define QUEUE_MAX_SIZE (32*7)
 
 void setled(unsigned int count);
 unsigned ledforvalue(unsigned int value);
@@ -19,7 +18,7 @@ unsigned ledforvalue(unsigned int value);
 void _zpu_interrupt()
 {
   // read 8 registers = 1 frame, only if the queue is not empty (at least one frame)
-  if(buffer_count() > (16+8))
+  if(buffer_count() > 32)
   {
     int i = 0;
     unsigned int snReg;
@@ -28,13 +27,14 @@ void _zpu_interrupt()
     // A frame dump is composed of the 8 SN76489 registers (16bits) : reg then value, so 16+8 bytes per frame
     for(i=0; i<8; i++)
     {
-      snReg = buffer_pop();
+      snReg = (buffer_pop() << 8);
+      snReg |= buffer_pop();
       snRegVal = (buffer_pop() << 8);
       snRegVal |= buffer_pop();
       // that's a 16bit word !
     
-      // send the reg value to the SN
-      SN76489REG(snReg) = snRegVal;    
+      // send the reg value to the SN76489 if not $FFFF
+      if(snRegVal < 4096) SN76489REG(snReg) = snRegVal;  
     }
     
     // display the buffer fillrate using leds
@@ -83,9 +83,9 @@ void setled(unsigned int count)
 
 	// based on count, decide how many leds to show (ugly fast code)
 	unsigned int maxLeds = 0;
-	unsigned int ratio = QUEUE_MAX_SIZE / 8;
+	unsigned int ratio = QUEUE_MAX_SIZE / 7;
 
-	if(count < 28) maxLeds = 0;
+	if(count < 32) maxLeds = 0;
 	else if (count >= (ratio*1) && count < (ratio*2)) maxLeds = 1;
 	else if (count >= (ratio*2) && count < (ratio*3)) maxLeds = 2;
 	else if (count >= (ratio*3) && count < (ratio*4)) maxLeds = 3;
@@ -124,15 +124,11 @@ void setup()
 	}  
 
 	// SPKR thru PPS
-	pinMode(OUTPUTPIN,OUTPUT);
-	pinModePPS(OUTPUTPIN,HIGH);
-	outputPinForFunction( OUTPUTPIN, 14);  
+	//pinMode(OUTPUTPIN,OUTPUT);
+	//pinModePPS(OUTPUTPIN,HIGH);
+	//outputPinForFunction( OUTPUTPIN, 14);  
 
 	setled(0);
-
-	// error proof constant note : A 440 on tone A max vol
-	SN76489REG(0x00) = 0x011C;
-	SN76489REG(0x01) = 0x00;
 
 }
 
@@ -157,7 +153,7 @@ void loop()
 		while (!serial_available());
 
 		// if the queue is not full and data available, fill it
-		if(buffer_count() < QUEUE_MAX_SIZE - (16+8))
+		if(buffer_count() < QUEUE_MAX_SIZE - 32)
 		{
 		  buffer_push(serial_read());
 		}
