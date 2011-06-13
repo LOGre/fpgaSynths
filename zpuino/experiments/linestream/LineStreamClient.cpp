@@ -21,7 +21,8 @@ LineStreamClient::LineStreamClient(int fdr,int fdw): fdread(fdr), fdwrite(fdw)
 }
 
 #define TRANSMITBYTE(x) send(x)
-#define LOG(x...) do { fprintf(stderr,"Client: "); fprintf(stderr,x); } while (0);
+#define LOG(x...) 
+// do { fprintf(stderr,"Client: "); fprintf(stderr,x); } while (0);
 #else
 
 #include "HardwareSerial.h"
@@ -73,78 +74,118 @@ int LineStreamClient::receiveFrame(unsigned char *dest, unsigned maxsize)
 	unsigned int bIn;
 	unsigned int ctrl = 0;
 	unsigned int checksum=0;
+	int pass = 0;
 
+	LOG("ENTER dest %X ptr %X esc %d inF %d tx %d rx %d\n", (unsigned) dest, (unsigned) dptr, unEscaping, inFrame, txSeq, rxSeq);
+	
 	state = CONTROL;
 
-	do {
+	do 
+	{
 		bIn = readData();
+		LOG("Pass %d Processing %X\n",pass++, bIn);
 
-		if (bIn==HDLC_escapeFlag) {
+		if (bIn==HDLC_escapeFlag) 
+		{
+			LOG("Processing HDLC_escapeFlag\n")
 			unEscaping=true;
 			continue;
-		}
-		if (bIn==HDLC_frameFlag && !unEscaping) {
-			if (inFrame) {
+		}	
+		
+		if (bIn==HDLC_frameFlag && !unEscaping) 
+		{
+			if (inFrame) 
+			{
 				inFrame = false;
 				LOG("End frame\n");
 				/* Check frame type */
-				if (state==CONTROL)
-					return -1; /* Error, no data */
+				
+				if (state==CONTROL)	return -1; /* Error, no data */
+				
 				state = CONTROL;
+				
 				/* Checksum computation */
-				if (checksum!=0) {
+				if (checksum!=0) 
+				{
                     LOG("Checksum error\n");
 					continue;
-				}
-				if (!(ctrl & 0x80)) {
+				}				
+				
+				if (!(ctrl & 0x80)) 
+				{
+					
 					/* Control frame */
+					LOG("!!!Control frame : %X\n", bIn);
 					handleControl(ctrl,dest, dptr-dest);
+					if (ctrl==HDLC_Control_Reset) 
+					{
+						LOG("*** Processing HDLC_Control_Reset flag\n");
+						*--dptr;
+					}
 					continue;
-				} else {
+				} 
+				else 
+				{
 					LOG("Data frame\n");
 					/* Data frame */
-					if ( (ctrl & 0x7) != rxSeq ) {
+					if ( (ctrl & 0x7) != rxSeq ) 
+					{
 						/* out of order */
 						LOG("Out of order, expected %d got %d\n", rxSeq, ctrl&0x7);
 						sendNAK();
 						continue;
 					}
 				}
+				
 				/* Ack this frame */
 				LOG("Acking this frame\n");
 				rxSeq++;
 				rxSeq &= 0x7;
 
 				sendACK();
-
+		
+				// removing chk
+				*--dptr = '\0';
+		
 				return dptr - dest;
 
-			} else {
+			} 
+			else 
+			{
 				/* Beginning of packet */
 				LOG("Start frame\n");
 				inFrame = true;
 				state = CONTROL;
 		    	checksum=0xaa;
 			}
-		} else {
+		} 
+		else 
+		{
 			if (!inFrame)
                 continue;
-			if (unEscaping) {
+			if (unEscaping) 
+			{
 				bIn^=HDLC_escapeXOR;
 				unEscaping=false;
 			}
+			LOG("Chk:%X received: %X checking: \n", checksum, (char) bIn, checksum ^ bIn);
 			checksum^=bIn;
-			switch (state) {
-			case CONTROL:
-				ctrl = bIn;
-				state=DATA;
-				break;
-			case DATA:
-				if (maxsize-- == 0) {
-					return -1;  /* Overflow */
-				}
-				*dptr++=bIn;
-				break;
+			
+			switch (state) 
+			{
+				case CONTROL:
+					LOG("State: Control : %X\n", (char) bIn);
+					ctrl = bIn;
+					state=DATA;
+					break;
+				case DATA:
+					LOG("State: Data : %X\n", (char) bIn);
+					if (maxsize-- == 0) 
+					{
+						return -1;  /* Overflow */
+					}
+					*dptr++=bIn;
+					break;
 			}
 		}
 	} while (1);
@@ -163,15 +204,16 @@ void LineStreamClient::sendFrame1(unsigned int value)
 void LineStreamClient::handleControl(unsigned char control, unsigned char *buf, unsigned datasize)
 {
 	/* We received a control sequence */
-	switch (control) {
-
-	case HDLC_Control_Reset:
-		/* Reset */
-		sendFrame1(HDLC_Control_ResetAck);
-		rxSeq=txSeq=0;
-		break;
-	default:
-		break;
+	switch (control) 
+	{
+		case HDLC_Control_Reset:
+			LOG("Sending Reset ack\n");
+			/* Reset */
+			sendFrame1(HDLC_Control_ResetAck);
+			rxSeq=txSeq=0;
+			break;
+		default:
+			break;
 	}
 }
 
