@@ -3,7 +3,10 @@ LIBS=-lutil -lpthread
 
 all: LineStreamServer
 
-LineStreamServer: main.o TransmitQueue.o LineStreamServer.o LineStreamClient.o
+clean:
+	@rm -rf *.o LineStreamServer
+
+LineStreamServer: main.o TransmitQueue.o LineStreamServer.o LineStreamClient.o Serial.o
 	$(CXX) -o $@ $+ $(LIBS)
 	
 	

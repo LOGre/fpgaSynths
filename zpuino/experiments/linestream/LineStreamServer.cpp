@@ -15,8 +15,6 @@
 #define LOG(x...) 
 //do { fprintf(stderr,"Server: "); fprintf(stderr,x); fflush(stderr); } while (0);
 
-enum { CONTROL, DATA } state;
-
 bool unEscaping, inFrame;
 
 static unsigned char const HDLC_Control_Reset = 0x00;
@@ -28,25 +26,46 @@ static unsigned char const HDLC_frameFlag = 0x7E;
 static unsigned char const HDLC_escapeFlag = 0x7D;
 static unsigned char const HDLC_escapeXOR = 0x20;
 
-	
-LineStreamServer::LineStreamServer(int fdr, int fdw): fdread(fdr), fdwrite(fdw) 
-{
-}
+/*
+ * Constructors 
+ * 
+ */	
+LineStreamServer::LineStreamServer(int fdr, int fdw): fdread(fdr), fdwrite(fdw), commType(PIPE) {}
+LineStreamServer::LineStreamServer(serial_handle_t* handle): handle(handle), commType(SERIAL) {}
 
-void LineStreamServer::stream(const unsigned char*data, unsigned size) {
+/*
+ * Public methods
+ * 
+ */ 
+void LineStreamServer::stream(const unsigned char*data, unsigned size) 
+{
 	txQueue.queueAndTransmit( *this, new DataFrame(data,size));
 }
 
-bool LineStreamServer::canTransmit() const {
+bool LineStreamServer::canTransmit() const 
+{
 	return !txQueue.full();
 }
 void LineStreamServer::sendRaw(unsigned char b)
 {
-	write(fdwrite,&b,1);
+	if(commType == PIPE)
+	{
+		write(fdwrite,&b,1);
+	}
+	else if(commType == SERIAL)
+	{
+		size_t nwritten = 0;
+		if (serial_write(handle, &b, 1, &nwritten) == -1) throw WriteException();
+	}
+	else
+	{
+		throw NoCommTypeException();
+	}
 }
 void LineStreamServer::sendByte(unsigned char b)
 {
-	if (b==HDLC_frameFlag || b==HDLC_escapeFlag) {
+	if (b==HDLC_frameFlag || b==HDLC_escapeFlag) 
+	{
 		sendRaw(HDLC_escapeFlag);
 		b ^= HDLC_escapeXOR;
 	}
@@ -57,7 +76,8 @@ void LineStreamServer::sendByte(unsigned char b)
 void LineStreamServer::sendData(const unsigned char *buf, unsigned size)
 {
 	printf("-> Sending all data bytes\n");
-	for(;size>0;size--,buf++) {
+	for(;size>0;size--,buf++) 
+	{
 		sendByte(*buf);
 	}
 }
@@ -101,24 +121,36 @@ int LineStreamServer::readData(unsigned timeout)
 {
 	unsigned char v;
 	struct timeval tv;
-	fd_set rfs;
 
 	tv.tv_sec=timeout/1000;
 	tv.tv_usec=(timeout%1000)*1000;
-
-	FD_ZERO(&rfs);
-	FD_SET(fdread, &rfs);
-
-	switch (select(fdread+1,&rfs,NULL,NULL,&tv)) {
-	default:
-		if (read(fdread,&v,1)!=1)
-			return -1;
-		return v;
-		break;
-	case 0:
-	case -1:
-		return -1;
+	
+	if(commType == PIPE)
+	{
+		fd_set rfs;
+		FD_ZERO(&rfs);
+		FD_SET(fdread, &rfs);
+		switch (select(fdread+1,&rfs,NULL,NULL,&tv)) 
+		{
+			default:
+				if (read(fdread,&v,1)!=1) return -1;
+				return v;
+			break;
+			case 0:
+			case -1:
+				return -1;
+		}
 	}
+	else if(commType == SERIAL)
+	{
+		size_t size = 0;
+		if(serial_read(handle, &v, 1, &size) == -1) throw WriteException();
+	}
+	else
+	{
+		throw NoCommTypeException();
+	}
+	
 }
 
 void LineStreamServer::transmit(const DataFrame *frame, unsigned sequence)

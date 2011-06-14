@@ -4,13 +4,18 @@
 #include "Transmitter.h"
 #include "TransmitQueue.h"
 #include "DataFrame.h"
+#include "Serial.h"
 	
 class LineStreamServer: public Transmitter
 {
 	
 public:
+	enum e_commType {PIPE, SERIAL};
+	enum e_state { CONTROL, DATA };
+	
 	LineStreamServer();
 	LineStreamServer(int fdread, int fdwrite);
+	LineStreamServer(serial_handle_t* handle);
 	void stream(const unsigned char*data, unsigned size);
 	bool canTransmit() const;
 	void sendRaw(unsigned char b);
@@ -26,13 +31,13 @@ public:
 	void sendACK();
 	Frame receiveFrame(unsigned timeout);
 	
-public:
+private:
 	unsigned char buffer[128];
 	int fdread,fdwrite;
+	serial_handle_t * handle;
 	TransmitQueue txQueue;
-	
-	
-protected:
+	e_commType commType;
+	e_state state;
 
 
 };

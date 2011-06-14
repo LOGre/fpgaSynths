@@ -3,36 +3,48 @@
 
 class MyException: public std::exception
 {
-public:
+	public:
 	MyException(const std::string &s): reason(s) {}
 	~MyException() throw () {}
 
 	virtual const char *what() const throw () { return reason.c_str(); }
-private:
+	private:
 	std::string reason;
 };
 
 class ReadException: public MyException
 {
-public:
+	public:
 	ReadException(): MyException("read") {};
+};
+
+class WriteException: public MyException
+{
+	public:
+	WriteException(): MyException("write") {};
+};
+
+class NoCommTypeException: public MyException
+{
+	public:
+	NoCommTypeException(): MyException("no comm type defined") {};
 };
 
 class FrameTooShortException: public MyException
 {
-public:
+	public:
 	FrameTooShortException(): MyException("short frame") {};
 };
 
 class BufferFullException: public MyException
 {
-public:
+	public:
 	BufferFullException(): MyException("buffer full") {};
 };
 
 class ChecksumErrorException: public MyException
 {
-public:
+	public:
 	ChecksumErrorException(): MyException("checksum error") {};
 };
 

@@ -46,9 +46,9 @@ static void send_sync_sequence(serial_handle_t* h)
 */
 
 #define LOG(x...) do { fprintf(stderr,"Server: "); fprintf(stderr,x); fflush(stderr); } while (0);
+#define USEDEBUGPIPE
 
 bool do_exit = false;
-
 
 void *receiverThread(void *arg)
 {
@@ -114,16 +114,31 @@ void *transmitterThread(void *arg)
 
 int main()
 {
-	// pipes
-	int fda[2], fdb[2];
+	// file descriptors
 	pid_t pid;
     int ret;
 
+	serial_handle_t handle;
+	static const serial_conf_t conf =
+    {
+		115200,
+		8,
+		SERIAL_PARITY_DISABLED,
+		1
+    };
+
+	#ifdef USEDEBUGPIPE
+	int fda[2], fdb[2];
 	pipe(fda);
 	pipe(fdb);
-
 	LineStreamServer *server = new LineStreamServer(fda[0],fdb[1]);
+	#else
+	serial_open(&handle, "/dev/ttyUSB0");
+	serial_set_conf(&handle, &conf);
+	LineStreamServer *server = new LineStreamServer(&handle);
+	#endif
 
+	#ifdef USEDEBUGPIPE
 	switch (fork()) 
 	{
 		case 0:
@@ -160,6 +175,7 @@ int main()
 	/* Close other ends of pipe */
 	close(fda[1]);
 	close(fdb[0]);
+	#endif
 
     pthread_t receiverThreadID, transmitterThreadID;
 
