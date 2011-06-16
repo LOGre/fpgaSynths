@@ -254,6 +254,7 @@ int serial_set_conf(serial_handle_t* h, const serial_conf_t* c)
 
 int serial_get_conf(serial_handle_t* h, serial_conf_t* c)
 {
+	printf("Setting serial conf\n");
 	struct termios termios;
 	memset(c, 0, sizeof(serial_conf_t));
 	memset(&termios, 0, sizeof(struct termios));
@@ -287,7 +288,10 @@ int serial_read(serial_handle_t* h,	void* buf,size_t size, size_t* nread)
 		printf("read() == %u\n", errno);
 		return -1;
 	}
+	
 	*nread = n;
+	
+	usleep(1000);
 
 	return 0;
 }

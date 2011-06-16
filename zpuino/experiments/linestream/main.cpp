@@ -32,7 +32,15 @@
 #include <pty.h> // Only for testing
 #include <sys/wait.h> // Only for testing
 
-#include "LineStreamClient.h"
+//#define USEDEBUGPIPE
+
+#ifdef USEDEBUGPIPE
+//#include "LineStreamClient.h"
+extern "C" {
+#include "lib/linestream.h"
+}
+#endif
+
 #include "LineStreamServer.h"
 #include "DataFrame.h"
 
@@ -46,7 +54,7 @@ static void send_sync_sequence(serial_handle_t* h)
 */
 
 #define LOG(x...) do { fprintf(stderr,"Server: "); fprintf(stderr,x); fflush(stderr); } while (0);
-#define USEDEBUGPIPE
+
 
 bool do_exit = false;
 
@@ -54,18 +62,23 @@ void *receiverThread(void *arg)
 {
 	LineStreamServer *server = (LineStreamServer*)arg;
 
-	while (!do_exit) {
+	while (!do_exit) 
+	{
 		try {
-			LOG("Server: Waiting for frame\n");
+			LOG("Waiting for frame\n");
 			Frame f = server->receiveFrame(-1);
-			if (server->handleIfControlFrame(f)) {
+			if (server->handleIfControlFrame(f)) 
+			{
                 /* Data frame */
 			}
 		} catch (...) {
-			LOG("Server: Exception getting frame\n");
+			LOG("Exception getting frame\n");
 		}
 
 	}
+	
+	LOG("Exiting receiverThread\n");
+	
 	return NULL;
 }
 
@@ -73,41 +86,54 @@ void *receiverThread(void *arg)
 void *transmitterThread(void *arg)
 {
 	// file
-	struct stat st;
-    int fd = open("test.bin", O_RDONLY);	
-	const uint8_t * addr;
+	struct stat st1, st2;
+    int fd1 = open("test.log", O_RDONLY);	
+    //int fd2 = open("saint_505_2.log", O_RDONLY);	
+	const uint8_t * addr1;
+	//const uint8_t * addr2;
 	size_t size, nwritten, saved_size;
 	const uint8_t* saved_addr;
 	
 	// get server ptr
 	LineStreamServer *server = (LineStreamServer*)arg;
 
-	// map file
-	fstat(fd, &st);
+	// map files
+	fstat(fd1, &st1);
+	//fstat(fd2, &st2);
 
-	addr = (const uint8_t*)mmap(NULL, st.st_size, PROT_READ, MAP_SHARED, fd, 0);
-	if (addr == MAP_FAILED) perror("mmap");
-	size = st.st_size;
+	addr1 = (const uint8_t*)mmap(NULL, st1.st_size, PROT_READ, MAP_SHARED, fd1, 0);
+	if (addr1 == MAP_FAILED) perror("mmap file 1");
+	size = st1.st_size;
+	
+	//addr2 = (const uint8_t*)mmap(NULL, st2.st_size, PROT_READ, MAP_SHARED, fd2, 0);
+	//if (addr2 == MAP_FAILED) perror("mmap file 2");
 
-	saved_size = st.st_size;
-	saved_addr = addr;
+	saved_size = st1.st_size;
+	saved_addr = addr1;
 
 
 	int sent = 0;
 	do {
 		if ( server->canTransmit()) 
 		{
-			server->stream((const unsigned char*) addr,28);	
-			addr += 28;	
+			server->stream((const unsigned char*) addr1,28);	
+			//server->stream((const unsigned char*) addr2,28);
+			addr1 += 28;	
+			//addr2 += 28;
 			sent++;
 		} 
 		else 
 		{
             LOG("TX is full...wait !!!\n");
-			usleep(2000000);
+			usleep(10000);
 		}
 	} 
 	while (sent<saved_size/28);
+	
+	close(fd1);
+	//close(fd2);
+	
+	LOG("Exiting transmitterThread\n");
 
 	return 0;
 }
@@ -135,6 +161,8 @@ int main()
 	#else
 	serial_open(&handle, "/dev/ttyUSB0");
 	serial_set_conf(&handle, &conf);
+	printf("/dev/ttyUSB0 is opened\n");
+		
 	LineStreamServer *server = new LineStreamServer(&handle);
 	#endif
 
@@ -145,14 +173,17 @@ int main()
 		{
 			unsigned char buffer[128];
 			buffer[0] = '\0';
-			LineStreamClient client(fdb[0], fda[1]);
+			//LineStreamClient client(fdb[0], fda[1]);
+			linestream_init(fdb[0], fda[1]);
+			
 			close(fdb[1]);
 			close(fda[0]);
 
 			int r = 1;
 			do
 			{
-				r = client.receiveFrame(buffer,sizeof(buffer));
+				r = linestream_receiveFrame(buffer,sizeof(buffer));
+				//r = client.receiveFrame(buffer,sizeof(buffer));
 				// Slow down.
 				usleep(800000);
 				
@@ -183,8 +214,12 @@ int main()
 
 	pthread_create(&receiverThreadID,NULL,&receiverThread, (void*)server);
 	pthread_create(&transmitterThreadID,NULL,&transmitterThread, (void*)server);
-
+	
+	while(1);
+	
 	waitpid(-1,&ret,0);
+
+	LOG("bye bye\n");
 
     delete (server) ;
 }

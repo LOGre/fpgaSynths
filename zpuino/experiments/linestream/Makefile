@@ -1,5 +1,5 @@
-CXXFLAGS=-O0 -g
-LIBS=-lutil -lpthread
+CXXFLAGS=-O0 -g -I"lib/"
+LIBS=-lutil -lpthread -L./lib/ ./lib/liblinestream.a -llinestream
 
 all: LineStreamServer
 
