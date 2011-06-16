@@ -5,21 +5,17 @@
 #include "linestream.h"
 #include "linestream_internal.h"
 
-
-#define TRANSMITBYTE(x) serial_write(x)
-#define LOG(x...)
-
-int unEscaping=0, inFrame=0;
+static int unEscaping=0, inFrame=0;
 unsigned int txSeq, rxSeq;
 
 void sendByte(unsigned char b)
 {
 	if (b==HDLC_frameFlag || b==HDLC_escapeFlag) 
 	{
-		TRANSMITBYTE(HDLC_escapeFlag);
+		serial_write(HDLC_escapeFlag);
 		b ^= HDLC_escapeXOR;
 	}
-	TRANSMITBYTE(b);
+	serial_write(b);
 }
 
 void sendData(const unsigned char *buf, unsigned size)
@@ -58,16 +54,14 @@ int linestream_receiveFrame(unsigned char *dest, unsigned maxsize)
 		{
 			if (inFrame) 
 			{
-				inFrame = 0;
-				LOG("End frame\n");
-				
+				inFrame = 0;				
 				/* Check frame type */
 				if (state==CONTROL)	return -1; /* Error, no data */
 				state = CONTROL;
 				
 				/* Checksum computation */
-				if (checksum!=0) {
-                    LOG("Checksum error\n");
+				if (checksum!=0) 
+				{
 					continue;
 				}				
 				
@@ -77,27 +71,23 @@ int linestream_receiveFrame(unsigned char *dest, unsigned maxsize)
 					handleControl(ctrl,dest, dptr-dest);
 					if (ctrl==HDLC_Control_Reset) 
 					{
-						/* Reset Ack frame */
-						LOG("Processing HDLC_Control_Reset flag\n");
+						/* Reset Ack frame */						
 						*--dptr;
 					}						
 					continue;
 				} 
 				else 
 				{
-					LOG("Data frame\n");
 					/* Data frame */
 					if ( (ctrl & 0x7) != rxSeq ) 
 					{
 						/* out of order */
-						LOG("Out of order, expected %d got %d\n", rxSeq, ctrl&0x7);
 						sendNAK();
 						continue;
 					}
 				}
 				
 				/* Ack this frame */
-				LOG("Acking this frame\n");
 				rxSeq++;
 				rxSeq &= 0x7;
 
@@ -112,7 +102,6 @@ int linestream_receiveFrame(unsigned char *dest, unsigned maxsize)
 			else 
 			{
 				/* Beginning of packet */
-				LOG("Start frame\n");
 				inFrame = 1;
 				state = CONTROL;
 		    	checksum=0xaa;
@@ -152,11 +141,14 @@ int linestream_receiveFrame(unsigned char *dest, unsigned maxsize)
 void sendFrame1(unsigned int value)
 {
     unsigned int checksum=0xaa;
-	TRANSMITBYTE(HDLC_frameFlag);
+	serial_write(HDLC_frameFlag);
+	
 	sendByte(value);
+	
 	checksum ^= value;
 	sendByte(checksum);
-	TRANSMITBYTE(HDLC_frameFlag);
+	
+	serial_write(HDLC_frameFlag);
 }
 
 void handleControl(unsigned char control, unsigned char *buf, unsigned datasize)
@@ -166,21 +158,8 @@ void handleControl(unsigned char control, unsigned char *buf, unsigned datasize)
 	{
 		/* Reset */
 		sendFrame1(HDLC_Control_ResetAck);
-		rxSeq=txSeq=0;		
+		rxSeq=txSeq=0;	
 	}
-	
-	/*
-	switch (control) 
-	{
-		case HDLC_Control_Reset:
-			// Reset
-			sendFrame1(HDLC_Control_ResetAck);
-			rxSeq=txSeq=0;	
-			break;
-		default:
-			break;
-	}
-	*/
 }
 
 
@@ -191,6 +170,5 @@ void sendNAK()
 
 void sendACK()
 {
-	LOG("Sending ack\n");
 	sendFrame1(HDLC_Control_ACK | rxSeq);
 }
