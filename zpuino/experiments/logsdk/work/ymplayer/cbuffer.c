@@ -3,8 +3,8 @@
 
 volatile unsigned int head = 0, tail = 0;
 volatile unsigned int itemCount = 0;
-static const unsigned int mask = (1<<8)-1;
-uint8_t buffer[1<<8];
+static const unsigned int mask = (1<<10)-1;
+uint8_t buffer[1<<10];
 
 unsigned buffer_increment(unsigned int i);
 

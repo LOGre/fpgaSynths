@@ -1,6 +1,6 @@
 TARGET = main
-TARGETOBJ = main.o cbuffer.o
-LIBS += $(ZPULOGSDK)/lib/libym2149.a $(ZPULOGSDK)/lib/liblcd.a $(ZPULOGSDK)/lib/libserial.a
+TARGETOBJ = main_6ch.o cbuffer.o
+LIBS += $(ZPULOGSDK)/lib/libym2149.a $(ZPULOGSDK)/lib/liblcd.a $(ZPULOGSDK)/lib/libserial.a $(ZPULOGSDK)/lib/liblinestream.a
 
 all: all-target
 
