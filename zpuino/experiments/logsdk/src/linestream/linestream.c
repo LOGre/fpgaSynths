@@ -6,32 +6,18 @@
 #include "linestream_internal.h"
 
 static int unEscaping=0, inFrame=0;
-unsigned int txSeq, rxSeq;
+static unsigned int txSeq, rxSeq;
+enum { CONTROL, DATA } state;
 
-void sendByte(unsigned char b)
-{
-	if (b==HDLC_frameFlag || b==HDLC_escapeFlag) 
-	{
-		serial_write(HDLC_escapeFlag);
-		b ^= HDLC_escapeXOR;
-	}
-	serial_write(b);
-}
+// ///////////////////////////////////////////////////////////////////
+// Public functions
+// ///////////////////////////////////////////////////////////////////
 
-void sendData(const unsigned char *buf, unsigned size)
-{
-	for(;size>0;size--,buf++) 
-	{
-		sendByte(*buf);
-	}
-}
-
-int readData()
-{
-	while (!serial_available());
-	return serial_read();
-}
-
+/*
+ * int linestream_receiveFrame(unsigned char *dest, unsigned maxsize)
+ * receive a full frame
+ * 
+ */ 
 int linestream_receiveFrame(unsigned char *dest, unsigned maxsize)
 {
 	unsigned char *dptr = dest;
@@ -138,7 +124,35 @@ int linestream_receiveFrame(unsigned char *dest, unsigned maxsize)
 	while (1);
 }
 
-void sendFrame1(unsigned int value)
+// ///////////////////////////////////////////////////////////////////
+// Internal functions
+// //////////////////////////////////////////////////////////////////// 
+
+inline void sendByte(unsigned char b)
+{
+	if (b==HDLC_frameFlag || b==HDLC_escapeFlag) 
+	{
+		serial_write(HDLC_escapeFlag);
+		b ^= HDLC_escapeXOR;
+	}
+	serial_write(b);
+}
+
+inline void sendData(const unsigned char *buf, unsigned size)
+{
+	for(;size>0;size--,buf++) 
+	{
+		sendByte(*buf);
+	}
+}
+
+inline int readData()
+{
+	while (!serial_available());
+	return serial_read();
+}
+
+inline void sendFrame1(unsigned int value)
 {
     unsigned int checksum=0xaa;
 	serial_write(HDLC_frameFlag);
@@ -151,7 +165,7 @@ void sendFrame1(unsigned int value)
 	serial_write(HDLC_frameFlag);
 }
 
-void handleControl(unsigned char control, unsigned char *buf, unsigned datasize)
+inline void handleControl(unsigned char control, unsigned char *buf, unsigned datasize)
 {
 	/* We received a control sequence */
 	if(control == HDLC_Control_Reset)
@@ -163,12 +177,12 @@ void handleControl(unsigned char control, unsigned char *buf, unsigned datasize)
 }
 
 
-void sendNAK()
+inline void sendNAK()
 {
 	sendFrame1(HDLC_Control_NAK | rxSeq);
 }
 
-void sendACK()
+inline void sendACK()
 {
 	sendFrame1(HDLC_Control_ACK | rxSeq);
 }

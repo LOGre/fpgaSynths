@@ -3,17 +3,17 @@
 
 #include <zpuino-types.h>
 
-int buffer_hasData();
+inline int buffer_hasData();
 
-int buffer_isFull();
+inline int buffer_isFull();
 
-unsigned int buffer_count();
+inline unsigned int buffer_count();
 
-int buffer_push(uint8_t value); 
+inline int buffer_push(uint8_t value); 
 
-uint8_t buffer_pop();
+inline uint8_t buffer_pop();
 
-void buffer_clear();
+inline void buffer_clear();
 
 #endif
 

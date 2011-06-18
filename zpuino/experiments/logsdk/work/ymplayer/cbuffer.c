@@ -3,23 +3,25 @@
 
 volatile unsigned int head = 0, tail = 0;
 volatile unsigned int itemCount = 0;
-static const unsigned int mask = (1<<10)-1;
-uint8_t buffer[1<<10];
+static const unsigned int mask = (1<<13)-1;
+uint8_t buffer[1<<13];
 
-unsigned buffer_increment(unsigned int i);
+inline unsigned increment(unsigned int i)
+{
+	return (i+1)&mask;
+}
 
-
-int buffer_hasData()
+inline int buffer_hasData()
 { 
 	return head!=tail; 
 }
 
-int buffer_isFull()
+inline int buffer_isFull()
 { 
 	return  (((tail+1) & mask) == head); 
 }
 
-unsigned int buffer_count()
+inline unsigned int buffer_count()
 {
 	// assumed called from push side
 
@@ -47,9 +49,9 @@ unsigned int buffer_count()
           
 }
 
-int buffer_push(uint8_t value) 
+inline int buffer_push(uint8_t value) 
 {
-	unsigned int nextTail = buffer_increment(tail);
+	unsigned int nextTail = increment(tail);
 	if(nextTail != head)
 	{
 		buffer[tail] = value;
@@ -60,16 +62,16 @@ int buffer_push(uint8_t value)
 	return 0; //false
 }
 
-uint8_t buffer_pop()
+inline uint8_t buffer_pop()
 {
 	// No checks
 	uint8_t ret = buffer[head];
-	head = buffer_increment(head);
+	head = increment(head);
 	if(itemCount>0) itemCount--;
 	return ret;
 }
 
-void buffer_clear()
+inline void buffer_clear()
 {
 	cli();
 	head=tail=0;
@@ -77,9 +79,6 @@ void buffer_clear()
 	sei();
 }
 
-unsigned buffer_increment(unsigned int i)
-{
-	return (i+1)&mask;
-}
+
 
 

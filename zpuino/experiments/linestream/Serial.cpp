@@ -290,8 +290,7 @@ int serial_read(serial_handle_t* h,	void* buf,size_t size, size_t* nread)
 	}
 	
 	*nread = n;
-	
-	usleep(1000);
+	usleep(5000);
 
 	return 0;
 }

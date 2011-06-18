@@ -33,6 +33,7 @@
 #include <sys/wait.h> // Only for testing
 
 //#define USEDEBUGPIPE
+#define FRAMESIZE 14
 
 #ifdef USEDEBUGPIPE
 //#include "LineStreamClient.h"
@@ -44,17 +45,7 @@ extern "C" {
 #include "LineStreamServer.h"
 #include "DataFrame.h"
 
-/*
-static void send_sync_sequence(serial_handle_t* h)
-{
-  static const uint16_t sync_seq = 0xa5a5;
-  size_t nwritten;
-  serial_write(h, (const void*)&sync_seq, 2, &nwritten);
-}
-*/
-
 #define LOG(x...) do { fprintf(stderr,"Server: "); fprintf(stderr,x); fflush(stderr); } while (0);
-
 
 bool do_exit = false;
 
@@ -87,51 +78,57 @@ void *transmitterThread(void *arg)
 {
 	// file
 	struct stat st1, st2;
-    int fd1 = open("test.log", O_RDONLY);	
-    //int fd2 = open("saint_505_2.log", O_RDONLY);	
-	const uint8_t * addr1;
-	//const uint8_t * addr2;
-	size_t size, nwritten, saved_size;
-	const uint8_t* saved_addr;
+    int fd1 = open("saint_505_1.log", O_RDONLY);	
+    int fd2 = open("saint_505_2.log", O_RDONLY);	
+	const uint8_t * addr1, * addr2;
+	size_t size1, size2;
+
 	
 	// get server ptr
 	LineStreamServer *server = (LineStreamServer*)arg;
 
 	// map files
 	fstat(fd1, &st1);
-	//fstat(fd2, &st2);
+	fstat(fd2, &st2);
 
 	addr1 = (const uint8_t*)mmap(NULL, st1.st_size, PROT_READ, MAP_SHARED, fd1, 0);
 	if (addr1 == MAP_FAILED) perror("mmap file 1");
-	size = st1.st_size;
+	size1 = st1.st_size;
 	
-	//addr2 = (const uint8_t*)mmap(NULL, st2.st_size, PROT_READ, MAP_SHARED, fd2, 0);
-	//if (addr2 == MAP_FAILED) perror("mmap file 2");
-
-	saved_size = st1.st_size;
-	saved_addr = addr1;
-
-
-	int sent = 0;
+	addr2 = (const uint8_t*)mmap(NULL, st2.st_size, PROT_READ, MAP_SHARED, fd2, 0);
+	if (addr2 == MAP_FAILED) perror("mmap file 2");
+	size2 = st2.st_size;
+	
 	do {
 		if ( server->canTransmit()) 
 		{
-			server->stream((const unsigned char*) addr1,28);	
-			//server->stream((const unsigned char*) addr2,28);
-			addr1 += 28;	
-			//addr2 += 28;
-			sent++;
+			server->stream((const unsigned char*) addr1, FRAMESIZE);	
+			addr1 += FRAMESIZE;	
+			size1 -= FRAMESIZE;
 		} 
 		else 
 		{
             LOG("TX is full...wait !!!\n");
-			usleep(10000);
+			usleep(100000);
 		}
+		
+		if ( server->canTransmit()) 
+		{
+			server->stream((const unsigned char*) addr2, FRAMESIZE);
+			addr2 += FRAMESIZE;
+			size2 -= FRAMESIZE;
+		} 
+		else 
+		{
+            LOG("TX is full...wait !!!\n");
+			usleep(100000);
+		}		
+		//usleep(5000);
 	} 
-	while (sent<saved_size/28);
+	while ((size1 > 0) && (size2 > 0));
 	
 	close(fd1);
-	//close(fd2);
+	close(fd2);
 	
 	LOG("Exiting transmitterThread\n");
 
@@ -223,68 +220,3 @@ int main()
 
     delete (server) ;
 }
-
-/*
-int main(int ac, char** av)
-{
-  struct stat st;
-  int fd = open(av[1], O_RDONLY);
-  const uint8_t* addr;
-  size_t size;
-  size_t nwritten;
-  size_t saved_size;
-  const uint8_t* saved_addr;
-  serial_handle_t handle;
-
-  static const serial_conf_t conf =
-    {
-      115200,
-      8,
-      SERIAL_PARITY_DISABLED,
-      1
-    };
-
-  serial_open(&handle, "/dev/ttyUSB1");
-  serial_set_conf(&handle, &conf);
-
-  fstat(fd, &st);
-
-  addr = (const uint8_t*)mmap(NULL, st.st_size, PROT_READ, MAP_SHARED, fd, 0);
-  if (addr == MAP_FAILED) perror("mmap");
-  size = st.st_size;
-
-  saved_size = st.st_size;
-  saved_addr = addr;
-
-  send_sync_sequence(&handle);
-
-  while (1)
-  {
-    usleep(20000);
-
-    if (size < 28)
-    {
-      size = saved_size;
-      addr = saved_addr;
-    }
-    
-    if (serial_write(&handle, addr, 28, &nwritten) == -1)
-    {
-      printf("serial_write() == -1\n");
-    }
-    else if (nwritten != 28)
-    {
-      printf("nwritten != 28\n");
-    }
-
-    addr += nwritten;
-    size -= nwritten;
-  }
-
-  close(fd);
-
-  return 0;
-}
-*/
-
-

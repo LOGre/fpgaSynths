@@ -8,36 +8,36 @@
 /*
  * 
  */
-void serial_setSlot(unsigned int slot);
+inline void serial_setSlot(unsigned int slot);
 
 /*
  * 
  */ 
-int serial_available(void);
+inline int serial_available(void);
 
 /*
  * 
  */ 
-int serial_read(void);
+inline int serial_read(void);
 
 /*
  * 
  */ 
-void serial_flush(void);
+inline void serial_flush(void);
 
 /*
  * 
  */ 
-void serial_begin(unsigned int baudrate);
+inline void serial_begin(unsigned int baudrate);
 
 /*
  * 
  */ 
-void serial_write(unsigned char c);
+inline void serial_write(unsigned char c);
 
 /*
  * 
  */ 
-void serial_writestr(char * c);
+inline void serial_writestr(char * c);
 	
 #endif /* __SERIAL_H__ */

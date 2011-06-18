@@ -166,10 +166,12 @@ int LineStreamServer::readData(unsigned timeout)
 		if(serial_read(handle, &v, 1, &size) == -1)
 		{
 			 LOG("error : read: %X\n", v);
-			 throw WriteException();
+			 throw ReadException();
 			 return -1;
 		}
 		//LOG("readData : %X\n", v);
+		
+		//if(v == 0) return -1;
 		return v;
 	}
 	else
@@ -273,7 +275,7 @@ Frame LineStreamServer::receiveFrame(unsigned timeout)
 				/* Check frame type */
 				if (state==CONTROL)
 				{
-					LOG("FrameTooShortException\n");
+					LOG("FrameTooShortException : %X\n", bIn);
 					throw FrameTooShortException(); /* Error, no data */
 				}
 				state = CONTROL;
