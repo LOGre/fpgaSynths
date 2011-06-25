@@ -42,8 +42,8 @@ package papiliochip_config is
   -- configuration
  
   -- soundchips enable/disable
-  constant zpuino_ym2149_enabled: 	boolean := false;
-  constant zpuino_pokey_enabled: 	boolean := false;
+  constant zpuino_ym2149_enabled: 	boolean := true;
+  constant zpuino_pokey_enabled: 	boolean := true;
   constant zpuino_sn76489_enabled: 	boolean := true;
 
    -- Internal Sigma delta

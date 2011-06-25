@@ -50,11 +50,11 @@ vhdl work "../../3rdparty/utils/conv_signed.vhd"
 #------------------------------------------------
 #  YM2149
 #------------------------------------------------
-#vhdl work "../../3rdparty/ym2149/zpuino_YM2149_linmix.vhd"
+vhdl work "../../3rdparty/ym2149/zpuino_YM2149_linmix.vhd"
 #------------------------------------------------
 #  Pokey
 #-----------------------------------------
-#vhdl work "../../3rdparty/pokey/zpuino_pokey.vhd"
+vhdl work "../../3rdparty/pokey/zpuino_pokey.vhd"
 #------------------------------------------------
 #  SN76489
 #-----------------------------------------

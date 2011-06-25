@@ -97,6 +97,11 @@ architecture struct of sn76489_top is
          tone3_s,
          noise_s     : signed(0 to 7);
 
+  signal tone1_s_q,
+         tone2_s_q,
+         tone3_s_q,
+         noise_s_q   : signed(0 to 7);
+
   signal tone3_ff_s  : std_logic;
 
 begin
@@ -196,7 +201,17 @@ begin
       noise_o    => noise_s
     );
 
+  process(clock_i)
+  begin
+    if rising_edge(clock_i) then
+		tone1_s_q <= tone1_s;
+		tone2_s_q <= tone2_s;
+		tone3_s_q <= tone3_s;
+		noise_s_q <= noise_s;
+		aout_o <= tone1_s_q + tone2_s_q + tone3_s_q + noise_s_q;
+    end if;
+  end process;
 
-  aout_o <= tone1_s + tone2_s + tone3_s + noise_s;
+  -- aout_o <= tone1_s + tone2_s + tone3_s + noise_s;
 
 end struct;
