@@ -1,0 +1,93 @@
+#ifndef __BOARD_H__
+#define __BOARD_H__
+
+#define CLK_FREQ 96000000UL
+#define BOARD_MEMORYSIZE 0x8000
+#define SPIOFFSET 0x00000000
+
+#define BOARD_SPI_DIVIDER BIT(SPICP1)
+
+#define IOBASE 0x8000000
+#define IO_SLOT_OFFSET_BIT 23
+
+#define FPGA_PIN_G14 0
+#define FPGA_PIN_G13 1
+#define FPGA_PIN_N10 2
+#define FPGA_PIN_T4 3
+#define FPGA_PIN_U16 4
+#define FPGA_PIN_A6 5
+#define FPGA_PIN_B6 6
+#define FPGA_PIN_E7 7
+#define FPGA_PIN_F7 8
+#define FPGA_PIN_D7 9
+#define FPGA_PIN_C7 10
+#define FPGA_PIN_F8 11
+#define FPGA_PIN_E8 12
+#define FPGA_PIN_A13 13
+#define FPGA_PIN_B13 14
+#define FPGA_PIN_A14 15
+#define FPGA_PIN_B14 16
+#define FPGA_PIN_C14 17
+#define FPGA_PIN_D14 18
+#define FPGA_PIN_A16 19
+#define FPGA_PIN_B16 20
+#define FPGA_PIN_E13 21
+#define FPGA_PIN_C4 22
+#define FPGA_PIN_B11 23
+#define FPGA_PIN_F12 24
+#define FPGA_PIN_E12 25
+#define FPGA_PIN_E11 26
+#define FPGA_PIN_F11 27
+#define FPGA_PIN_C11 28
+#define FPGA_PIN_D11 29
+#define FPGA_PIN_E9 30
+#define FPGA_PIN_F9 31
+#define FPGA_PIN_A11 32
+#define FPGA_PIN_A8 33
+#define FPGA_PIN_G9 34
+#define FPGA_PIN_C3 35
+#define FPGA_PIN_P11 36
+#define FPGA_PIN_N8 37
+#define FPGA_PIN_N7 38
+#define FPGA_PIN_D16 39
+#define FPGA_PIN_U3 40
+#define FPGA_PIN_B4 41
+#define FPGA_PIN_A4 42
+#define FPGA_PIN_D5 43
+#define FPGA_PIN_C5 44
+#define FPGA_PIN_P7 45
+#define FPGA_PIN_L18 46
+#define FPGA_PIN_L17 47
+#define FPGA_PIN_R15 48
+#define FPGA_PIN_R16 49
+#define FPGA_PIN_P17 50
+#define FPGA_PIN_M15 51
+#define FPGA_PIN_M18 52
+#define FPGA_PIN_K18 53
+#define FPGA_PIN_G18 54
+#define FPGA_PIN_V16 55
+
+#define FPGA_LED_0 FPGA_PIN_F12
+#define FPGA_LED_1 FPGA_PIN_E12
+#define FPGA_LED_2 FPGA_PIN_E11
+#define FPGA_LED_3 FPGA_PIN_F11
+#define FPGA_LED_4 FPGA_PIN_C11
+#define FPGA_LED_5 FPGA_PIN_D11
+#define FPGA_LED_6 FPGA_PIN_E9
+#define FPGA_LED_7 FPGA_PIN_F9
+
+#define FPGA_AD_CONV FPGA_PIN_P11
+#define FPGA_DAC_CS  FPGA_PIN_N8
+#define FPGA_AMP_CS  FPGA_PIN_N7
+#define FPGA_SF_CE0  FPGA_PIN_D16
+#define FPGA_SS_B    FPGA_PIN_U3
+
+#define FPGA_FX2_IO1 FPGA_PIN_B4
+#define FPGA_FX2_IO2 FPGA_PIN_A4
+#define FPGA_FX2_IO3 FPGA_PIN_D5
+#define FPGA_FX2_IO4 FPGA_PIN_C5
+
+#define SPI_FLASH_SEL_PIN FPGA_SS_B
+
+
+#endif
